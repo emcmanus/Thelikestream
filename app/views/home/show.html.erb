@@ -1,0 +1,230 @@
+
+
+<div class="span-20 last prepend-1 append-1">
+    
+    <div class="span-18">
+        <h2>Today's Top Links</h2>
+    </div>
+    
+    <style type="text/css" media="screen">
+        .secondary_submit {
+            color: white; background-color: #ff008b; font-size: 0.9em; font-weight: bold; padding:1px 2px;
+        }
+        .secondary_submit:hover {
+/*            background-color: #ff0;*/
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+    <div class="span-2 last" style="padding-top:5px;">
+        <%= link_to "+SUBMIT", submit_path, :class=>"secondary_submit" %>
+    </div>
+    
+    
+    <% for @link in @links %>
+        <span style="font-size: 1.2em;">
+            <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+            <% if false %>
+                <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+            <% end %>
+            <div class="span-16">
+                <h4 style="padding:0;margin:0;"><%= link_to @link.title, @link.url, :class=>"quotelink", :target=>"_blank" %></h4>
+            </div>
+            <div class="span-16" style="font-size: 0.7em;">
+                <%= link_to "Comments", @link %> - <span style="color:#666">16hrs Ago</span> - <%= link_to "More", @link %>
+            </div>
+        </span>
+
+        <hr class="space" />
+    <% end %>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <% if false %>
+    
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                She's my daughter........break her heart and I can make your death look like an accident!!!
+            </a>
+        </div>
+    </span>
+
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Your one fat friend who dresses like they're skinny.
+            </a>
+        </div>
+    </span>
+
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                YOUR IN A RELATIONSHIP.....QUIT FLIRTING WITH EVERYOBODY!
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                The fact that the voices in my head are smarter than most people i know
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Yelling random numbers while someone is counting.
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                You mean the drug dealer from the liquor store wasn't a good guy!?
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit that wasnt supposed to happen...... Shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit
+            </a>
+        </div>
+    </span>
+    
+    <hr class="space" />
+    
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                She's my daughter........break her heart and I can make your death look like an accident!!!
+            </a>
+        </div>
+    </span>
+
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Your one fat friend who dresses like they're skinny.
+            </a>
+        </div>
+    </span>
+
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                YOUR IN A RELATIONSHIP.....QUIT FLIRTING WITH EVERYOBODY!
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                The fact that the voices in my head are smarter than most people i know
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Yelling random numbers while someone is counting.
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                You mean the drug dealer from the liquor store wasn't a good guy!?
+            </a>
+        </div>
+    </span>
+    
+    
+    <hr class="space" />
+
+    <span style="font-size: 1.2em;">
+        <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
+        <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
+        <div class="span-16">
+            <a href="#" class="quotelink">
+                Shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit that wasnt supposed to happen...... Shiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiit
+            </a>
+        </div>
+    </span>
+    
+    
+    <% end %>
+    
+</div>
+
+

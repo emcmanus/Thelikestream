@@ -1,0 +1,29 @@
+<h1>AjaxSubmit#index</h1>
+<p>Find me in app/views/ajax_submit/index.html.erb</p>
+
+
+<%= form_remote_tag :url => '/ajax_submit' do -%>
+    <%= f.error_messages %>
+
+    <!-- TODO: Pre-populate this field -->
+    <p>
+      <%= f.label :title %><br />
+      <%= f.text_field :title %>
+    </p>
+    
+    take these out:
+    <p>
+      <%= f.label :url %><br />
+      <%= f.text_field :url %>
+    </p>
+    <p>
+      <%= f.label :like_count %><br />
+      <%= f.text_field :like_count %>
+    </p>
+    
+    
+    <p>
+      <%= f.submit 'Post!' %>
+    </p>
+    
+<% end -%>

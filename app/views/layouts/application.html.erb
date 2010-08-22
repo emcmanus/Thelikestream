@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  
+  <% unless @page_title.blank? %>
+    <title>LikeLoft - <%= @page_title %></title>
+  <% else %>
+    <title>LikeLoft - <%= controller.controller_name.titleize %></title>
+  <% end %>
+  
+  <%= javascript_include_tag :defaults %>
+  
+  <%= stylesheet_link_tag 'scaffold' %>
+  <%= stylesheet_link_tag 'blueprint/screen', :media => "screen, projection" %>
+  <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
+  <!--[if lt IE 8]>
+    <%= stylesheet_link_tag 'blueprint/ie', :media => "screen, projection" %>
+  <![endif]-->
+  <%= stylesheet_link_tag 'application' %>
+  
+  <%= yield :head %>
+  
+</head>
+
+<body>
+
+
+
+    <style type="text/css" media="screen">
+        .nav_link.current {
+                background-color: #000;
+                color: white;
+                padding: 0 3px;
+                margin: 0 2px;
+                font-weight: bold; letter-spacing: -1px; font-size:1.3em;
+        }
+        .nav_link {
+            background-color: #ffff00;
+            padding: 0 3px;
+            margin: 0 2px;
+            font-weight: bold; letter-spacing: -1px; font-size:1.3em;
+            cursor: pointer;
+        }
+        a.nav_link { 
+            color: black;
+            text-decoration: none;
+        }
+        .nav_link:hover {
+            background-color: #000;
+            color: white;
+        }
+        a.quotelink {
+            text-decoration: none;
+            color: #333;
+        }
+        a.quotelink:hover {
+            text-decoration: none;
+            color: #000;
+        }
+    </style>
+    
+
+<div class="container" style="">
+  
+  <div class="span-5">
+      <div style='margin: 10px;'>
+          <%= link_to image_tag('logo-4.png'), home_path %>
+      </div>
+ </div>
+ <div class="span-13" style="padding-top: 46px;">
+     <%= link_to "LINKS", home_path, :class=>"nav_link current" %>
+     <%= link_to "PICS", pics_path, :class=>"nav_link" %>
+     <%= link_to "VIDS", vids_path, :class=>"nav_link" %>
+     <%= link_to "QUOTES", quotes_path, :class=>"nav_link" %>
+     <%= link_to "JOKES", jokes_path, :class=>"nav_link" %>
+ </div>
+ 
+ <div class="span-6 last" style="padding-top: 20px;">
+      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %><br/>
+      <%= link_to "GET THE BOOKMARKLET", tools_path, :class=>"nav_link" %>
+ </div>
+  <style type="text/css" media="screen">
+    a.likeloftBookmarklet {
+        background-color: rgba(0,0,0,0.4);border-radius: 3px; color: white; padding: 3px 5px; font-size: 0.7em;
+    }
+    a.likeloftBookmarklet:hover {
+        background-color: rgba(0,0,0,0.6);
+        text-decoration: none;
+    }
+  </style>
+  <div class="prepend-1 append-1 span-22 last" style="border-radius: 5px; border-top: 0; background-color: #fff;">
+    
+    <div class="span-22 last" style="border-bottom: 1px dotted #ddd;">
+        <div class="prepend-1 span-6" style="padding-top: 20px; padding-bottom: 5px;">
+            <h2 style="font-weight: 400; color:#00ccff; font-size: 2.5em; padding-bottom:0; margin-bottom: -7px;">Get Started</h2>
+            <h4 style="color: #999;">Add the bookmarklet</h4>
+        </div>
+        <div class="span-14 last" style="font-size:1.4em; color:#333; padding-top: 25px;">
+            1. Drag this button onto your bookmarks bar:
+                <%= render :partial=>'/layouts/bookmarklet' %>
+                <br/>
+            2. Browse to a page you like, then click the bookmark <a href="javascript:showBookmarkletHelp();void(0);" style="font-size: 0.6em; color: #00ccff;">(Show Help)</a>
+            <div id="bookmarkletHelp" style="display: none; width: 500px; position: absolute; color: white; background-color: rgba(0, 0, 0, 0.92); padding: 10px; border-radius: 6px; font-size: 0.7em">
+                <h2 style="color: white; width: 400px; float: left;">Bookmarklet Help</h2><div style="float:left; text-align: right; width: 100px;"><div style="padding-right: 10px; padding-top: 10px;"><a href="javascript:closeBookmarkletHelp();void(0);" style="color: white; font-weight: bold;">X</a></div></div>
+                <div style="width:100%; height: 1px;clear:both;">&nbsp;</div>
+                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> What is a bookmarklet? </h4>
+                <p>A bookmarklet is simply a link which performs an action when clicked. It's a small, safe tool for sharing content on <strong>LikeLoft</strong> and cannot harm your computer or access personal information.</p>
+                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Can I remove it later? </h4>
+                <p>Yes. The bookmarklet can be "uninstalled" simply by removing the link from your bookmark toolbar or menu.</p>
+                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> I don't see my Bookmark toolbar</h4>
+                <p>Some browsers don't show the Bookmark toolbar by default. In this case, you can usually display the Bookmark toolbar using your browser's "View" menu.</p>
+                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Other Options </h4>
+                <p style="">If you don't want to display the Bookmark toolbar, you can add the bookmarklet to your Bookmarks menu. You can do this by right-clicking on the button above and selecting "Add link to bookmarks." Then to share content on <strong>LikeLoft</strong>, click it like any other bookmark.</p>
+                <button onclick="closeBookmarkletHelp()" type="button" class="btn"><span><span><b>&nbsp;</b><u>Close</u></span></span></button>
+            </div>
+        </div>
+        <script type="text/javascript" charset="utf-8">
+            function closeBookmarkletHelp(){
+                $('bookmarkletHelp').hide();
+            }
+            function showBookmarkletHelp(){
+                $('bookmarkletHelp').show();
+            }
+        </script>
+    </div>
+    
+    <div class="span-22 last">
+      <% if flash[:notice] %>
+        <div id="flash_message_container">
+          <h3><span class="highlight"><%= flash[:notice] %></span></h3>
+        </div>
+      <% else %>
+      &nbsp;
+      <% end %>
+    </div>
+    
+    <%= yield  %>
+    
+    <hr class="space"/>
+    
+    <div style="height: 300px;">
+        &nbsp;
+    </div>
+
+  </div>
+  
+  <hr class="space" />
+  
+</div>
+ 
+</body>
+</html>

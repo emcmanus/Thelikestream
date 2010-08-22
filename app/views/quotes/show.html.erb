@@ -1,0 +1,15 @@
+<h1>Top 10 links go here, prune the quote list!</h1>
+
+<p>
+  <b>Title:</b>
+  <%=h @quote.title %>
+</p>
+
+<p>
+  <b>Like count:</b>
+  <%=h @quote.like_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_quote_path(@quote) %> |
+<%= link_to 'Back', quotes_path %>

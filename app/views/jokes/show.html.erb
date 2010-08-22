@@ -1,0 +1,18 @@
+<p>
+  <b>Title:</b>
+  <%=h @joke.title %>
+</p>
+
+<p>
+  <b>Body:</b>
+  <%=h @joke.body %>
+</p>
+
+<p>
+  <b>Like count:</b>
+  <%=h @joke.like_count %>
+</p>
+
+
+<%= link_to 'Edit', edit_joke_path(@joke) %> |
+<%= link_to 'Back', jokes_path %>
