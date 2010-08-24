@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>vendor/plugins/facebooker2/README
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>Sun Aug 22 18:59:43 -0700 2010</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+<a href="../../../../classes/Facebooker2.html">Facebooker2</a>
+</p>
+<h6>=====</h6>
+<p>
+Provides rails helpers for interfacing with Facebook&#8216;s OpenGraph
+Javascript API, <a
+href="http://developers.facebook.com/docs/reference/javascript">developers.facebook.com/docs/reference/javascript</a>/.
+</p>
+<p>
+Requires the mogli gem.
+</p>
+<p>
+Example
+</p>
+<h6>=</h6>
+<ol>
+<li>Prerequisite: You need a facebook app. Have your API Key, Application
+
+</li>
+</ol>
+<p>
+Secret, and Application ID handy.
+</p>
+<ol>
+<li>Install facebooker2 as a plugin in your rails app.
+
+</li>
+<li>Create config/facebooker.yml with the appropriate environment.
+
+</li>
+</ol>
+<p>
+production:
+</p>
+<pre>
+  app_id: &lt;your application id&gt;
+  secret: &lt;your application secret&gt;
+  api_key: &lt;your application key&gt;
+</pre>
+<ol>
+<li>Create config/initializers/facebooker2.rb and place the following line in
+it
+
+</li>
+</ol>
+<p>
+<a
+href="../../../../classes/Facebooker2.html#M000005">Facebooker2.load_facebooker_yaml</a>
+</p>
+<ol>
+<li>Add the following line to your app/controllers/application_controller.rb
+
+</li>
+</ol>
+<p>
+include <a
+href="../../../../classes/Facebooker2/Rails/Controller.html">Facebooker2::Rails::Controller</a>
+</p>
+<ol>
+<li>Update your rails applications to use the rails helpers. This could be in a
+
+</li>
+</ol>
+<p>
+shared login partial.
+</p>
+<p>
+&lt;%= fb_connect_async_js %&gt; &lt;% if current_facebook_user %&gt;
+</p>
+<pre>
+   &lt;%= &quot;Welcome #{current_facebook_user.first_name} #{current_facebook_user.last_name}!&quot; %&gt;
+   or
+   &lt;%= &quot;Hello #{fb_name(current_facebook_user, :useyou =&gt; false)}!&quot; # link to facebook profile
+    %&gt;
+  &lt;%= fb_logout_link(&quot;Logout of fb&quot;, request.url) %&gt;&lt;br /&gt;
+</pre>
+<p>
+&lt;% else
+</p>
+<pre>
+   # you must explicitly request permissions for facebook user fields.
+   # here we instruct facebook to ask the user for permission for our website
+   # to access the user's facebook email and birthday
+   %&gt;
+  &lt;%= fb_login_and_redirect('&lt;your URL here&gt;', :perms =&gt; 'email,user_birthday') %&gt;
+</pre>
+<p>
+&lt;% end %&gt;
+</p>
+<p>
+Copyright (c) 2010 Mike Mangino, released under the MIT license
+</p>
+
+    </div>
+
+
+   </div>
+
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

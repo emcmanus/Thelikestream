@@ -2,17 +2,13 @@
 
 <table>
   <tr>
-    <th>Preview</th>
     <th>Title</th>
-    <th>Url</th>
     <th>Like count</th>
   </tr>
 
 <% @links.each do |link| %>
   <tr>
-    <td><%=h link.preview %></td>
     <td><%=h link.title %></td>
-    <td><%=h link.url %></td>
     <td><%=h link.like_count %></td>
     <td><%= link_to 'Show', link %></td>
     <td><%= link_to 'Edit', edit_link_path(link) %></td>

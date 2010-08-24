@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Facebooker2::Rails::Controller</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Facebooker2::Rails::Controller</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../files/vendor/plugins/facebooker2/lib/facebooker2/rails/controller_rb.html">
+                vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000025">current_facebook_client</a>&nbsp;&nbsp;
+      <a href="#M000024">current_facebook_user</a>&nbsp;&nbsp;
+      <a href="#M000035">facebook_params</a>&nbsp;&nbsp;
+      <a href="#M000032">fb_cookie_for_app_id</a>&nbsp;&nbsp;
+      <a href="#M000031">fb_cookie_for_app_id?</a>&nbsp;&nbsp;
+      <a href="#M000030">fb_cookie_hash_for_app_id</a>&nbsp;&nbsp;
+      <a href="#M000033">fb_cookie_signature_correct?</a>&nbsp;&nbsp;
+      <a href="#M000028">fb_create_user_and_client</a>&nbsp;&nbsp;
+      <a href="#M000036">fb_load_facebook_params</a>&nbsp;&nbsp;
+      <a href="#M000029">fb_sign_in_user_and_client</a>&nbsp;&nbsp;
+      <a href="#M000034">fb_signed_request_json</a>&nbsp;&nbsp;
+      <a href="#M000037">fb_signed_request_sig_valid?</a>&nbsp;&nbsp;
+      <a href="#M000026">fetch_client_and_user</a>&nbsp;&nbsp;
+      <a href="#M000027">fetch_client_and_user_from_cookie</a>&nbsp;&nbsp;
+      <a href="#M000038">fetch_client_and_user_from_signed_request</a>&nbsp;&nbsp;
+      <a href="#M000023">included</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000023" class="method-detail">
+        <a name="M000023"></a>
+
+        <div class="method-heading">
+          <a href="#M000023" class="method-signature">
+          <span class="method-name">included</span><span class="method-args">(controller)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000023-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 7</span>
+ 7:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">controller</span>)
+ 8:         <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">helper</span> <span class="ruby-constant">Facebooker2</span><span class="ruby-operator">::</span><span class="ruby-constant">Rails</span><span class="ruby-operator">::</span><span class="ruby-constant">Helpers</span>
+ 9:         <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">helper_method</span> <span class="ruby-identifier">:current_facebook_user</span>
+10:         <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">helper_method</span> <span class="ruby-identifier">:current_facebook_client</span>
+11:         <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">helper_method</span> <span class="ruby-identifier">:facebook_params</span>
+12:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000025" class="method-detail">
+        <a name="M000025"></a>
+
+        <div class="method-heading">
+          <a href="#M000025" class="method-signature">
+          <span class="method-name">current_facebook_client</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000025-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 19</span>
+19:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_facebook_client</span>
+20:         <span class="ruby-identifier">fetch_client_and_user</span>
+21:         <span class="ruby-ivar">@_current_facebook_client</span>
+22:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000024" class="method-detail">
+        <a name="M000024"></a>
+
+        <div class="method-heading">
+          <a href="#M000024" class="method-signature">
+          <span class="method-name">current_facebook_user</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000024-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 14</span>
+14:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_facebook_user</span>
+15:         <span class="ruby-identifier">fetch_client_and_user</span>
+16:         <span class="ruby-ivar">@_current_facebook_user</span>
+17:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000035" class="method-detail">
+        <a name="M000035"></a>
+
+        <div class="method-heading">
+          <a href="#M000035" class="method-signature">
+          <span class="method-name">facebook_params</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000035-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000035-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 87</span>
+87:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">facebook_params</span>
+88:         <span class="ruby-ivar">@facebook_param</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">fb_load_facebook_params</span>
+89:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000032" class="method-detail">
+        <a name="M000032"></a>
+
+        <div class="method-heading">
+          <a href="#M000032" class="method-signature">
+          <span class="method-name">fb_cookie_for_app_id</span><span class="method-args">(app_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000032-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000032-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 67</span>
+67:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_cookie_for_app_id</span>(<span class="ruby-identifier">app_id</span>)
+68:         <span class="ruby-identifier">cookies</span>[<span class="ruby-node">&quot;fbs_#{app_id}&quot;</span>]
+69:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000031" class="method-detail">
+        <a name="M000031"></a>
+
+        <div class="method-heading">
+          <a href="#M000031" class="method-signature">
+          <span class="method-name">fb_cookie_for_app_id?</span><span class="method-args">(app_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000031-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000031-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 63</span>
+63:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_cookie_for_app_id?</span>(<span class="ruby-identifier">app_id</span>)
+64:         <span class="ruby-operator">!</span><span class="ruby-identifier">fb_cookie_for_app_id</span>(<span class="ruby-identifier">app_id</span>).<span class="ruby-identifier">nil?</span>
+65:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000030" class="method-detail">
+        <a name="M000030"></a>
+
+        <div class="method-heading">
+          <a href="#M000030" class="method-signature">
+          <span class="method-name">fb_cookie_hash_for_app_id</span><span class="method-args">(app_id)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000030-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000030-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_cookie_hash_for_app_id</span>(<span class="ruby-identifier">app_id</span>)
+53:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">fb_cookie_for_app_id?</span>(<span class="ruby-identifier">app_id</span>)
+54:         <span class="ruby-identifier">hash</span>={}
+55:         <span class="ruby-identifier">data</span> = <span class="ruby-identifier">fb_cookie_for_app_id</span>(<span class="ruby-identifier">app_id</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/&quot;/</span>,<span class="ruby-value str">&quot;&quot;</span>)
+56:         <span class="ruby-identifier">data</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;&amp;&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">str</span><span class="ruby-operator">|</span>
+57:           <span class="ruby-identifier">parts</span> = <span class="ruby-identifier">str</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;=&quot;</span>)
+58:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">parts</span>.<span class="ruby-identifier">first</span>] = <span class="ruby-identifier">parts</span>.<span class="ruby-identifier">last</span>
+59:         <span class="ruby-keyword kw">end</span>
+60:         <span class="ruby-identifier">hash</span>
+61:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000033" class="method-detail">
+        <a name="M000033"></a>
+
+        <div class="method-heading">
+          <a href="#M000033" class="method-signature">
+          <span class="method-name">fb_cookie_signature_correct?</span><span class="method-args">(hash,secret)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000033-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000033-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 71</span>
+71:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_cookie_signature_correct?</span>(<span class="ruby-identifier">hash</span>,<span class="ruby-identifier">secret</span>)
+72:         <span class="ruby-identifier">sorted_keys</span> = <span class="ruby-identifier">hash</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">reject</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span><span class="ruby-operator">|</span> <span class="ruby-identifier">k</span><span class="ruby-operator">==</span><span class="ruby-value str">&quot;sig&quot;</span>}.<span class="ruby-identifier">sort</span>
+73:         <span class="ruby-identifier">test_string</span> = <span class="ruby-value str">&quot;&quot;</span>
+74:         <span class="ruby-identifier">sorted_keys</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+75:           <span class="ruby-identifier">test_string</span> <span class="ruby-operator">+=</span> <span class="ruby-node">&quot;#{key}=#{hash[key]}&quot;</span>
+76:         <span class="ruby-keyword kw">end</span>
+77:         <span class="ruby-identifier">test_string</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">secret</span>
+78:         <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">MD5</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-identifier">test_string</span>) <span class="ruby-operator">==</span> <span class="ruby-identifier">hash</span>[<span class="ruby-value str">&quot;sig&quot;</span>]
+79:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
+
+        <div class="method-heading">
+          <a href="#M000028" class="method-signature">
+          <span class="method-name">fb_create_user_and_client</span><span class="method-args">(token,expires,userid)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 39</span>
+39:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_create_user_and_client</span>(<span class="ruby-identifier">token</span>,<span class="ruby-identifier">expires</span>,<span class="ruby-identifier">userid</span>)
+40:         <span class="ruby-identifier">client</span> = <span class="ruby-constant">Mogli</span><span class="ruby-operator">::</span><span class="ruby-constant">Client</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">token</span>,<span class="ruby-identifier">expires</span>.<span class="ruby-identifier">to_i</span>)
+41:         <span class="ruby-identifier">user</span> = <span class="ruby-constant">Mogli</span><span class="ruby-operator">::</span><span class="ruby-constant">User</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:id=</span><span class="ruby-operator">&gt;</span><span class="ruby-identifier">userid</span>)
+42:         <span class="ruby-identifier">fb_sign_in_user_and_client</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">client</span>)        
+43:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000036" class="method-detail">
+        <a name="M000036"></a>
+
+        <div class="method-heading">
+          <a href="#M000036" class="method-signature">
+          <span class="method-name">fb_load_facebook_params</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000036-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000036-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 91</span>
+91:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_load_facebook_params</span>
+92:         <span class="ruby-keyword kw">return</span> {} <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:signed_request</span>].<span class="ruby-identifier">blank?</span>
+93:         <span class="ruby-identifier">sig</span>,<span class="ruby-identifier">encoded_json</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:signed_request</span>].<span class="ruby-identifier">split</span>(<span class="ruby-value str">&quot;.&quot;</span>)
+94:         <span class="ruby-keyword kw">return</span> {} <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">fb_signed_request_sig_valid?</span>(<span class="ruby-identifier">sig</span>,<span class="ruby-identifier">encoded_json</span>)
+95:         <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">JSON</span>.<span class="ruby-identifier">decode</span>(<span class="ruby-identifier">fb_signed_request_json</span>(<span class="ruby-identifier">encoded_json</span>)).<span class="ruby-identifier">with_indifferent_access</span>
+96:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
+
+        <div class="method-heading">
+          <a href="#M000029" class="method-signature">
+          <span class="method-name">fb_sign_in_user_and_client</span><span class="method-args">(user,client)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 45</span>
+45:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_sign_in_user_and_client</span>(<span class="ruby-identifier">user</span>,<span class="ruby-identifier">client</span>)
+46:         <span class="ruby-identifier">user</span>.<span class="ruby-identifier">client</span> = <span class="ruby-identifier">client</span>
+47:         <span class="ruby-ivar">@_current_facebook_user</span> = <span class="ruby-identifier">user</span>
+48:         <span class="ruby-ivar">@_current_facebook_client</span> = <span class="ruby-identifier">client</span>
+49:         <span class="ruby-ivar">@_fb_user_fetched</span> = <span class="ruby-keyword kw">true</span>
+50:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000034" class="method-detail">
+        <a name="M000034"></a>
+
+        <div class="method-heading">
+          <a href="#M000034" class="method-signature">
+          <span class="method-name">fb_signed_request_json</span><span class="method-args">(encoded)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000034-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000034-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 81</span>
+81:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_signed_request_json</span>(<span class="ruby-identifier">encoded</span>)
+82:         <span class="ruby-identifier">chars_to_add</span> = <span class="ruby-value">4</span><span class="ruby-operator">-</span>(<span class="ruby-identifier">encoded</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">%</span> <span class="ruby-value">4</span>)
+83:         <span class="ruby-identifier">encoded</span> <span class="ruby-operator">+=</span> (<span class="ruby-value str">&quot;=&quot;</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">chars_to_add</span>)
+84:         <span class="ruby-constant">Base64</span>.<span class="ruby-identifier">decode64</span>(<span class="ruby-identifier">encoded</span>)
+85:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000037" class="method-detail">
+        <a name="M000037"></a>
+
+        <div class="method-heading">
+          <a href="#M000037" class="method-signature">
+          <span class="method-name">fb_signed_request_sig_valid?</span><span class="method-args">(sig,encoded)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000037-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000037-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 98</span>
+ 98:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fb_signed_request_sig_valid?</span>(<span class="ruby-identifier">sig</span>,<span class="ruby-identifier">encoded</span>) 
+ 99:         <span class="ruby-identifier">base64</span> = <span class="ruby-constant">Base64</span>.<span class="ruby-identifier">encode64</span>(<span class="ruby-constant">HMAC</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA256</span>.<span class="ruby-identifier">digest</span>(<span class="ruby-constant">Facebooker2</span>.<span class="ruby-identifier">secret</span>,<span class="ruby-identifier">encoded</span>))
+100:         <span class="ruby-comment cmt">#now make the url changes that facebook makes</span>
+101:         <span class="ruby-identifier">url_escaped_base64</span> = <span class="ruby-identifier">base64</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/=*\n?$/</span>,<span class="ruby-value str">&quot;&quot;</span>).<span class="ruby-identifier">tr</span>(<span class="ruby-value str">&quot;+/&quot;</span>,<span class="ruby-value str">&quot;-_&quot;</span>)
+102:         <span class="ruby-identifier">sig</span> <span class="ruby-operator">==</span>  <span class="ruby-identifier">url_escaped_base64</span>
+103:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
+
+        <div class="method-heading">
+          <a href="#M000026" class="method-signature">
+          <span class="method-name">fetch_client_and_user</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 24</span>
+24:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fetch_client_and_user</span>
+25:         <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@_fb_user_fetched</span>
+26:         <span class="ruby-identifier">fetch_client_and_user_from_cookie</span>
+27:         <span class="ruby-identifier">fetch_client_and_user_from_signed_request</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@_current_facebook_client</span>
+28:         <span class="ruby-ivar">@_fb_user_fetched</span> = <span class="ruby-keyword kw">true</span>
+29:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
+
+        <div class="method-heading">
+          <a href="#M000027" class="method-signature">
+          <span class="method-name">fetch_client_and_user_from_cookie</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000027-source">
+<pre>
+    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 31</span>
+31:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fetch_client_and_user_from_cookie</span>
+32:         <span class="ruby-identifier">app_id</span> = <span class="ruby-constant">Facebooker2</span>.<span class="ruby-identifier">app_id</span>
+33:         <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">hash_data</span> = <span class="ruby-identifier">fb_cookie_hash_for_app_id</span>(<span class="ruby-identifier">app_id</span>)) <span class="ruby-keyword kw">and</span>
+34:           <span class="ruby-identifier">fb_cookie_signature_correct?</span>(<span class="ruby-identifier">fb_cookie_hash_for_app_id</span>(<span class="ruby-identifier">app_id</span>),<span class="ruby-constant">Facebooker2</span>.<span class="ruby-identifier">secret</span>)
+35:           <span class="ruby-identifier">fb_create_user_and_client</span>(<span class="ruby-identifier">hash_data</span>[<span class="ruby-value str">&quot;access_token&quot;</span>],<span class="ruby-identifier">hash_data</span>[<span class="ruby-value str">&quot;expires&quot;</span>],<span class="ruby-identifier">hash_data</span>[<span class="ruby-value str">&quot;uid&quot;</span>])
+36:         <span class="ruby-keyword kw">end</span>
+37:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000038" class="method-detail">
+        <a name="M000038"></a>
+
+        <div class="method-heading">
+          <a href="#M000038" class="method-signature">
+          <span class="method-name">fetch_client_and_user_from_signed_request</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000038-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000038-source">
+<pre>
+     <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb, line 105</span>
+105:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">fetch_client_and_user_from_signed_request</span>
+106:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">facebook_params</span>[<span class="ruby-identifier">:oauth_token</span>]
+107:           <span class="ruby-identifier">fb_create_user_and_client</span>(<span class="ruby-identifier">facebook_params</span>[<span class="ruby-identifier">:oauth_token</span>],<span class="ruby-identifier">facebook_params</span>[<span class="ruby-identifier">:expires</span>],<span class="ruby-identifier">facebook_params</span>[<span class="ruby-identifier">:user_id</span>])
+108:         <span class="ruby-keyword kw">end</span>
+109:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

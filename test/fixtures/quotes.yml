@@ -1,9 +1,0 @@
-# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
-
-one:
-  title: MyString
-  like_count: 1
-
-two:
-  title: MyString
-  like_count: 1

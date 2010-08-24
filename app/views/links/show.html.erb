@@ -1,23 +1,26 @@
-<p>
-  <b>Preview:</b>
-  <%=h @link.preview %>
-</p>
+<div class="span-20 prepend-1 append-1 last">
 
-<p>
-  <b>Title:</b>
-  <%=h @link.title %>
-</p>
+<h2 style="padding-bottom:0;margin-bottom:0;"><%=h @link.title %></h2>
+<div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
+    Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. This has been liked <span style=""><%=h @link.like_count %></span> times.
+</div>
 
-<p>
-  <b>Url:</b>
-  <%=h @link.url %>
-</p>
+<div style="margin-bottom: 10px;">
+    <%= @link.preview_html %>
+</div>
 
-<p>
-  <b>Like count:</b>
-  <%=h @link.like_count %>
-</p>
+<br/>
+
+<% if @link.show_link %>
+    <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 10px;">
+        <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>View Page - <%= link_to @link.url %></h3>
+    </div>
+<% end %>
 
 
-<%= link_to 'Edit', edit_link_path(@link) %> |
-<%= link_to 'Back', links_path %>
+<% if current_user and current_user.is_content_editor %>
+    <%= link_to 'Edit', edit_link_path(@link) %> |
+    <%= link_to 'Back', links_path %>
+<% end %>
+
+</div>

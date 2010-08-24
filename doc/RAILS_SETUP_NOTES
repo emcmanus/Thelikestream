@@ -1,0 +1,23 @@
+
+PLUGINS/GEMS
+
+Authlogic
+REMOVED - With setup info here: http://github.com/binarylogic/authlogic_example
+
+Authlogic/Facebook Connect integration
+REMOVED - http://github.com/jbasdf/authlogic_facebook_connect	(Note this is a forked branch!)
+
+Facebook JS Library
+http://developers.facebook.com/docs/reference/javascript/
+
+We're using Facebooker2 - NOT Facebooker
+http://github.com/mmangino/facebooker2
+
+Using is_taggable
+http://github.com/jamesgolick/is_taggable
+
+
+CAPISTRANO
+
+Followed this guide from slicehost:
+http://articles.slicehost.com/2008/1/18/capistrano-series-configuring-capistrano-1

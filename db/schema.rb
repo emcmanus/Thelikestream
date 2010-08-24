@@ -9,46 +9,41 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100821084444) do
-
-  create_table "jokes", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.integer  "like_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20100823045941) do
 
   create_table "links", :force => true do |t|
-    t.text     "preview"
-    t.string   "title"
+    t.text     "preview_html"
+    t.string   "title",                          :null => false
     t.string   "url"
-    t.integer  "like_count"
+    t.boolean  "show_link",    :default => true, :null => false
+    t.integer  "like_count",   :default => 0,    :null => false
+    t.integer  "user_id",                        :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "pictures", :force => true do |t|
-    t.text     "description"
-    t.string   "title"
-    t.string   "full_path"
-    t.integer  "like_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "taggings", :force => true do |t|
+    t.integer "tag_id"
+    t.string  "taggable_type", :default => ""
+    t.integer "taggable_id"
   end
 
-  create_table "quotes", :force => true do |t|
-    t.string   "title"
-    t.integer  "like_count"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
+  add_index "taggings", ["taggable_id", "taggable_type"], :name => "index_taggings_on_taggable_id_and_taggable_type"
+
+  create_table "tags", :force => true do |t|
+    t.string "name", :default => ""
+    t.string "kind", :default => ""
   end
 
-  create_table "videos", :force => true do |t|
-    t.text     "description"
-    t.string   "title"
-    t.text     "embed_code"
-    t.integer  "like_count"
+  add_index "tags", ["name", "kind"], :name => "index_tags_on_name_and_kind"
+
+  create_table "users", :force => true do |t|
+    t.boolean  "is_god",               :default => false, :null => false
+    t.boolean  "can_admin",            :default => false, :null => false
+    t.boolean  "can_edit_raw_html",    :default => false, :null => false
+    t.string   "facebook_id"
+    t.string   "facebook_session_key"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

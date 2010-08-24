@@ -23,15 +23,20 @@
     
     <% for @link in @links %>
         <span style="font-size: 1.2em;">
-            <%= image_tag 'like-placeholder.png', :style=>'float: left; padding-right: 10px;' %>
-            <% if false %>
-                <%= image_tag 'quotation-mark.png', :style => 'position:relative; top: -2px; float: left; padding-right: 6px;' %>
-            <% end %>
-            <div class="span-16">
-                <h4 style="padding:0;margin:0;"><%= link_to @link.title, @link.url, :class=>"quotelink", :target=>"_blank" %></h4>
+            <div class="span-2">
+                <fb:like layout="button_count" show_faces="false"></fb:like>
             </div>
-            <div class="span-16" style="font-size: 0.7em;">
-                <%= link_to "Comments", @link %> - <span style="color:#666">16hrs Ago</span> - <%= link_to "More", @link %>
+            <div class="span-16">
+                <h4 style="padding:0;margin:0;">
+                    <% if @link.url.blank? %>
+                        <%= link_to @link.title, @link, :class=>"quotelink", :target=>"_blank" %>
+                    <% else %>
+                        <%= link_to @link.title, @link.url, :class=>"quotelink", :target=>"_blank" %>
+                    <% end %>
+                </h4>
+            </div>
+            <div class="span-14 prepend-2" style="font-size: 0.7em; color: #ccc;">
+                Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. <%= link_to "Comments", @link %>
             </div>
         </span>
 

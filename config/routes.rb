@@ -1,26 +1,23 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :jokes
-
-  map.resources :quotes
-
-  map.resources :videos
-
-  map.resources :pictures
-
+  
+  map.resources :users
   map.resources :links
   
-  # Content type
-  map.vids    "vids",     :controller => :videos,   :action => :index
-  map.pics    "pics",     :controller => :pictures, :action => :index
-  map.quotes  "quotes",   :controller => :quotes,   :action => :index
-  map.jokes   "jokes",    :controller => :jokes,    :action => :index
+  # Session
+  map.logout          "/logout",          :controller => "sessions",  :action => "destroy"
+  map.login           "/login",           :controller => "sessions",  :action => "new"
+  map.create_session  "/session/create",  :controller => "sessions",  :action => "create"
   
-  # Global
-  map.submit  "submit",   :controller => :links, :action => :new
-  map.tools   "tools",    :controller => :tools, :action => :show
+  # Bookmarklet
+  map.bookmarklet "/bookmarklet_submit",  :controller => :links,   :action => :bookmarklet
+  
+  # Global Nav
+  map.home    "/home",    :controller => :home,   :action => :show
+  map.profile "/profile", :controller => :users,  :action => :profile
+  map.submit  "/submit",  :controller => :links,  :action => :new
+  map.tools   "/tools",   :controller => :tools,  :action => :show
   
   # Root
-  map.home    "home",     :controller => :home,  :action => :show
   map.root                :controller => :home,  :action => :show
   
 end

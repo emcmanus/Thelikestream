@@ -1,0 +1,27 @@
+Some documentation of the server setup process
+
+Server located at 184.106.218.75 : 2298	(NON-STANDARD PORT!)
+
+ssh -p 2298 emcmanus@184.106.218.75
+
+Followed these articles for server setup:
+http://articles.slicehost.com/2009/5/13/capistrano-series-setting-up-your-slice-2
+http://articles.slicehost.com/2008/4/25/ubuntu-hardy-setup-page-1 (user accounts, firewall, ssh config)
+http://articles.slicehost.com/2008/4/25/ubuntu-hardy-setup-page-2 (mostly bash config)
+http://articles.slicehost.com/2009/5/13/capistrano-series-setting-up-git
+
+Highlights:
+- created new usergroup "wheel"
+- created new user "emcmanus" - USE THIS USER FOR ADMINISTRATIVE TASKS
+- Still allow password authentication in SSH
+- Using apache, passenger
+
+MySQL:
+MySQL root user DOES require a password. It's your insecure pass.
+
+Apache:
+Config located in /etc/apache2/apache2.conf
+
+
+Example site config with Passenger:
+http://articles.slicehost.com/2008/5/1/ubuntu-hardy-using-mod_rails-to-serve-your-application

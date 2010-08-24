@@ -1,0 +1,12 @@
+
+<div class="prepend-1 append-1 span-20 last">
+    <h3>Links</h3>
+    <% for link in @user.links %>
+        <%= link_to link.title, link.url %><br/>
+    <% end %>
+    
+    <hr class="space" />
+    
+    <h3>Other</h3>
+    <p>Facebook ID: <%= @user.facebook_id %></p>
+</div>

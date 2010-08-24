@@ -1,0 +1,13 @@
+<div class="prepend-1 span-20 append-1 last">
+    <% unless flash[:error].blank? %>
+        <h3><span class="highlight"><%= flash[:error] %></span></h3><br/>
+    <% end %>
+
+    <% if current_user %>
+        <h2>You're already logged in!</h2>
+    <% else %>
+        <h2>Login via Facebook</h2>
+        <p>Click the button below to log in.</p>
+        <%= fb_login_and_redirect create_session_path %>
+    <% end %>
+</div>
