@@ -23,10 +23,11 @@ Rails::Initializer.run do |config|
   # config.gem "facebooker"
   config.gem "authlogic"
   config.gem "is_taggable"
+  config.gem "nokogiri"
   
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
-  config.plugins = [ :facebooker2 ]
+  config.plugins = [ :facebooker2, "ruby-readability" ]
   
   # Skip frameworks you're not going to use. To use Rails without a database,
   # you must remove the Active Record framework.

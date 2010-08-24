@@ -1,9 +1,11 @@
 
 <div class="prepend-1 append-1 span-20 last">
     <h3>Links</h3>
+    <ul>
     <% for link in @user.links %>
-        <%= link_to link.title, link.url %><br/>
+        <li><%= link_to link.title, link %></li>
     <% end %>
+    </ul>
     
     <hr class="space" />
     

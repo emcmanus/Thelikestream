@@ -59,34 +59,6 @@
                 vendor/plugins/facebooker2/lib/facebooker2/rails/controller.rb
                 </a>
         <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/facebook_connect_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/facebook_connect.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/javascript_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/javascript.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/request_forms_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/request_forms.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/user_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails/helpers/user.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails/helpers_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails/helpers.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2/rails_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2/rails.rb
-                </a>
-        <br />
-                <a href="../files/vendor/plugins/facebooker2/lib/facebooker2_rb.html">
-                vendor/plugins/facebooker2/lib/facebooker2.rb
-                </a>
-        <br />
             </td>
         </tr>
 
@@ -104,18 +76,6 @@
 
    </div>
 
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000002">app_id</a>&nbsp;&nbsp;
-      <a href="#M000006">cast_to_facebook_id</a>&nbsp;&nbsp;
-      <a href="#M000004">configuration=</a>&nbsp;&nbsp;
-      <a href="#M000005">load_facebooker_yaml</a>&nbsp;&nbsp;
-      <a href="#M000003">raise_unconfigured_exception</a>&nbsp;&nbsp;
-      <a href="#M000001">secret</a>&nbsp;&nbsp;
-      </div>
-    </div>
 
   </div>
 
@@ -128,193 +88,16 @@
       <h3 class="section-bar">Classes and Modules</h3>
 
       Module <a href="Facebooker2/Rails.html" class="link">Facebooker2::Rails</a><br />
-Class <a href="Facebooker2/NotConfigured.html" class="link">Facebooker2::NotConfigured</a><br />
 
     </div>
 
 
 
 
-    <div id="attribute-list">
-      <h3 class="section-bar">Attributes</h3>
-
-      <div class="name-list">
-        <table>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">api_key</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">app_id</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">secret</td>
-          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
-          <td class="context-item-desc"></td>
-        </tr>
-        </table>
-      </div>
-    </div>
       
 
 
     <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000002" class="method-detail">
-        <a name="M000002"></a>
-
-        <div class="method-heading">
-          <a href="#M000002" class="method-signature">
-          <span class="method-name">app_id</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000002-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000002-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">app_id</span>
-14:     <span class="ruby-ivar">@app_id</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raise_unconfigured_exception</span>
-15:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000006" class="method-detail">
-        <a name="M000006"></a>
-
-        <div class="method-heading">
-          <a href="#M000006" class="method-signature">
-          <span class="method-name">cast_to_facebook_id</span><span class="method-args">(object)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000006-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 33</span>
-33:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cast_to_facebook_id</span>(<span class="ruby-identifier">object</span>)
-34:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">kind_of?</span>(<span class="ruby-constant">Mogli</span><span class="ruby-operator">::</span><span class="ruby-constant">Profile</span>)
-35:       <span class="ruby-identifier">object</span>.<span class="ruby-identifier">id</span>
-36:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:facebook_id</span>)
-37:       <span class="ruby-identifier">object</span>.<span class="ruby-identifier">facebook_id</span>
-38:     <span class="ruby-keyword kw">else</span>
-39:       <span class="ruby-identifier">object</span>
-40:     <span class="ruby-keyword kw">end</span>
-41:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
-
-        <div class="method-heading">
-          <a href="#M000004" class="method-signature">
-          <span class="method-name">configuration=</span><span class="method-args">(hash)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">configuration=</span>(<span class="ruby-identifier">hash</span>)
-22:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">api_key</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:api_key</span>]
-23:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">secret</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:secret</span>]
-24:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">app_id</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">:app_id</span>]
-25:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
-
-        <div class="method-heading">
-          <a href="#M000005" class="method-signature">
-          <span class="method-name">load_facebooker_yaml</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 27</span>
-27:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">load_facebooker_yaml</span>
-28:     <span class="ruby-identifier">config</span> = <span class="ruby-constant">YAML</span>.<span class="ruby-identifier">load</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-operator">::</span><span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>,<span class="ruby-value str">&quot;config&quot;</span>,<span class="ruby-value str">&quot;facebooker.yml&quot;</span>)))[<span class="ruby-operator">::</span><span class="ruby-constant">Rails</span>.<span class="ruby-identifier">env</span>]
-29:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotConfigured</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;Unable to load configuration for #{::Rails.env} from facebooker.yml. Is it set up?&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">config</span>.<span class="ruby-identifier">nil?</span>
-30:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">configuration</span> = <span class="ruby-identifier">config</span>.<span class="ruby-identifier">with_indifferent_access</span>
-31:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
-
-        <div class="method-heading">
-          <a href="#M000003" class="method-signature">
-          <span class="method-name">raise_unconfigured_exception</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 17</span>
-17:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">raise_unconfigured_exception</span>
-18:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">NotConfigured</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;No configuration provided for Facebooker2. Either set the app_id and secret or call Facebooker2.load_facebooker_yaml in an initializer&quot;</span>)
-19:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000001" class="method-detail">
-        <a name="M000001"></a>
-
-        <div class="method-heading">
-          <a href="#M000001" class="method-signature">
-          <span class="method-name">secret</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000001-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000001-source">
-<pre>
-    <span class="ruby-comment cmt"># File vendor/plugins/facebooker2/lib/facebooker2.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">secret</span>
-10:     <span class="ruby-ivar">@secret</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raise_unconfigured_exception</span>    
-11:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
 
   </div>

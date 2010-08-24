@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class LinksController < ApplicationController
   
   # Must be a user to post
@@ -43,7 +45,28 @@ class LinksController < ApplicationController
     @link.user = current_user
     @link.like_count = 0
     
-    # TODO: Get Preview HTML
+    # TODO SANTIZE LINKS
+    
+    unless @link.url.blank?
+      raw_html = open(@link.url).read
+      
+      # Get preview
+      begin
+        readability_doc = Readability::Document.new raw_html
+        @link.preview_html = readability_doc.content
+      rescue
+        logger.error $!
+      end
+      
+      # Get title
+      begin      
+        if @link.title.blank?
+          @link.title = Nokogiri::HTML(raw_html).css('title').first.try :content
+        end
+      rescue
+        logger.error $!
+      end
+    end
 
     if @link.save
       redirect_to(@link, :notice => 'Link was successfully created.')

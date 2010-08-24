@@ -19822,3 +19822,1005 @@ Rendering home/show
   [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
 Rendered layouts/_bookmarklet (0.1ms)
 Completed in 29ms (View: 20, DB: 3) | 200 OK [http://localhost/home]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 05:43:31) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 10, DB: 3) | 200 OK [http://localhost/submit]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:43:46) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+
+NameError (uninitialized constant LinksController::Readability):
+  app/controllers/links_controller.rb:48:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (100.5ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:44:05) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+
+Errno::ENOENT (No such file or directory - http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/):
+  app/controllers/links_controller.rb:48:in `initialize'
+  app/controllers/links_controller.rb:48:in `open'
+  app/controllers/links_controller.rb:48:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (25.6ms)
+Rendered rescues/_request_and_response (1.1ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:47:01) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+
+NoMethodError (undefined method `new' for Readability:Module):
+  app/controllers/links_controller.rb:50:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (25.9ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:48:23) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+
+NameError (uninitialized constant LinksController::Readabilit):
+  app/controllers/links_controller.rb:50:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (99.7ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:48:32) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+ABOUT TO PRINT ARTICLE
+
+NameError (undefined local variable or method `readability_doc' for #<LinksController:0x1034a04f8>):
+  app/controllers/links_controller.rb:52:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (23.8ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:49:08) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+ABOUT TO PRINT ARTICLE
+
+ArgumentError (wrong number of arguments (0 for 2)):
+  app/controllers/links_controller.rb:52:in `get_article'
+  app/controllers/links_controller.rb:52:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (25.4ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:50:15) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"Test of new readability integration", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mLink Create (0.6ms)[0m   [0;1mINSERT INTO `links` (`like_count`, `created_at`, `title`, `updated_at`, `preview_html`, `url`, `user_id`, `show_link`) VALUES(0, '2010-08-24 12:50:15', 'Test of new readability integration', '2010-08-24 12:50:15', '<div><div>\n<p>“Who the f@#k you think you f$&amp;kin’ with\nI’m the f%*kin’ boss.”\n—Rick Ross</p>\n<p>In all my years in business, I have yet to hear someone say: “I love corporate politics.” On the other hand, I meet plenty of people who complain bitterly about corporate politics—sometimes even in the companies they run. So, if nobody loves politics, why all the politics?</p>\n<p>Political behavior almost always starts with the CEO. Now you may be thinking: “I hate politics, I’m not political, but my organization is very political. I clearly didn’t cause this.” Sadly, you needn’t be political to create extreme political behavior in your organization. In fact, it’s often the least political CEOs who run the most ferociously political organizations. Apolitical CEOs frequently accidentally encourage intense political behavior.</p>\n<p>What do I mean by politics? I mean people advancing their careers or agendas by means other than merit and contribution. There may be other types of politics, but politics of this form seem to be the ones that really bother people.</p>\nHow it happens\n<p>A CEO creates politics by encouraging and sometimes incenting political behavior—often accidentally. For a very simple example, let’s consider executive compensation. As CEO, senior employees will come to you from time to time and ask for an increase in compensation. They may suggest that you are paying them far less than their current market value. They may even have a competitive offer in hand. Faced with this confrontation, if the request is reasonable, you might investigate the situation. You might even give the employee a raise. This may sound innocent, but you have just created a strong incentive for political behavior.</p>\n<p>Specifically, you will be rewarding behavior that has nothing to do with advancing your business. The employee will earn a raise by asking for one rather than you automatically rewarding them for outstanding performance. Why is this bad? Let me count the ways:</p>\nThe other ambitious members of your staff will immediately agitate for raises as well. Note that neither this campaign nor the prior one need be correlated with actual performance. You will now spend time dealing with the political issues rather than actual performance issues. Importantly, if you have a competent board, you will not be able to give them all out-of-cycle raises, so your company executive raises will occur on a first-come, first-serve basis.\nThe less aggressive (but perhaps more competent) members of your team will be denied off-cycle raises simply by being apolitical.\nThe object lesson for your staff and the company will be the squeaky wheel gets the grease and the political employee gets the raise. Get ready for a whole lot of squeaky wheels.<p>Now let’s move on to a more complicated example. Your CFO comes to you and says that he wants to continue developing as a manager. He says that he would like to eventually become a COO and would like to know what skills he must demonstrate in order to earn that position in your company. Being a positive leader, you would like to encourage him to pursue his dream. You tell him that you think that he’d be a fine COO some day and that he should work to develop a few more skills. In addition, you tell him that he’ll need to be a strong enough leader, such that other executives in the company will want to work for him. A week later, one of your other executives comes to you in a panic. She says that the CFO just asked her if she’d work for him. She says that he said that you are grooming him to be the COO and that’s his final step. Did that just happen? Welcome to the big time.</p>\nHow to minimize politics\nProfessionals vs. Amateurs\n<p>Minimizing politics often feels totally unnatural. It’s counter to excellent management practices such as being open minded and encouraging employee development.</p>\n<p>The difference between managing executives and managing more junior employees can be thought of as the difference between being in a fight with someone with no training and being in a ring with a professional boxer. If you are in a fight with a regular person, then you can do natural things and they won’t get you into much trouble. For example, if you want to take a step backwards, you can pick your front foot up first. If you do this against a professional boxer, you will get your block knocked off. Professional boxers train for years to take advantage of small errors in technique. Lifting your front foot first to take a step backwards will take you slightly off balance for a split second and that’s all your opponent will need.</p>\n<p>Similarly, if you manage a junior employee and they ask you about their career development, you can say what comes naturally and generally get away with it. As we saw above, things change when you deal with highly ambitious, seasoned professionals. In order to keep from getting knocked out by corporate politics, you need to refine your technique.</p>\nThe Technique\n<p>As I developed as a CEO, I found three key techniques to be extremely useful in minimizing politics.</p>\n<p>1. Hire people with the right kind of ambition– The cases that I described above might involve people who are ambitious, but not necessarily inherently political. All cases are not like this. The surest way to turn your company into the political equivalent of the US Senate is to hire people with the wrong kind of ambition. As defined by Andy Grove, the right kind of ambition is ambition for the company’s success with the executive’s own success only coming as a bi-product of the company’s victory. The wrong kind of ambition is ambition for the executive’s personal success regardless of the company’s outcome.</p>\n<p>2. Build strict processes for potentially political issues and do not deviate–Certain activities attract political behavior. These activities include:</p>\nPerformance evaluation and compensation\nOrganizational design and territory\nPromotions<p>Let’s examine each case and how you might build and execute a process that insulates the company from bad behavior and politically motivated outcomes.</p>\n<p>Performance and compensation – Often companies defer putting performance management and compensation processes in place. This doesn’t mean that they don’t evaluate employees or give pay raises; it just means they do so in an ad hoc manner that’s highly vulnerable to political machinations. By conducting well-structured, regular performance and compensation reviews, you will ensure that pay and stock increases are as fair as possible. This is especially important for executive compensation as doing so will also serve to minimize politics. In the example above, the CEO should have had an airtight performance and compensation policy and simply told the executive that his compensation would be evaluated with everyone else’s. Ideally, the executive compensation process should involve the board of directors. This will a) help ensure good governance and b) make exceptions even more difficult.</p>\n<p>Organizational design and territory – If you manage ambitious people, from time to time, they will want to expand their scope of responsibility. In the example above, the CFO wanted to become the COO. In other situations, the head of marketing might want to run sales and marketing or the head of engineering may want to run engineering and product management. When someone raises an issue like this with you, you must be very careful about what you say, because everything that you say can be turned into political cannon fodder. Generally, it’s best to say nothing at all. At most, you might ask “why?”, but if you do so be sure not to react to the reasons. If you indicate what you are thinking, that information will leak, rumors will spread and you plant the seeds for all kinds of unproductive discussions. You should evaluate your organizational design on a regular basis and gather the information that you need to decide without tipping people to what you plan to do. Once you decide, you should immediately execute the re-org: don’t leave time for leaks and lobbying.</p>\n<p>Promotions– Every time your company gives someone a promotion, everyone else at that person’s level evaluates the promotion and judges whether merit or political favors yielded the promotion. If the latter, then the other employees generally react in one of three ways:</p>\nThey sulk and feel undervalued\nThey outwardly disagree, campaign against the person, and undermine them in their new position\nThey attempt to copy the political behavior that generated the unwarranted promotion<p>Clearly, you don’t want any of these behaviors in your company. Therefore, you must have a formal, visible, defensible promotion process that governs every employee promotion. Often this process must be different for people on your own staff (the general process may involve various managers who are familiar with the employee’s work, the executive process should include the board of directors). The purpose of the process is twofold. First, it will give the organization confidence that the company at least attempted to base the promotion on merit and second, the result of the process will be the information necessary for your team to explain the promotion decisions that you made.</p>\n<p>3. Be careful with “he said, she said” – Once your organization grows to a significant size, members of your team will, from time to time, complain about each other. Sometimes this criticism will be extremely aggressive. Be very careful about how you listen and the message that it sends. Simply by hearing them out without defending the employee in question, you will send the message that you agree. If people in the company think that you agree that one of your executives is less than stellar, that information will spread quickly and without qualification. As a result, people will stop listening to the executive in question and they will soon become ineffective.</p>\n<p>There are two distinct types of complaints that you will receive:</p>\nComplaints about an executive’s behavior\nComplaints about an executive’s competency or performance<p>Generally, the best way to handle complaints of type 1 is to get the complaining executive and the targeted executive in the room together and have them explain themselves. Usually, simply having this meeting will resolve the conflict and correct the behavior (if it was actually broken). Do not attempt to address behavioral issues without both executives in the room. Doing so will invite manipulation and politics.</p>\n<p>Complaints of type 2 are both more rare and more complex. If one of your executives summons the courage to complain about the competency of one of their peers, then there is a good chance that either the complainer or the targeted executive has a major problem. If you receive a type 2 complaint, you will generally have one of two reactions: a) they will be telling you something that you already know or b) they’ll be telling you shocking news.</p>\n<p>If they are telling you something that you already know, then the big news is that you have let the situation go too far. Whatever your reasons for attempting to rehabilitate the wayward executive, you have taken too long and now your organization has turned on the executive in question. You must resolve the situation quickly. Almost always, this means firing the executive. While I’ve seen executives improve their performance and skill sets, I’ve never seen one lose the support of the organization then regain it.</p>\n<p>On the other hand, if the complaint is new news, then you must immediately stop the conversation and make clear to the complaining executive that you in no way agree with their assessment. You do not want to cripple the other executive before you re-evaluate their performance. You do not want the complaint to become a self-fulfilling prophecy. Once you’ve shut down the conversation, you must quickly re-assess the employee in question. If you find that they are doing an excellent job, then you must figure out the complaining executive’s motivations and resolve them. Do not let an accusation of this magnitude fester. If you find that the employee is doing a poor job, there will be time to go back and get the complaining employee’s input, but you should be on a track to remove the poor performer at that point.</p>\nClosing Thought\n<p>As CEO, you must consider the systemic incentives that result from your words and actions. While it may feel good in the moment to be open, responsive and action oriented, be careful not to encourage all the wrong things.</p>\n</div></div>', 'http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/', 2, 1)[0m
+  [4;35;1mTagging Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `taggings`[0m
+  [4;36;1mTag Load (0.3ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mTagging Load (0.2ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 8 AND `taggings`.taggable_type = 'Link') [0m
+  [4;36;1mSQL (0.5ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/links/8
+Completed in 375ms (DB: 5) | 302 Found [http://localhost/links]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:50:16) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;35;1mLink Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.7ms)
+Completed in 105ms (View: 31, DB: 3) | 200 OK [http://localhost/links/8]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 05:50:32) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.4ms)[0m   [0;1mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 105ms (View: 97, DB: 3) | 200 OK [http://localhost/home]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:50:40) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;36;1mLink Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 21ms (View: 12, DB: 3) | 200 OK [http://localhost/links/8]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#edit (for 127.0.0.1 at 2010-08-24 05:50:44) [GET]
+  Parameters: {"action"=>"edit", "id"=>"8", "controller"=>"links"}
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.3ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/edit
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 30ms (View: 19, DB: 3) | 200 OK [http://localhost/links/8/edit]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#update (for 127.0.0.1 at 2010-08-24 05:50:57) [PUT]
+  Parameters: {"commit"=>"Update", "action"=>"update", "_method"=>"put", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "id"=>"8", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"How To Minimize Politics in Your Company", "url"=>"http://bhorowitz.com/2010/08/23/how-to-minimize-politics-in-your-company/", "preview_html"=>"<div><div>\r\n<p>“Who the f@#k you think you f$&amp;kin’ with\r\nI’m the f%*kin’ boss.”\r\n—Rick Ross</p>\r\n<p>In all my years in business, I have yet to hear someone say: “I love corporate politics.” On the other hand, I meet plenty of people who complain bitterly about corporate politics—sometimes even in the companies they run. So, if nobody loves politics, why all the politics?</p>\r\n<p>Political behavior almost always starts with the CEO. Now you may be thinking: “I hate politics, I’m not political, but my organization is very political. I clearly didn’t cause this.” Sadly, you needn’t be political to create extreme political behavior in your organization. In fact, it’s often the least political CEOs who run the most ferociously political organizations. Apolitical CEOs frequently accidentally encourage intense political behavior.</p>\r\n<p>What do I mean by politics? I mean people advancing their careers or agendas by means other than merit and contribution. There may be other types of politics, but politics of this form seem to be the ones that really bother people.</p>\r\nHow it happens\r\n<p>A CEO creates politics by encouraging and sometimes incenting political behavior—often accidentally. For a very simple example, let’s consider executive compensation. As CEO, senior employees will come to you from time to time and ask for an increase in compensation. They may suggest that you are paying them far less than their current market value. They may even have a competitive offer in hand. Faced with this confrontation, if the request is reasonable, you might investigate the situation. You might even give the employee a raise. This may sound innocent, but you have just created a strong incentive for political behavior.</p>\r\n<p>Specifically, you will be rewarding behavior that has nothing to do with advancing your business. The employee will earn a raise by asking for one rather than you automatically rewarding them for outstanding performance. Why is this bad? Let me count the ways:</p>\r\nThe other ambitious members of your staff will immediately agitate for raises as well. Note that neither this campaign nor the prior one need be correlated with actual performance. You will now spend time dealing with the political issues rather than actual performance issues. Importantly, if you have a competent board, you will not be able to give them all out-of-cycle raises, so your company executive raises will occur on a first-come, first-serve basis.\r\nThe less aggressive (but perhaps more competent) members of your team will be denied off-cycle raises simply by being apolitical.\r\nThe object lesson for your staff and the company will be the squeaky wheel gets the grease and the political employee gets the raise. Get ready for a whole lot of squeaky wheels.<p>Now let’s move on to a more complicated example. Your CFO comes to you and says that he wants to continue developing as a manager. He says that he would like to eventually become a COO and would like to know what skills he must demonstrate in order to earn that position in your company. Being a positive leader, you would like to encourage him to pursue his dream. You tell him that you think that he’d be a fine COO some day and that he should work to develop a few more skills. In addition, you tell him that he’ll need to be a strong enough leader, such that other executives in the company will want to work for him. A week later, one of your other executives comes to you in a panic. She says that the CFO just asked her if she’d work for him. She says that he said that you are grooming him to be the COO and that’s his final step. Did that just happen? Welcome to the big time.</p>\r\nHow to minimize politics\r\nProfessionals vs. Amateurs\r\n<p>Minimizing politics often feels totally unnatural. It’s counter to excellent management practices such as being open minded and encouraging employee development.</p>\r\n<p>The difference between managing executives and managing more junior employees can be thought of as the difference between being in a fight with someone with no training and being in a ring with a professional boxer. If you are in a fight with a regular person, then you can do natural things and they won’t get you into much trouble. For example, if you want to take a step backwards, you can pick your front foot up first. If you do this against a professional boxer, you will get your block knocked off. Professional boxers train for years to take advantage of small errors in technique. Lifting your front foot first to take a step backwards will take you slightly off balance for a split second and that’s all your opponent will need.</p>\r\n<p>Similarly, if you manage a junior employee and they ask you about their career development, you can say what comes naturally and generally get away with it. As we saw above, things change when you deal with highly ambitious, seasoned professionals. In order to keep from getting knocked out by corporate politics, you need to refine your technique.</p>\r\nThe Technique\r\n<p>As I developed as a CEO, I found three key techniques to be extremely useful in minimizing politics.</p>\r\n<p>1. Hire people with the right kind of ambition– The cases that I described above might involve people who are ambitious, but not necessarily inherently political. All cases are not like this. The surest way to turn your company into the political equivalent of the US Senate is to hire people with the wrong kind of ambition. As defined by Andy Grove, the right kind of ambition is ambition for the company’s success with the executive’s own success only coming as a bi-product of the company’s victory. The wrong kind of ambition is ambition for the executive’s personal success regardless of the company’s outcome.</p>\r\n<p>2. Build strict processes for potentially political issues and do not deviate–Certain activities attract political behavior. These activities include:</p>\r\nPerformance evaluation and compensation\r\nOrganizational design and territory\r\nPromotions<p>Let’s examine each case and how you might build and execute a process that insulates the company from bad behavior and politically motivated outcomes.</p>\r\n<p>Performance and compensation – Often companies defer putting performance management and compensation processes in place. This doesn’t mean that they don’t evaluate employees or give pay raises; it just means they do so in an ad hoc manner that’s highly vulnerable to political machinations. By conducting well-structured, regular performance and compensation reviews, you will ensure that pay and stock increases are as fair as possible. This is especially important for executive compensation as doing so will also serve to minimize politics. In the example above, the CEO should have had an airtight performance and compensation policy and simply told the executive that his compensation would be evaluated with everyone else’s. Ideally, the executive compensation process should involve the board of directors. This will a) help ensure good governance and b) make exceptions even more difficult.</p>\r\n<p>Organizational design and territory – If you manage ambitious people, from time to time, they will want to expand their scope of responsibility. In the example above, the CFO wanted to become the COO. In other situations, the head of marketing might want to run sales and marketing or the head of engineering may want to run engineering and product management. When someone raises an issue like this with you, you must be very careful about what you say, because everything that you say can be turned into political cannon fodder. Generally, it’s best to say nothing at all. At most, you might ask “why?”, but if you do so be sure not to react to the reasons. If you indicate what you are thinking, that information will leak, rumors will spread and you plant the seeds for all kinds of unproductive discussions. You should evaluate your organizational design on a regular basis and gather the information that you need to decide without tipping people to what you plan to do. Once you decide, you should immediately execute the re-org: don’t leave time for leaks and lobbying.</p>\r\n<p>Promotions– Every time your company gives someone a promotion, everyone else at that person’s level evaluates the promotion and judges whether merit or political favors yielded the promotion. If the latter, then the other employees generally react in one of three ways:</p>\r\nThey sulk and feel undervalued\r\nThey outwardly disagree, campaign against the person, and undermine them in their new position\r\nThey attempt to copy the political behavior that generated the unwarranted promotion<p>Clearly, you don’t want any of these behaviors in your company. Therefore, you must have a formal, visible, defensible promotion process that governs every employee promotion. Often this process must be different for people on your own staff (the general process may involve various managers who are familiar with the employee’s work, the executive process should include the board of directors). The purpose of the process is twofold. First, it will give the organization confidence that the company at least attempted to base the promotion on merit and second, the result of the process will be the information necessary for your team to explain the promotion decisions that you made.</p>\r\n<p>3. Be careful with “he said, she said” – Once your organization grows to a significant size, members of your team will, from time to time, complain about each other. Sometimes this criticism will be extremely aggressive. Be very careful about how you listen and the message that it sends. Simply by hearing them out without defending the employee in question, you will send the message that you agree. If people in the company think that you agree that one of your executives is less than stellar, that information will spread quickly and without qualification. As a result, people will stop listening to the executive in question and they will soon become ineffective.</p>\r\n<p>There are two distinct types of complaints that you will receive:</p>\r\nComplaints about an executive’s behavior\r\nComplaints about an executive’s competency or performance<p>Generally, the best way to handle complaints of type 1 is to get the complaining executive and the targeted executive in the room together and have them explain themselves. Usually, simply having this meeting will resolve the conflict and correct the behavior (if it was actually broken). Do not attempt to address behavioral issues without both executives in the room. Doing so will invite manipulation and politics.</p>\r\n<p>Complaints of type 2 are both more rare and more complex. If one of your executives summons the courage to complain about the competency of one of their peers, then there is a good chance that either the complainer or the targeted executive has a major problem. If you receive a type 2 complaint, you will generally have one of two reactions: a) they will be telling you something that you already know or b) they’ll be telling you shocking news.</p>\r\n<p>If they are telling you something that you already know, then the big news is that you have let the situation go too far. Whatever your reasons for attempting to rehabilitate the wayward executive, you have taken too long and now your organization has turned on the executive in question. You must resolve the situation quickly. Almost always, this means firing the executive. While I’ve seen executives improve their performance and skill sets, I’ve never seen one lose the support of the organization then regain it.</p>\r\n<p>On the other hand, if the complaint is new news, then you must immediately stop the conversation and make clear to the complaining executive that you in no way agree with their assessment. You do not want to cripple the other executive before you re-evaluate their performance. You do not want the complaint to become a self-fulfilling prophecy. Once you’ve shut down the conversation, you must quickly re-assess the employee in question. If you find that they are doing an excellent job, then you must figure out the complaining executive’s motivations and resolve them. Do not let an accusation of this magnitude fester. If you find that the employee is doing a poor job, there will be time to go back and get the complaining employee’s input, but you should be on a track to remove the poor performer at that point.</p>\r\nClosing Thought\r\n<p>As CEO, you must consider the systemic incentives that result from your words and actions. While it may feel good in the moment to be open, responsive and action oriented, be careful not to encourage all the wrong things.</p>\r\n</div></div>", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mLink Update (0.9ms)[0m   [0;1mUPDATE `links` SET `updated_at` = '2010-08-24 12:50:57', `title` = 'How To Minimize Politics in Your Company', `preview_html` = '<div><div>\r\n<p>“Who the f@#k you think you f$&amp;kin’ with\r\nI’m the f%*kin’ boss.”\r\n—Rick Ross</p>\r\n<p>In all my years in business, I have yet to hear someone say: “I love corporate politics.” On the other hand, I meet plenty of people who complain bitterly about corporate politics—sometimes even in the companies they run. So, if nobody loves politics, why all the politics?</p>\r\n<p>Political behavior almost always starts with the CEO. Now you may be thinking: “I hate politics, I’m not political, but my organization is very political. I clearly didn’t cause this.” Sadly, you needn’t be political to create extreme political behavior in your organization. In fact, it’s often the least political CEOs who run the most ferociously political organizations. Apolitical CEOs frequently accidentally encourage intense political behavior.</p>\r\n<p>What do I mean by politics? I mean people advancing their careers or agendas by means other than merit and contribution. There may be other types of politics, but politics of this form seem to be the ones that really bother people.</p>\r\nHow it happens\r\n<p>A CEO creates politics by encouraging and sometimes incenting political behavior—often accidentally. For a very simple example, let’s consider executive compensation. As CEO, senior employees will come to you from time to time and ask for an increase in compensation. They may suggest that you are paying them far less than their current market value. They may even have a competitive offer in hand. Faced with this confrontation, if the request is reasonable, you might investigate the situation. You might even give the employee a raise. This may sound innocent, but you have just created a strong incentive for political behavior.</p>\r\n<p>Specifically, you will be rewarding behavior that has nothing to do with advancing your business. The employee will earn a raise by asking for one rather than you automatically rewarding them for outstanding performance. Why is this bad? Let me count the ways:</p>\r\nThe other ambitious members of your staff will immediately agitate for raises as well. Note that neither this campaign nor the prior one need be correlated with actual performance. You will now spend time dealing with the political issues rather than actual performance issues. Importantly, if you have a competent board, you will not be able to give them all out-of-cycle raises, so your company executive raises will occur on a first-come, first-serve basis.\r\nThe less aggressive (but perhaps more competent) members of your team will be denied off-cycle raises simply by being apolitical.\r\nThe object lesson for your staff and the company will be the squeaky wheel gets the grease and the political employee gets the raise. Get ready for a whole lot of squeaky wheels.<p>Now let’s move on to a more complicated example. Your CFO comes to you and says that he wants to continue developing as a manager. He says that he would like to eventually become a COO and would like to know what skills he must demonstrate in order to earn that position in your company. Being a positive leader, you would like to encourage him to pursue his dream. You tell him that you think that he’d be a fine COO some day and that he should work to develop a few more skills. In addition, you tell him that he’ll need to be a strong enough leader, such that other executives in the company will want to work for him. A week later, one of your other executives comes to you in a panic. She says that the CFO just asked her if she’d work for him. She says that he said that you are grooming him to be the COO and that’s his final step. Did that just happen? Welcome to the big time.</p>\r\nHow to minimize politics\r\nProfessionals vs. Amateurs\r\n<p>Minimizing politics often feels totally unnatural. It’s counter to excellent management practices such as being open minded and encouraging employee development.</p>\r\n<p>The difference between managing executives and managing more junior employees can be thought of as the difference between being in a fight with someone with no training and being in a ring with a professional boxer. If you are in a fight with a regular person, then you can do natural things and they won’t get you into much trouble. For example, if you want to take a step backwards, you can pick your front foot up first. If you do this against a professional boxer, you will get your block knocked off. Professional boxers train for years to take advantage of small errors in technique. Lifting your front foot first to take a step backwards will take you slightly off balance for a split second and that’s all your opponent will need.</p>\r\n<p>Similarly, if you manage a junior employee and they ask you about their career development, you can say what comes naturally and generally get away with it. As we saw above, things change when you deal with highly ambitious, seasoned professionals. In order to keep from getting knocked out by corporate politics, you need to refine your technique.</p>\r\nThe Technique\r\n<p>As I developed as a CEO, I found three key techniques to be extremely useful in minimizing politics.</p>\r\n<p>1. Hire people with the right kind of ambition– The cases that I described above might involve people who are ambitious, but not necessarily inherently political. All cases are not like this. The surest way to turn your company into the political equivalent of the US Senate is to hire people with the wrong kind of ambition. As defined by Andy Grove, the right kind of ambition is ambition for the company’s success with the executive’s own success only coming as a bi-product of the company’s victory. The wrong kind of ambition is ambition for the executive’s personal success regardless of the company’s outcome.</p>\r\n<p>2. Build strict processes for potentially political issues and do not deviate–Certain activities attract political behavior. These activities include:</p>\r\nPerformance evaluation and compensation\r\nOrganizational design and territory\r\nPromotions<p>Let’s examine each case and how you might build and execute a process that insulates the company from bad behavior and politically motivated outcomes.</p>\r\n<p>Performance and compensation – Often companies defer putting performance management and compensation processes in place. This doesn’t mean that they don’t evaluate employees or give pay raises; it just means they do so in an ad hoc manner that’s highly vulnerable to political machinations. By conducting well-structured, regular performance and compensation reviews, you will ensure that pay and stock increases are as fair as possible. This is especially important for executive compensation as doing so will also serve to minimize politics. In the example above, the CEO should have had an airtight performance and compensation policy and simply told the executive that his compensation would be evaluated with everyone else’s. Ideally, the executive compensation process should involve the board of directors. This will a) help ensure good governance and b) make exceptions even more difficult.</p>\r\n<p>Organizational design and territory – If you manage ambitious people, from time to time, they will want to expand their scope of responsibility. In the example above, the CFO wanted to become the COO. In other situations, the head of marketing might want to run sales and marketing or the head of engineering may want to run engineering and product management. When someone raises an issue like this with you, you must be very careful about what you say, because everything that you say can be turned into political cannon fodder. Generally, it’s best to say nothing at all. At most, you might ask “why?”, but if you do so be sure not to react to the reasons. If you indicate what you are thinking, that information will leak, rumors will spread and you plant the seeds for all kinds of unproductive discussions. You should evaluate your organizational design on a regular basis and gather the information that you need to decide without tipping people to what you plan to do. Once you decide, you should immediately execute the re-org: don’t leave time for leaks and lobbying.</p>\r\n<p>Promotions– Every time your company gives someone a promotion, everyone else at that person’s level evaluates the promotion and judges whether merit or political favors yielded the promotion. If the latter, then the other employees generally react in one of three ways:</p>\r\nThey sulk and feel undervalued\r\nThey outwardly disagree, campaign against the person, and undermine them in their new position\r\nThey attempt to copy the political behavior that generated the unwarranted promotion<p>Clearly, you don’t want any of these behaviors in your company. Therefore, you must have a formal, visible, defensible promotion process that governs every employee promotion. Often this process must be different for people on your own staff (the general process may involve various managers who are familiar with the employee’s work, the executive process should include the board of directors). The purpose of the process is twofold. First, it will give the organization confidence that the company at least attempted to base the promotion on merit and second, the result of the process will be the information necessary for your team to explain the promotion decisions that you made.</p>\r\n<p>3. Be careful with “he said, she said” – Once your organization grows to a significant size, members of your team will, from time to time, complain about each other. Sometimes this criticism will be extremely aggressive. Be very careful about how you listen and the message that it sends. Simply by hearing them out without defending the employee in question, you will send the message that you agree. If people in the company think that you agree that one of your executives is less than stellar, that information will spread quickly and without qualification. As a result, people will stop listening to the executive in question and they will soon become ineffective.</p>\r\n<p>There are two distinct types of complaints that you will receive:</p>\r\nComplaints about an executive’s behavior\r\nComplaints about an executive’s competency or performance<p>Generally, the best way to handle complaints of type 1 is to get the complaining executive and the targeted executive in the room together and have them explain themselves. Usually, simply having this meeting will resolve the conflict and correct the behavior (if it was actually broken). Do not attempt to address behavioral issues without both executives in the room. Doing so will invite manipulation and politics.</p>\r\n<p>Complaints of type 2 are both more rare and more complex. If one of your executives summons the courage to complain about the competency of one of their peers, then there is a good chance that either the complainer or the targeted executive has a major problem. If you receive a type 2 complaint, you will generally have one of two reactions: a) they will be telling you something that you already know or b) they’ll be telling you shocking news.</p>\r\n<p>If they are telling you something that you already know, then the big news is that you have let the situation go too far. Whatever your reasons for attempting to rehabilitate the wayward executive, you have taken too long and now your organization has turned on the executive in question. You must resolve the situation quickly. Almost always, this means firing the executive. While I’ve seen executives improve their performance and skill sets, I’ve never seen one lose the support of the organization then regain it.</p>\r\n<p>On the other hand, if the complaint is new news, then you must immediately stop the conversation and make clear to the complaining executive that you in no way agree with their assessment. You do not want to cripple the other executive before you re-evaluate their performance. You do not want the complaint to become a self-fulfilling prophecy. Once you’ve shut down the conversation, you must quickly re-assess the employee in question. If you find that they are doing an excellent job, then you must figure out the complaining executive’s motivations and resolve them. Do not let an accusation of this magnitude fester. If you find that the employee is doing a poor job, there will be time to go back and get the complaining employee’s input, but you should be on a track to remove the poor performer at that point.</p>\r\nClosing Thought\r\n<p>As CEO, you must consider the systemic incentives that result from your words and actions. While it may feel good in the moment to be open, responsive and action oriented, be careful not to encourage all the wrong things.</p>\r\n</div></div>' WHERE `id` = 8[0m
+  [4;35;1mTag Load (0.3ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 8) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mTagging Load (0.2ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 8 AND `taggings`.taggable_type = 'Link') [0m
+  [4;35;1mSQL (0.6ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/links/8
+Completed in 98ms (DB: 5) | 302 Found [http://localhost/links/8]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:50:57) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 14, DB: 3) | 200 OK [http://localhost/links/8]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:51:00) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.9ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 14, DB: 3) | 200 OK [http://localhost/links/8]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:51:21) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;36;1mLink Columns (1.3ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (1.8ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 25ms (View: 15, DB: 4) | 200 OK [http://localhost/links/8]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:51:26) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;35;1mLink Columns (2.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (1.0ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 31ms (View: 18, DB: 5) | 200 OK [http://localhost/links/8]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:51:30) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.3ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (1.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 25ms (View: 16, DB: 4) | 200 OK [http://localhost/links/8]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 05:51:47) [GET]
+  Parameters: {"action"=>"show", "id"=>"8", "controller"=>"links"}
+  [4;35;1mLink Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 8) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 25ms (View: 16, DB: 3) | 200 OK [http://localhost/links/8]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 05:52:08) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.3ms)[0m   [0;1mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 99ms (View: 91, DB: 3) | 200 OK [http://localhost/home]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 05:52:49) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;36;1mUser Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 26ms (View: 14, DB: 3) | 200 OK [http://localhost/submit]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 05:56:17) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;35;1mLink Load (0.3ms)[0m   [0mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 30ms (View: 22, DB: 3) | 200 OK [http://localhost/home]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 05:57:55) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+
+NoMethodError (undefined method `name' for nil:NilClass):
+  app/controllers/links_controller.rb:53:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (25.5ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:00:21) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+
+NoMethodError (undefined method `name' for nil:NilClass):
+  app/controllers/links_controller.rb:53:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (26.2ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:00:42) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+
+NoMethodError (undefined method `content' for nil:NilClass):
+  app/controllers/links_controller.rb:56:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (25.2ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:01:40) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+
+NoMethodError (undefined method `name' for nil:NilClass):
+  app/controllers/links_controller.rb:53:in `create'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+  /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (94.9ms)
+Rendered rescues/_request_and_response (0.4ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:05:59) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+undefined method `name' for nil:NilClass
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mLink Create (0.2ms)[0m   [0;1mINSERT INTO `links` (`like_count`, `created_at`, `title`, `updated_at`, `preview_html`, `url`, `user_id`, `show_link`) VALUES(0, '2010-08-24 13:06:02', 0, '2010-08-24 13:06:02', '', 'http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete', 2, 1)[0m
+  [4;35;1mTag Load (0.2ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 9) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mTagging Load (0.2ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 9 AND `taggings`.taggable_type = 'Link') [0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/links/9
+Completed in 3016ms (DB: 4) | 302 Found [http://localhost/links]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:06:02) [GET]
+  Parameters: {"action"=>"show", "id"=>"9", "controller"=>"links"}
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 9) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.2ms)
+Completed in 20ms (View: 13, DB: 3) | 200 OK [http://localhost/links/9]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:07:52) [GET]
+  Parameters: {"action"=>"show", "id"=>"9", "controller"=>"links"}
+  [4;35;1mLink Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 9) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 97ms (View: 88, DB: 3) | 200 OK [http://localhost/links/9]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 06:07:56) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 10, DB: 3) | 200 OK [http://localhost/submit]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:08:01) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+undefined method `name' for nil:NilClass
+raw html: #<File:0x102e66ba0>
+  [4;36;1mSQL (0.2ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mROLLBACK[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 1547ms (View: 11, DB: 3) | 200 OK [http://localhost/links]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:09:56) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+undefined method `name' for nil:NilClass
+raw html length: 151384
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mROLLBACK[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 2603ms (View: 80, DB: 3) | 200 OK [http://localhost/links]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:12:50) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+raw html length: 151829
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mLink Create (0.5ms)[0m   [0;1mINSERT INTO `links` (`like_count`, `created_at`, `title`, `updated_at`, `preview_html`, `url`, `user_id`, `show_link`) VALUES(0, '2010-08-24 13:12:52', '--- !ruby/object:Nokogiri::XML::NodeSet \ndocument: !ruby/object:Nokogiri::HTML::Document \n decorators: \n errors: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"Unexpected end tag : script\"\n code: 76\n column: 110\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 75\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 208\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 329\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 226\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 330\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 137\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 331\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 144\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 331\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 7\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 332\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 563\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 488\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 645\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 488\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 652\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 488\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Element script embeds close tag\n code: 76\n column: 662\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 488\n str1: script\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 118\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 568\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 185\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 568\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 204\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 568\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Namespace prefix fb is not defined\n code: 201\n column: 141\n domain: 3\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 1\n line: 576\n str1: fb\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Tag fb:like invalid\n code: 801\n column: 141\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 576\n str1: fb:like\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 134\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 769\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 182\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 769\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 193\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 769\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Namespace prefix fb is not defined\n code: 201\n column: 134\n domain: 3\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 1\n line: 850\n str1: fb\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Tag fb:login-button invalid\n code: 801\n column: 134\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 850\n str1: fb:login-button\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"htmlParseEntityRef: expecting \';\'\"\n code: 23\n column: 69\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1120\n str1: \n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Attribute style redefined\n code: 42\n column: 135\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1457\n str1: style\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Attribute name redefined\n code: 42\n column: 144\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1492\n str1: name\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Attribute style redefined\n code: 42\n column: 109\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1511\n str1: style\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Namespace prefix fb is not defined\n code: 201\n column: 123\n domain: 3\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 1\n line: 1557\n str1: fb\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Tag fb:login-button invalid\n code: 801\n column: 123\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1557\n str1: fb:login-button\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"Unexpected end tag : input\"\n code: 76\n column: 112\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1624\n str1: input\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: \"Unexpected end tag : input\"\n code: 76\n column: 112\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1667\n str1: input\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Namespace prefix fb is not defined\n code: 201\n column: 98\n domain: 3\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 1\n line: 1730\n str1: fb\n str2: \n str3: \n - !ruby/exception:Nokogiri::XML::SyntaxError \n message: Tag fb:activity invalid\n code: 801\n column: 98\n domain: 5\n file: /var/folders/3X/3XOpwtpoF94W87YR5G83dU+++TI/-Tmp-/open-uri20100824-89987-oazgnz-0\n int1: 0\n level: 2\n line: 1730\n str1: fb:activity\n str2: \n str3: \n node_cache: \n - !ruby/object:Nokogiri::XML::Element {}\n\n', '2010-08-24 13:12:52', '', 'http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete', 2, 1)[0m
+  [4;35;1mTag Load (0.3ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 10) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mTagging Load (0.5ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 10 AND `taggings`.taggable_type = 'Link') [0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/links/10
+Completed in 1906ms (DB: 5) | 302 Found [http://localhost/links]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:12:53) [GET]
+  Parameters: {"action"=>"show", "id"=>"10", "controller"=>"links"}
+  [4;36;1mLink Columns (1.5ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.3ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 10) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 13, DB: 3) | 200 OK [http://localhost/links/10]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 06:13:02) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;35;1mLink Load (0.4ms)[0m   [0mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mUser Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 31ms (View: 23, DB: 3) | 200 OK [http://localhost/home]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 06:13:07) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 103ms (View: 13, DB: 3) | 200 OK [http://localhost/submit]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 06:15:53) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 23ms (View: 10, DB: 3) | 200 OK [http://localhost/submit]
+  [4;35;1mSQL (0.2ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:16:05) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete", "preview_html"=>"", "show_link"=>"1"}}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mBEGIN[0m
+  [4;35;1mUser Load (0.4ms)[0m   [0mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;36;1mLink Create (0.2ms)[0m   [0;1mINSERT INTO `links` (`like_count`, `created_at`, `title`, `updated_at`, `preview_html`, `url`, `user_id`, `show_link`) VALUES(0, '2010-08-24 13:16:07', 'Jimena Navarrete: Miss Universe: Pics, Videos, Links, News', '2010-08-24 13:16:07', '<div><div>\n \n <div> \n \n \n Jimena Navarrete: Miss Universe \n \n \n <p>\n The Miss Universe 2010 winner is Jimena Navarrete of Mexico! She started out as Miss Jalisco, and now look at her!\n \n \n \n \n \n </p>\n<!--/meta--> \n \n \n \n \n \n \n \n \n </div>\n \n \n \n \n</div></div>', 'http://www.buzzfeed.com/scott/jimena-ximena-navarrete-rosete', 2, 1)[0m
+  [4;35;1mTag Load (0.3ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 11) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mTagging Load (0.3ms)[0m   [0;1mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 11 AND `taggings`.taggable_type = 'Link') [0m
+  [4;35;1mSQL (0.4ms)[0m   [0mCOMMIT[0m
+Redirected to http://localhost:3000/links/11
+Completed in 2053ms (DB: 4) | 302 Found [http://localhost/links]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:16:07) [GET]
+  Parameters: {"action"=>"show", "id"=>"11", "controller"=>"links"}
+  [4;36;1mLink Columns (1.4ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 11) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 22ms (View: 14, DB: 3) | 200 OK [http://localhost/links/11]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#bookmarklet (for 127.0.0.1 at 2010-08-24 06:17:14) [GET]
+  Parameters: {"action"=>"bookmarklet", "controller"=>"links", "t"=>"LikeLoft - Home", "u"=>"http://localhost:3000/home"}
+  [4;35;1mUser Columns (1.7ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mLink Columns (0.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/plainApplication
+Rendering links/new
+Completed in 25ms (View: 12, DB: 3) | 200 OK [http://localhost/bookmarklet_submit/?t=LikeLoft%20-%20Home&u=http%3A//localhost%3A3000/home]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#create (for 127.0.0.1 at 2010-08-24 06:17:23) [POST]
+  Parameters: {"commit"=>"Update", "action"=>"create", "authenticity_token"=>"2X4sOUztp3VWTnYIrdO81wMmHMnNcnM8omRSMn7ubc8=", "controller"=>"links", "link"=>{"like_count"=>"0", "title"=>"", "url"=>"http://www.tmz.com/2010/08/20/chad-ochocinco-vh1-dating-show-basketball-wives", "preview_html"=>"", "show_link"=>"1"}}
+  [4;36;1mUser Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mBEGIN[0m
+  [4;36;1mUser Load (0.5ms)[0m   [0;1mSELECT `users`.id FROM `users` WHERE (`users`.`facebook_id` = BINARY '904678' AND `users`.id <> 2) LIMIT 1[0m
+  [4;35;1mLink Create (0.2ms)[0m   [0mINSERT INTO `links` (`like_count`, `created_at`, `title`, `updated_at`, `preview_html`, `url`, `user_id`, `show_link`) VALUES(0, '2010-08-24 13:17:25', 'Ochocinco\'s Dating Life Messes with Dating Show | TMZ.com ', '2010-08-24 13:17:25', '<div><div>\n Ochocinco\'s Dating Life Messes with Dating Show\n <p>8/23/2010 12:10 AM PDT by TMZ Staff  </p>\n \n <p>\n Chad Ochocinco is constantly tweeting about his dating life -- but since it has nothing to do with his VH1 dating show, sources tell us ... the network is none too pleased.Ochocinco has been dating Evelyn Lozada (of VH1\'s \"Basketball Wives\") for the past several months ... and he has made no secret of their relationship (just check his Twitter once in a while). Things are so serious between the two, we\'re told Chad will be popping up on her show next season.But sources close to the couple tell TMZ ... VH1 is pissed at Ochocinco about the relationship -- since he\'s the star of a dating show that\'s currently airing on VH1! We\'re told the network doesn\'t like the \"spoiler\" that Ochocinco doesn\'t end up with anyone on the show. A rep for VH1 tells TMZ, \"We cannot comment on possible story lines regarding series currently airing or in production.\"</p>\n \n \n \n \n <p>Tags: Chad Ochocinco, TMZ Sports, TV, Hook Ups</p>\n <!-- POSTMETA BEGIN -->\n </div></div>', 'http://www.tmz.com/2010/08/20/chad-ochocinco-vh1-dating-show-basketball-wives', 2, 1)[0m
+  [4;36;1mTag Load (0.3ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT `tags`.* FROM `tags` INNER JOIN `taggings` ON `tags`.id = `taggings`.tag_id WHERE ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link')) AND ((`tags`.`kind` = 'category') AND ((`taggings`.taggable_id = 12) AND (`taggings`.taggable_type = 'Link'))) [0m
+  [4;35;1mTagging Load (0.2ms)[0m   [0mSELECT * FROM `taggings` WHERE (`taggings`.taggable_id = 12 AND `taggings`.taggable_type = 'Link') [0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mCOMMIT[0m
+Redirected to http://localhost:3000/links/12
+Completed in 1798ms (DB: 4) | 302 Found [http://localhost/links]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:17:25) [GET]
+  Parameters: {"action"=>"show", "id"=>"12", "controller"=>"links"}
+  [4;35;1mLink Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 12) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 97ms (View: 89, DB: 3) | 200 OK [http://localhost/links/12]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 06:17:30) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.4ms)[0m   [0;1mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;35;1mLink Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (2.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 34ms (View: 25, DB: 4) | 200 OK [http://localhost/home]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:17:37) [GET]
+  Parameters: {"action"=>"show", "id"=>"12", "controller"=>"links"}
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mLink Load (0.2ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.`id` = 12) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;36;1mUser Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 99ms (View: 91, DB: 3) | 200 OK [http://localhost/links/12]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:18:22) [GET]
+  Parameters: {"action"=>"show", "id"=>"11", "controller"=>"links"}
+  [4;35;1mLink Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.2ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 11) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 25ms (View: 16, DB: 3) | 200 OK [http://localhost/links/11]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 06:19:23) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.5ms)[0m   [0;1mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;35;1mLink Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (0.9ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 34ms (View: 26, DB: 3) | 200 OK [http://localhost/home]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#profile (for 127.0.0.1 at 2010-08-24 06:19:24) [GET]
+  Parameters: {"action"=>"profile", "controller"=>"users"}
+  [4;36;1mUser Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (2.6ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;36;1mLink Load (0.4ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.user_id = 2) [0m
+  [4;35;1mLink Columns (1.0ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 31ms (View: 19, DB: 5) | 200 OK [http://localhost/profile]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#new (for 127.0.0.1 at 2010-08-24 06:19:28) [GET]
+  Parameters: {"action"=>"new", "controller"=>"links"}
+  [4;36;1mUser Columns (1.6ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendering template within layouts/application
+Rendering links/new
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 110ms (View: 97, DB: 3) | 200 OK [http://localhost/submit]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-08-24 06:19:29) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;35;1mLink Load (0.4ms)[0m   [0mSELECT * FROM `links` [0m
+Rendering template within layouts/application
+Rendering home/show
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 1) [0m
+  [4;35;1mUser Load (0.3ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 35ms (View: 27, DB: 3) | 200 OK [http://localhost/home]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#profile (for 127.0.0.1 at 2010-08-24 06:19:30) [GET]
+  Parameters: {"action"=>"profile", "controller"=>"users"}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.4ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;35;1mLink Load (0.7ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.user_id = 2) [0m
+  [4;36;1mLink Columns (1.2ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 24ms (View: 14, DB: 4) | 200 OK [http://localhost/profile]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#profile (for 127.0.0.1 at 2010-08-24 06:19:56) [GET]
+  Parameters: {"action"=>"profile", "controller"=>"users"}
+  [4;35;1mUser Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;35;1mLink Load (0.4ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.user_id = 2) [0m
+  [4;36;1mLink Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 23ms (View: 15, DB: 3) | 200 OK [http://localhost/profile]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#profile (for 127.0.0.1 at 2010-08-24 06:20:04) [GET]
+  Parameters: {"action"=>"profile", "controller"=>"users"}
+  [4;35;1mUser Columns (1.4ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;35;1mLink Load (1.8ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.user_id = 2) [0m
+  [4;36;1mLink Columns (1.7ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 26ms (View: 14, DB: 5) | 200 OK [http://localhost/profile]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing UsersController#profile (for 127.0.0.1 at 2010-08-24 06:20:13) [GET]
+  Parameters: {"action"=>"profile", "controller"=>"users"}
+  [4;35;1mUser Columns (1.3ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendering template within layouts/application
+Rendering users/show
+  [4;35;1mLink Load (0.3ms)[0m   [0mSELECT * FROM `links` WHERE (`links`.user_id = 2) [0m
+  [4;36;1mLink Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+Rendered layouts/_bookmarklet (0.1ms)
+Completed in 23ms (View: 15, DB: 3) | 200 OK [http://localhost/profile]
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing LinksController#show (for 127.0.0.1 at 2010-08-24 06:20:16) [GET]
+  Parameters: {"action"=>"show", "id"=>"12", "controller"=>"links"}
+  [4;35;1mLink Columns (1.2ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mLink Load (0.3ms)[0m   [0;1mSELECT * FROM `links` WHERE (`links`.`id` = 12) [0m
+Rendering template within layouts/application
+Rendering links/show
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered layouts/_bookmarklet (0.2ms)
+Completed in 20ms (View: 12, DB: 3) | 200 OK [http://localhost/links/12]
