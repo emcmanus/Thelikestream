@@ -1,8 +1,10 @@
 require 'rubygems'
 require 'nokogiri'
+require 'uri/http'
 
 module Readability
   class Document
+    IMAGE_AREA_THRESHOLD = 80000 # Every 80,000 pixels contributes TEXT_LENGTH_THRESHOLD to the node length score
     TEXT_LENGTH_THRESHOLD = 25
     RETRY_LENGTH = 250
 
@@ -42,11 +44,15 @@ module Readability
       article = get_article(candidates, best_candidate)
 
       cleaned_article = sanitize(article, candidates, options)
+      debug "finished cleaning article, remove_unlikely_candidates = #{remove_unlikely_candidates}"
+      debug "length test: #{article.text.strip.length}"
       if remove_unlikely_candidates && article.text.strip.length < (options[:retry_length] || RETRY_LENGTH)
+        debug "Branch 1"
         make_html
-        content(false)
+        return content(false)
       else
-        cleaned_article
+        debug "Branch 2. Returning #{cleaned_article.inspect} bytes"
+        return cleaned_article
       end
     end
 
@@ -102,15 +108,29 @@ module Readability
       link_length / text_length.to_f
     end
 
-    def score_paragraphs(min_text_length)
+    def score_paragraphs(min_content_score)
       candidates = {}
-      @html.css("p,td").each do |elem|
+      @html.css("p,td,li").each do |elem|
         parent_node = elem.parent
         grand_parent_node = parent_node.respond_to?(:parent) ? parent_node.parent : nil
         inner_text = elem.text
+        content_length_score = inner_text.length
 
-        # If this paragraph is less than 25 characters, don't even count it.
-        next if inner_text.length < min_text_length
+        # Threshold for pure image content is eq. to IMAGE_AREA_THRESHOLD
+        if options[:score_images]
+          per_pixel_contribution = min_content_score.to_f/IMAGE_AREA_THRESHOLD;
+          node_image_contribution = 0
+          elem.css("img").each do |e|
+            unless e[:width].blank? or e[:height].blank?
+              node_image_contribution += [e[:width].to_i*e[:height].to_i*per_pixel_contribution, 8*min_content_score].min
+            end
+          end
+          content_length_score += node_image_contribution
+          debug "Images contributed #{node_image_contribution} pts to #{elem.name}##{elem[:id]}.#{elem[:class]}"
+        end
+
+        # Remove paragraph if shorter than min text threshold, including images
+        next if content_length_score < min_content_score
 
         candidates[parent_node] ||= score_node(parent_node)
         candidates[grand_parent_node] ||= score_node(grand_parent_node) if grand_parent_node
@@ -118,7 +138,8 @@ module Readability
         content_score = 1
         content_score += inner_text.split(',').length
         content_score += [(inner_text.length / 100).to_i, 3].min
-
+        content_score += node_image_contribution/5
+        
         candidates[parent_node][:content_score] += content_score
         candidates[grand_parent_node][:content_score] += content_score / 2.0 if grand_parent_node
       end
@@ -215,8 +236,8 @@ module Readability
         elem.remove
       end
 
-      # remove empty <p> tags
-      node.css("p").each do |elem|
+      # remove empty <p> and <div> tags
+      node.css("p,div").each do |elem|
         elem.remove if elem.content.strip.empty?
       end
 
@@ -240,7 +261,12 @@ module Readability
 
           if counts["img"] > counts["p"]
             reason = "too many images"
-            to_remove = true
+            # If we allow weighting for images, lets be lenient
+            if options[:score_images]
+              # to_remove = true if counts["img"] > (counts["p"] * 2)
+            else
+              to_remove = true
+            end
           elsif counts["li"] > counts["p"] && name != "ul" && name != "ol"
             reason = "more <li>s than <p>s"
             to_remove = true
@@ -278,17 +304,96 @@ module Readability
 
         # If element is in whitelist, delete all its attributes
         if whitelist[el.node_name]
-          el.attributes.each { |a, x| el.delete(a) unless @options[:attributes] && @options[:attributes].include?(a.to_s) }
-
-          # Otherwise, replace the element with its contents
+          el.attributes.each do |a, x|
+            el.delete(a) unless @options[:attributes] && @options[:attributes].include?(a.to_s)
+            if options[:sanitize_links] and (a == "href" or a == "src")
+              el.set_attribute a, resolve_relative_url(el.attribute(a).value)
+              unless validates_url el.attribute(a)
+                debug "Removed invalid URL: #{el.attribute a}"
+                el.delete a
+                break
+              end
+            end
+          end
+          debug "set rel"
+          if el and el.node_name == "a" and options[:sanitize_links]
+            el.set_attribute "rel", "nofollow"
+          end
+          debug "check for empty a or img"
+          if el and (el.node_name == "a" or el.node_name == "img") and (el.keys.length == 0 or el.keys == ["rel"])
+            # Empty a or img
+            if el.content.strip.empty?
+              debug "removing empty el"
+              el.remove
+            else
+              debug "swapping empty el"
+              el.swap(el.text)
+            end
+          end
         else
+          # Otherwise, replace the element with its contents
           el.swap(el.text)
         end
-
+        debug "FINISHED LOOP"
       end
-
+      
+      debug "RETURNING FROM SANITIZE"
+      
       # Get rid of duplicate whitespace
       node.to_html.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ")
+    end
+    
+    def resolve_relative_url(value)
+      debug "Entered resolve_relative_url with value: #{value.inspect}"
+      unless value.blank? or value.index('http://')==0 or options[:resolve_relative_urls_with_path].blank?
+        debug "Entered branch 1"
+        begin
+          source = URI.parse options[:resolve_relative_urls_with_path]
+          source_root = "#{source.scheme}://"
+          source_root += "#{source.userinfo}@" unless source.userinfo.nil?
+          source_root += "#{source.host}"
+          source_root += ":#{source.port}" unless source.port == 80
+          
+          dir_path = source.path.split("/")
+          dir_path.pop unless (source.path.last == "/")
+          dir_path = "#{source_root}#{dir_path.join '/'}/"
+          
+          debug "source root: #{source_root}, dir_path = #{dir_path}"
+          
+          # Determine path type
+          if value.index('/') == 0
+            debug "root path"
+            # Relative to Root
+            value = source_root + value
+          elsif value.index('http://').nil?
+            debug "relative to directory"
+            # Either malformed or relative to directory
+            value = (dir_path + value) if validates_url(dir_path + value)
+          end
+        rescue => err
+          debug "Error: #{err}"
+        end
+      end
+      debug "returning #{value}"
+      value
+    end
+    
+    def validates_url(value)
+      begin
+        uri = URI.parse(value)
+
+        if !%w[http https].include?(uri.scheme)
+          raise(URI::InvalidURIError)
+        end
+
+        if [:scheme, :host].any? { |i| uri.send(i).blank? }
+          raise(URI::InvalidURIError)
+        end
+
+      rescue
+        return false
+      end
+      return true
     end
 
   end

@@ -14,11 +14,11 @@ We're using Facebooker2 - NOT Facebooker
 http://github.com/mmangino/facebooker2
 
 Using is_taggable
-http://github.com/jamesgolick/is_taggable
+REMOVED - http://github.com/jamesgolick/is_taggable
 
 And the awesome ruby-readability
-http://github.com/iterationlabs/ruby-readability
-
+REMOVED - http://github.com/iterationlabs/ruby-readability
+ADDED - git@github.com:emcmanus/ruby-readability.git
 
 CAPISTRANO
 

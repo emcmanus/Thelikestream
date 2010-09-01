@@ -3,7 +3,7 @@
 -------------------------------------------------------- */
 
 body {
-  background-color: #f5f5f5;
+  background-color: #fff;
 }
 
 a {
@@ -126,6 +126,69 @@ h3 span.parenthetical
   -moz-opacity: 0.5;
 }
 
+
+/* --------------------------------------------------------
+  LINK PAGE
+  Accepted preview tags: img div p b i h1 h2 h3 h4 h5 h6 ul li
+-------------------------------------------------------- */
+
+#link_preview_container {
+  
+}
+
+#link_preview_container h1 {
+  font-size: 1.4em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container h2 {
+  font-size: 1.3em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container h3 {
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container h4 {
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container h5 {
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container h6 {
+  font-size: 1em;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+#link_preview_container p {
+  margin: 15px 0;
+}
+
+#link_preview_container img {
+  clear: both;
+}
+
+#link_preview_container ul {
+  list-style-type:none;
+  padding: 0;
+}
+
+#link_preview_container li {
+  list-style-type:none;
+  margin: 15px 0;
+}
 
 /* Start custom button CSS here
 http://stackoverflow.com/questions/520640/googles-imageless-buttons

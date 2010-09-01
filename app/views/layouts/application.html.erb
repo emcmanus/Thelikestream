@@ -70,90 +70,68 @@
     </style>
     
 
-<div class="container" style="">
+<div class="container" style="margin-top: 10px;">
     
-    <% if current_user.is_content_editor %>
-        <div class="prepend-1 span-22 append-1 last" style="background-color: white;">
-            <div style="float: left;">
-                <strong>Admin Panel:</strong> You're logged in, #<%= current_user.facebook_id %>.
+    <% unless current_user.blank? %>
+    
+        <% if current_user.is_content_editor %>
+            <div class="prepend-1 span-22 append-1 last" style="background-color: white;">
+                <div style="float: left;">
+                    <strong>Admin Panel:</strong> You're logged in, #<%= current_user.facebook_id %>.
+                </div>
+                <div style="float:left;width:5px;text-align:center;">&nbsp;</div>
+                <div style="float: left;">
+                    <%= fb_logout_link "logout", logout_path %> 
+                </div>
+                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float: left;">
+                    <%= link_to "manage users", users_path %>
+                </div>
+                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float: left;">
+                    <%= link_to "manage links", links_path %>
+                </div>
             </div>
-            <div style="float:left;width:5px;text-align:center;">&nbsp;</div>
-            <div style="float: left;">
-                <%= fb_logout_link "logout", logout_path %> 
-            </div>
-            <div style="float:left;width:30px;text-align:center;">|</div>
-            <div style="float: left;">
-                <%= link_to "manage users", users_path %>
-            </div>
-            <div style="float:left;width:30px;text-align:center;">|</div>
-            <div style="float: left;">
-                <%= link_to "manage links", links_path %>
-            </div>
-        </div>
+        <% end %>
+        
     <% end %>
+    
   
-  
-  <div class="span-5">
+  <div class="span-6">
       <div style='margin: 10px;'>
-          <%= link_to image_tag('logo-4.png'), home_path %>
+          <%= link_to image_tag('logo-6.png'), home_path %>
       </div>
  </div>
- <div class="span-13" style="padding-top: 46px;">
-     <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
-     <%= link_to "YOUR LINKS", profile_path, :class=>"nav_link" %>
+ <div class="span-12" style="padding-top: 24px;">
+     <%= link_to "TOP", home_path, :class=>"nav_link current" %>
+     <%= link_to "HISTORY", profile_path, :class=>"nav_link" %>
      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
  </div>
  
- <div class="span-5 append-1 last" style="padding-top: 46px; text-align: right;">
+ <div class="span-6 last" style="padding-top: 24px; text-align: right;">
       <%= link_to "GET THE BOOKMARKLET", tools_path, :class=>"nav_link" %>
  </div>
-  <style type="text/css" media="screen">
-    a.likeloftBookmarklet {
-        background-color: rgba(0,0,0,0.4);border-radius: 3px; color: white; padding: 3px 5px; font-size: 0.7em;
-    }
-    a.likeloftBookmarklet:hover {
-        background-color: rgba(0,0,0,0.6);
-        text-decoration: none;
-    }
-  </style>
-  <div class="prepend-1 append-1 span-22 last" style="border-radius: 5px; border-top: 0; background-color: #fff;">
+ 
+ 
+ <div class="span-24">
+     <div style="border: 3px solid #ddd; padding: 20px;">
+         <h2 style="font-weight: 400; color:#00ccff; border-bottom: 1px dotted #ccc; padding-bottom:7px; margin-bottom: 7px; line-height: 1em;">TheLikeStream</h2>
+         <h2 style="color: #333; padding-bottom:0; margin-bottom: 7px; line-height: 1.2em;">Create "Like Pages" From Your Website</h2>
+         <span style="color: #7f7f7f;">Use our bookmarklet to quickly create a Like Page using your site's content. TheLikeStream is the fastest, easiest, most effective way to get your content noticed on Facebook.</span>
+         <div style="border-bottom: 1px dotted #ccc; margin-top:7px; height: 1px;">&nbsp;</div>
+         <div class="clearfix" style="height: 15px;">&nbsp;</div>
+     	<a href="<%= url_for :controller=>:tools, :action=>:show %>" class="btn" style="float:right;font-size:1.3em; position:relative; bottom: 1px;"><span><span><b>&nbsp;</b><u>Click to Get Started</u></span></span></a>
+     	     <div class="clearfix" style="height:15px;" />
+     </div>
+ </div>
+
+  <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff; margin-top: 10px;">
     
-    <div class="span-22 last" style="border-bottom: 1px dotted #ddd;">
-        <div class="prepend-1 span-6" style="padding-top: 20px; padding-bottom: 5px;">
-            <h2 style="font-weight: 400; color:#00ccff; font-size: 2.5em; padding-bottom:0; margin-bottom: -7px;">Get Started</h2>
-            <h4 style="color: #999;">Add the bookmarklet</h4>
-        </div>
-        <div class="span-14 last" style="font-size:1.4em; color:#333; padding-top: 25px;">
-            1. Drag this button onto your bookmarks bar
-                <%= render :partial=>'/layouts/bookmarklet' %> <a href="javascript:showBookmarkletHelp();void(0);" style="font-size: 0.7em; color: #00ccff;">(Show Help)</a>
-                <br/>
-            2. Browse to a page you like, then click the bookmark
-            <div id="bookmarkletHelp" style="display: none; width: 500px; position: absolute; color: white; background-color: rgba(0, 0, 0, 0.92); padding: 10px; border-radius: 6px; font-size: 0.7em">
-                <h2 style="color: white; width: 400px; float: left;">Bookmarklet Help</h2><div style="float:left; text-align: right; width: 100px;"><div style="padding-right: 10px; padding-top: 10px;"><a href="javascript:closeBookmarkletHelp();void(0);" style="color: white; font-weight: bold;">X</a></div></div>
-                <div style="width:100%; height: 1px;clear:both;">&nbsp;</div>
-                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> What is a bookmarklet? </h4>
-                <p>A bookmarklet is simply a link which performs an action when clicked. It's a small, safe tool for sharing content on <strong>LikeLoft</strong> and cannot harm your computer or access personal information.</p>
-                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Can I remove it later? </h4>
-                <p>Yes. The bookmarklet can be "uninstalled" simply by removing the link from your bookmark toolbar or menu.</p>
-                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> I don't see my Bookmark toolbar</h4>
-                <p>Some browsers don't show the Bookmark toolbar by default. In this case, you can usually display the Bookmark toolbar using your browser's "View" menu.</p>
-                <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Other Options </h4>
-                <p style="">If you don't want to display the Bookmark toolbar, you can add the bookmarklet to your Bookmarks menu. You can do this by right-clicking on the button above and selecting "Add link to bookmarks." Then to share content on <strong>LikeLoft</strong>, click it like any other bookmark.</p>
-                <button onclick="closeBookmarkletHelp()" type="button" class="btn"><span><span><b>&nbsp;</b><u>Close</u></span></span></button>
-            </div>
-        </div>
-        <script type="text/javascript" charset="utf-8">
-            function closeBookmarkletHelp(){
-                $('bookmarkletHelp').hide();
-            }
-            function showBookmarkletHelp(){
-                $('bookmarkletHelp').show();
-            }
-        </script>
-    </div>
     
+
+      
     <div class="span-20 prepend-1 append-1 last">
-      <% if flash[:notice] %>
+      <% unless flash[:notice].blank? %>
         <div id="flash_message_container">
           <h3><span class="highlight"><%= flash[:notice] %></span></h3>
         </div>

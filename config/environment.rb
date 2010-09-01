@@ -22,7 +22,6 @@ Rails::Initializer.run do |config|
   
   # config.gem "facebooker"
   config.gem "authlogic"
-  config.gem "is_taggable"
   config.gem "nokogiri"
   
   # Only load the plugins named here, in the order given (default is alphabetical).

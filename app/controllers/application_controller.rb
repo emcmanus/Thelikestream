@@ -19,6 +19,7 @@ class ApplicationController < ActionController::Base
       elsif current_facebook_user and @current_user.nil?
         @current_user = User.find_by_facebook_id(current_facebook_user.id)
       end
+      @current_user
     end
     
     
@@ -38,12 +39,13 @@ class ApplicationController < ActionController::Base
       require_user
       redirect_to root_path unless current_user and current_user.is_content_editor
     end
-        
+    
     def require_user
       unless current_user
         flash[:notice] = "You must be logged in to access this page"
         session[:return_to] = request.request_uri
         redirect_to login_path
+        return false
       end
     end
     

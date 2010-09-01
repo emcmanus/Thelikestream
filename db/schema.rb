@@ -9,7 +9,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100823045941) do
+ActiveRecord::Schema.define(:version => 20100828000244) do
+
+  create_table "bookmarklet_keys", :force => true do |t|
+    t.string   "value",      :null => false
+    t.integer  "user_id",    :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "links", :force => true do |t|
     t.text     "preview_html"

@@ -1,1 +1,33 @@
-Tools!
+<div class="span-22 last" style="">
+    <div class="prepend-1 span-5 append-1" style="">
+        <h2 style="font-weight: 400; color:#00ccff; font-size: 2.5em; padding-bottom:0; margin-bottom: 5px; line-height: 1em;">Get Started</h2>
+        <h4 style="color: #999; padding-bottom: 0; margin-bottom: 10px;">Install the bookmarklet</h4>
+    </div>
+    <div class="span-14 last" style="font-size:1.4em; color:#333;">
+        1. Drag this button onto your bookmarks bar
+            <%= render :partial=>'/layouts/bookmarklet' %> <a href="javascript:showBookmarkletHelp();void(0);" style="font-size: 0.7em; color: #00ccff;">(Show Help)</a>
+            <br/>
+        2. Browse to a page you like, then click the bookmark
+        <div id="bookmarkletHelp" style="display: none; width: 500px; position: absolute; color: white; background-color: rgba(0, 0, 0, 0.92); padding: 10px; border-radius: 6px; font-size: 0.7em">
+            <h2 style="color: white; width: 400px; float: left;">Bookmarklet Help</h2><div style="float:left; text-align: right; width: 100px;"><div style="padding-right: 10px; padding-top: 10px;"><a href="javascript:closeBookmarkletHelp();void(0);" style="color: white; font-weight: bold;">X</a></div></div>
+            <div style="width:100%; height: 1px;clear:both;">&nbsp;</div>
+            <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> What is a bookmarklet? </h4>
+            <p>A bookmarklet is simply a link which performs an action when clicked. It's a small, safe tool for sharing content on <strong>LikeLoft</strong> and cannot harm your computer or access personal information.</p>
+            <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Can I remove it later? </h4>
+            <p>Yes. The bookmarklet can be "uninstalled" simply by removing the link from your bookmark toolbar or menu.</p>
+            <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> I don't see my Bookmark toolbar</h4>
+            <p>Some browsers don't show the Bookmark toolbar by default. In this case, you can usually display the Bookmark toolbar using your browser's "View" menu.</p>
+            <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Other Options </h4>
+            <p style="">If you don't want to display the Bookmark toolbar, you can add the bookmarklet to your Bookmarks menu. You can do this by right-clicking on the button above and selecting "Add link to bookmarks." Then to share content on <strong>LikeLoft</strong>, click it like any other bookmark.</p>
+            <button onclick="closeBookmarkletHelp()" type="button" class="btn"><span><span><b>&nbsp;</b><u>Close</u></span></span></button>
+        </div>
+    </div>
+    <script type="text/javascript" charset="utf-8">
+        function closeBookmarkletHelp(){
+            $('bookmarkletHelp').hide();
+        }
+        function showBookmarkletHelp(){
+            $('bookmarkletHelp').show();
+        }
+    </script>
+</div>

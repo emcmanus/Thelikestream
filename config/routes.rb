@@ -9,7 +9,8 @@ ActionController::Routing::Routes.draw do |map|
   map.create_session  "/session/create",  :controller => "sessions",  :action => "create"
   
   # Bookmarklet
-  map.bookmarklet "/bookmarklet_submit",  :controller => :links,   :action => :bookmarklet
+  map.bookmarklet_js      "/bookmarklet/js",      :controller => :links,   :action => :bookmarklet_js
+  map.bookmarklet_submit  "/bookmarklet/submit",  :controller => :links,   :action => :bookmarklet_submit
   
   # Global Nav
   map.home    "/home",    :controller => :home,   :action => :show

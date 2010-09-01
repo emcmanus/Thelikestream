@@ -1,0 +1,57 @@
+(function(){
+
+// Assemble the submit path
+
+var k = "<%= @user_key %>";
+var t = escape(document.getElementsByTagName("title")[0].innerHTML);
+var u = escape(window.location.href);
+<% if RAILS_ENV == 'development' %>
+var src = "http://localhost:3000/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
+<% else %>
+var src = "http://likeloft.com/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
+<% end %>
+
+// Append status box
+var e = document.createElement('div');
+e.setAttribute("id", "likeLoftSubmitStatusBox");
+e.style.position = "fixed";
+e.style.zIndex = 99999;
+e.style.fontSize = "20px";
+e.style.padding = "15px";
+e.style.top="15px";
+e.style.right="15px";
+e.style.width="450px";
+e.style.height="600px";
+e.style.border="5px solid black";
+e.style.backgroundColor="white";
+document.body.insertBefore(e, document.body.firstChild);
+
+window.__likeLoftBookmarketResponseHandler = function( response )
+{
+	if (response.completed == true)
+	{
+		e.innerHTML = "Submitted.<br/> <a href='" + response.link + "'>View post</a>";
+	}
+	else if (response.require_login)
+	{
+		e.innerHTML = "Please log in first.";
+	}
+	else if (response.message)
+	{
+		e.innerHTML = response.message;
+	}
+	else
+	{
+		e.innerHTML = "There was an error, this page was not submitted";
+	}
+}
+
+
+e.innerHTML = "Submitting";
+
+// "Submit" link
+var s = document.createElement("script");
+s.setAttribute("src", src);
+document.body.appendChild(s);
+
+})();
