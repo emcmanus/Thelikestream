@@ -44,15 +44,15 @@ class LinksController < ApplicationController
     raw_html = open(link.url).read
     
     # Preview
-    begin
+    # begin
       readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], 
                 :attributes=>%w[src href], :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>link.url, :debug=>true
       logger.warn "pre-preview_html set. readability_doc: #{readability_doc}, link: #{link}"
       link.preview_html = readability_doc.content
       logger.warn "post preview set"
-    rescue
-      logger.warn "fill_in_link_using_url, in rescue 1: #{$!}"
-    end
+    # rescue
+    #   logger.warn "fill_in_link_using_url, in rescue 1: #{$!}"
+    # end
     
     logger.warn "finished preview_html. raw_html is still #{raw_html.length} chars"
     

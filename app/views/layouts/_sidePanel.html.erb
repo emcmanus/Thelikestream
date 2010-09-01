@@ -1,0 +1,22 @@
+<div class="prepend-1 span-7 last">
+    <% unless current_user %>
+        <div style="border: 3px solid #ddd; padding: 20px;">
+            <h2 style="font-weight: 400; color:#00ccff; border-bottom: 1px dotted #ccc; padding-bottom:7px; margin-bottom: 7px; line-height: 1em;">TheLikeStream</h2>
+            <h2 style="color: #333; padding-bottom:0; margin-bottom: 7px; line-height: 1.2em;">Build <em>Like Pages</em> From Your Website</h2>
+            <span style="color: #7f7f7f;">Use our bookmarklet to quickly create a Facebook Like Page using your site's content. TheLikeStream is the fastest way to share your content on Facebook.</span>
+            <div style="border-bottom: 1px dotted #ccc; margin-top:7px; height: 1px;">&nbsp;</div>
+            <div class="clearfix" style="height: 15px;">&nbsp;</div>
+        	<a href="<%= url_for :controller=>:tools, :action=>:show %>" class="btn" style="font-size:1.3em; position:relative; bottom: 1px;"><span><span><b>&nbsp;</b><u>Click to Get Started</u></span></span></a>
+        </div>
+        <hr class="space"/>
+    <% end %>
+
+    <div style="border: 3px solid #ddd; padding: 20px; padding-bottom: 5px;">
+        <h2 style="font-weight: 400; color:#00ccff; padding-bottom:0; margin-bottom: 10px; line-height: 1em;">Latest</h2>
+        <ul>
+            <% for link in top_links %>
+                <li><%= link_to truncate(link.title, :length=>100), link %></li>
+            <% end %>
+        </ul>
+    </div>
+</div>

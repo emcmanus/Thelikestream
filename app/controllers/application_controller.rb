@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   helper :all
-  helper_method :current_user
+  helper_method :current_user, :top_links
   
   private
     def current_user
@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
         @current_user = User.find_by_facebook_id(current_facebook_user.id)
       end
       @current_user
+    end
+    
+    def top_links
+      Link.all(:order=>"created_at DESC", :limit=>10)
     end
     
     

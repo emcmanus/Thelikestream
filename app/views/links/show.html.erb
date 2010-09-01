@@ -1,7 +1,7 @@
-<div class="span-20 prepend-1 append-1 last">
+<div class="span-14">
 
 <h2 style="padding-bottom:0;margin-bottom:0;"><%=h @link.title %></h2>
-<div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
+<div style="color: #aaa; font-size: 0.9em; margin-bottom:25px;">
     Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. This has been liked <span style=""><%=h @link.like_count %></span> times.
 </div>
 
@@ -24,3 +24,6 @@
 <% end %>
 
 </div>
+
+
+<%= render :partial=>"/layouts/sidePanel" %>

@@ -4,7 +4,7 @@ require 'uri/http'
 
 module Readability
   class Document
-    IMAGE_AREA_THRESHOLD = 80000 # Every 80,000 pixels contributes TEXT_LENGTH_THRESHOLD to the node length score
+    IMAGE_AREA_THRESHOLD = 50000 # Every 50,000 pixels contributes TEXT_LENGTH_THRESHOLD to the node length score
     TEXT_LENGTH_THRESHOLD = 25
     RETRY_LENGTH = 250
 
@@ -14,6 +14,11 @@ module Readability
       @input = input
       @options = options
       make_html
+      
+      if options[:score_images]
+        # Remove img from the test
+        REGEXES[:divToPElementsRe] = /<(a|blockquote|dl|div|ol|p|pre|table|ul)/i
+      end
     end
 
     def make_html
@@ -38,20 +43,19 @@ module Readability
       @html.css("script, style").each { |i| i.remove }
 
       remove_unlikely_candidates! if remove_unlikely_candidates
+      if options[:score_images]
+        wrap_every_img_in_p!
+      end
       transform_misused_divs_into_paragraphs!
       candidates = score_paragraphs(options[:min_text_length] || TEXT_LENGTH_THRESHOLD)
       best_candidate = select_best_candidate(candidates)
       article = get_article(candidates, best_candidate)
 
       cleaned_article = sanitize(article, candidates, options)
-      debug "finished cleaning article, remove_unlikely_candidates = #{remove_unlikely_candidates}"
-      debug "length test: #{article.text.strip.length}"
       if remove_unlikely_candidates && article.text.strip.length < (options[:retry_length] || RETRY_LENGTH)
-        debug "Branch 1"
         make_html
         return content(false)
       else
-        debug "Branch 2. Returning #{cleaned_article.inspect} bytes"
         return cleaned_article
       end
     end
@@ -104,7 +108,7 @@ module Readability
 
     def get_link_density(elem)
       link_length = elem.css("a").map {|i| i.text}.join("").length
-      text_length = elem.text.length
+      text_length = elem.text.length + 1    # Prevent division by 0, resulting in NaN
       link_length / text_length.to_f
     end
 
@@ -115,6 +119,7 @@ module Readability
         grand_parent_node = parent_node.respond_to?(:parent) ? parent_node.parent : nil
         inner_text = elem.text
         content_length_score = inner_text.length
+        node_image_contribution = 0
 
         # Threshold for pure image content is eq. to IMAGE_AREA_THRESHOLD
         if options[:score_images]
@@ -138,7 +143,7 @@ module Readability
         content_score = 1
         content_score += inner_text.split(',').length
         content_score += [(inner_text.length / 100).to_i, 3].min
-        content_score += node_image_contribution/5
+        content_score += node_image_contribution
         
         candidates[parent_node][:content_score] += content_score
         candidates[grand_parent_node][:content_score] += content_score / 2.0 if grand_parent_node
@@ -149,7 +154,7 @@ module Readability
       candidates.each do |elem, candidate|
         candidate[:content_score] = candidate[:content_score] * (1 - get_link_density(elem))
       end
-
+      
       candidates
     end
 
@@ -212,7 +217,7 @@ module Readability
         if elem.name.downcase == "div"
           # transform <div>s that do not contain other block elements into <p>s
           if elem.inner_html !~ REGEXES[:divToPElementsRe]
-            debug("Altering div(##{elem[:id]}.#{elem[:class]}) to p");
+            debug("Transforming div(##{elem[:id]}.#{elem[:class]}) to p");
             elem.name = "p"
           end
         else
@@ -226,7 +231,16 @@ module Readability
         end
       end
     end
-
+    
+    def wrap_every_img_in_p!
+      @html.css("img").each do |elem|
+        # don't want to aler elements we may operate on later, e.g. the case <img><img/></img>
+        if elem.children.length == 0
+          elem.swap "<p>#{elem.to_html}</p>"
+        end
+      end
+    end
+    
     def sanitize(node, candidates, options = {})
       node.css("h1, h2, h3, h4, h5, h6").each do |header|
         header.remove if class_weight(header) < 0 || get_link_density(header) > 0.33
@@ -238,7 +252,7 @@ module Readability
 
       # remove empty <p> and <div> tags
       node.css("p,div").each do |elem|
-        elem.remove if elem.content.strip.empty?
+        elem.remove if elem.inner_html.strip.empty?
       end
 
       # Conditionally clean <table>s, <ul>s, and <div>s
@@ -315,38 +329,51 @@ module Readability
               end
             end
           end
-          debug "set rel"
-          if el and el.node_name == "a" and options[:sanitize_links]
+          if el.node_name == "a" and options[:sanitize_links]
             el.set_attribute "rel", "nofollow"
           end
-          debug "check for empty a or img"
-          if el and (el.node_name == "a" or el.node_name == "img") and (el.keys.length == 0 or el.keys == ["rel"])
-            # Empty a or img
-            if el.content.strip.empty?
-              debug "removing empty el"
-              el.remove
-            else
-              debug "swapping empty el"
-              el.swap(el.text)
-            end
-          end
         else
-          # Otherwise, replace the element with its contents
-          el.swap(el.text)
+          # Attempt to get text. If the element has invalid children, replace with ""
+          begin
+            el.swap(el.text)
+          rescue
+            debug "WARN: Caught in the trap!!"
+            el.swap("")
+          end
         end
-        debug "FINISHED LOOP"
       end
       
-      debug "RETURNING FROM SANITIZE"
+      
+      # Simple Source Cleanup
+      
+      node.css("img").each do |el|
+        if el[:src].blank? and el.children.length == 0
+          # <img> has no src
+          debug "<IMG> ##{el[:id]}.#{el[:class]} empty, removing"
+          el.remove
+        end
+      end
+      
+      node.css("a").each do |el|
+        if el[:href].blank? and el[:name].blank?
+          # <a> isnt' a useful anchor
+          if el.content.strip.empty? and el.children.length == 0
+            debug "<A> ##{el[:id]}.#{el[:class]} empty, removing"
+            el.remove
+          elsif el.children.length == 0
+            debug "<A> ##{el[:id]}.#{el[:class]} inactive, swapping with text"
+            el.swap(el.text)
+          end
+        end
+      end
       
       # Get rid of duplicate whitespace
       node.to_html.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ")
     end
     
     def resolve_relative_url(value)
-      debug "Entered resolve_relative_url with value: #{value.inspect}"
+      debug_input_val = value
       unless value.blank? or value.index('http://')==0 or options[:resolve_relative_urls_with_path].blank?
-        debug "Entered branch 1"
         begin
           source = URI.parse options[:resolve_relative_urls_with_path]
           source_root = "#{source.scheme}://"
@@ -358,15 +385,11 @@ module Readability
           dir_path.pop unless (source.path.last == "/")
           dir_path = "#{source_root}#{dir_path.join '/'}/"
           
-          debug "source root: #{source_root}, dir_path = #{dir_path}"
-          
           # Determine path type
           if value.index('/') == 0
-            debug "root path"
             # Relative to Root
             value = source_root + value
           elsif value.index('http://').nil?
-            debug "relative to directory"
             # Either malformed or relative to directory
             value = (dir_path + value) if validates_url(dir_path + value)
           end
@@ -374,7 +397,7 @@ module Readability
           debug "Error: #{err}"
         end
       end
-      debug "returning #{value}"
+      debug "Transformed URL: #{debug_input_val} -> #{value}"
       value
     end
     

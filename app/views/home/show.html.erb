@@ -12,10 +12,9 @@
 </style>
 
 
-
-<div class="span-14" style="">
+<div class="span-22 last" style="">
     
-    <div class="span-12">
+    <div class="span-20">
         <h2 style="padding:0; margin:0;">Popular</h2>
     </div>
         
@@ -29,32 +28,20 @@
         <span style="font-size: 1.2em;">
             <div>
                 <h4 style="padding:0;margin:0;">
-                    <% if @link.url.blank? %>
-                        <%= link_to truncate(@link.title, 100), @link, :class=>"quotelink", :target=>"_blank" %>
-                    <% else %>
-                        <%= link_to truncate(@link.title, 100), @link.url, :class=>"quotelink", :target=>"_blank" %>
-                    <% end %>
+                    <%= link_to truncate(@link.title, :length=>100), @link, :class=>"quotelink" %>
                 </h4>
             </div>
             <div class="prepend-2" style="font-size: 0.7em; color: #ccc;">
-                Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. <%= link_to "Comments", @link %>
+                Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. 
+                <%= link_to "Comments", @link %> 
+                <% unless @link.url.blank? %>
+                    | <%= link_to "Source", @link.url %>
+                <% end %>
             </div>
         </span>
 
         <hr class="space" />
     <% end %>
     
-    
-</div>
-
-
-
-<div class="prepend-1 span-6 last" style="padding: 20px; padding-bottom: 5px;">
-    <h2 style="font-weight: 400; color:#00ccff; padding-bottom:0; margin-bottom: 10px; line-height: 1em;">Latest</h2>
-    <ul>
-        <% for i in 0..10 %>
-            <li><%= link_to truncate(@links[i].title, 100), @links[i] %></li>
-        <% end %>
-    </ul>
 </div>
 

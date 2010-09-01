@@ -75,14 +75,11 @@
     <% unless current_user.blank? %>
     
         <% if current_user.is_content_editor %>
-            <div class="prepend-1 span-22 append-1 last" style="background-color: white;">
+            <div class="prepend-1 span-22 append-1 last" style="background-color: white; border: 1px solid #ccc; padding-top: 10px; padding-bottom: 10px;" id="admin_panel">
                 <div style="float: left;">
                     <strong>Admin Panel:</strong> You're logged in, #<%= current_user.facebook_id %>.
                 </div>
                 <div style="float:left;width:5px;text-align:center;">&nbsp;</div>
-                <div style="float: left;">
-                    <%= fb_logout_link "logout", logout_path %> 
-                </div>
                 <div style="float:left;width:30px;text-align:center;">|</div>
                 <div style="float: left;">
                     <%= link_to "manage users", users_path %>
@@ -91,7 +88,19 @@
                 <div style="float: left;">
                     <%= link_to "manage links", links_path %>
                 </div>
+                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float: left;">
+                    <%= fb_logout_link "logout", logout_path %> 
+                </div>
+                <div style="float: right;">
+                    <a href="javascript:closeAdminPanel()">X</a>
+                </div>
             </div>
+            <script type="text/javascript" charset="utf-8">
+                function closeAdminPanel(){
+                    $('admin_panel').hide();
+                }
+            </script>
         <% end %>
         
     <% end %>
@@ -103,8 +112,8 @@
       </div>
  </div>
  <div class="span-12" style="padding-top: 24px;">
-     <%= link_to "TOP", home_path, :class=>"nav_link current" %>
-     <%= link_to "HISTORY", profile_path, :class=>"nav_link" %>
+     <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
+     <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
  </div>
  
@@ -112,20 +121,12 @@
       <%= link_to "GET THE BOOKMARKLET", tools_path, :class=>"nav_link" %>
  </div>
  
- 
- <div class="span-24">
-     <div style="border: 3px solid #ddd; padding: 20px;">
-         <h2 style="font-weight: 400; color:#00ccff; border-bottom: 1px dotted #ccc; padding-bottom:7px; margin-bottom: 7px; line-height: 1em;">TheLikeStream</h2>
-         <h2 style="color: #333; padding-bottom:0; margin-bottom: 7px; line-height: 1.2em;">Create "Like Pages" From Your Website</h2>
-         <span style="color: #7f7f7f;">Use our bookmarklet to quickly create a Like Page using your site's content. TheLikeStream is the fastest, easiest, most effective way to get your content noticed on Facebook.</span>
-         <div style="border-bottom: 1px dotted #ccc; margin-top:7px; height: 1px;">&nbsp;</div>
-         <div class="clearfix" style="height: 15px;">&nbsp;</div>
-     	<a href="<%= url_for :controller=>:tools, :action=>:show %>" class="btn" style="float:right;font-size:1.3em; position:relative; bottom: 1px;"><span><span><b>&nbsp;</b><u>Click to Get Started</u></span></span></a>
-     	     <div class="clearfix" style="height:15px;" />
-     </div>
- </div>
+<!-- Get Started Banner -->
+<% unless current_user %>
+    <%= render :partial=>'/layouts/introBanner/introBanner' %>
+<% end %>
 
-  <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff; margin-top: 10px;">
+  <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff;">
     
     
 

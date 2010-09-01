@@ -11,6 +11,19 @@ var src = "http://localhost:3000/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
 var src = "http://likeloft.com/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
 <% end %>
 
+var ourStyle = document.createElement('style');
+ourStyle.setAttribute('type', 'text/css');
+ourStyle.innerHTML = "\
+#likeLoftSubmitStatusBox { \
+	text-align: left; color: black;\
+}\
+#likeLoftSubmitStatusBox a {\
+	text-decoration: underline; color: #00f; \
+}";
+
+// Append submission box styles
+document.getElementsByTagName("head")[0].appendChild(ourStyle);
+
 // Append status box
 var e = document.createElement('div');
 e.setAttribute("id", "likeLoftSubmitStatusBox");

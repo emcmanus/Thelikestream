@@ -1,0 +1,44 @@
+
+
+<div class="span-24" style="" id="introBannerOutterContainer">
+
+    <div style="border: 1px dotted #ddd; padding: 20px;">
+    
+    <div id="getStartedContainer" style="display:none;">
+        <%= render :partial=>'/layouts/introBanner/gettingStarted' %>
+    </div>
+
+    <div id="introBannerContainer">
+        <%= render :partial=>'/layouts/introBanner/intro' %>
+    </div>
+    
+    </div>
+    
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    // Show "install bookmarklet" help
+    function closeBookmarkletHelp(){
+        $('bookmarkletHelp').hide();
+    }
+    function showBookmarkletHelp(){
+        $('bookmarkletHelp').show();
+    }
+    
+    // Close entire thing
+    function closeBanner(){
+        $('introBannerOutterContainer').hide();
+        // TODO add cookie
+    }
+    
+    // Switch to "Getting Started"
+    function showGettingStartedBanner(){
+        $('getStartedContainer').show();
+        $('introBannerContainer').hide();
+    }
+    function showIntroBanner(){
+        $('getStartedContainer').hide();
+        $('introBannerContainer').show();
+    }
+</script>
+
