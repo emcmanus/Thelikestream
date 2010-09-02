@@ -1,19 +1,25 @@
-<div class="span-14">
+<div class="span-14" style="overflow: hidden;">
 
-<h2 style="padding-bottom:0;margin-bottom:0;"><%=h @link.title %></h2>
-<div style="color: #aaa; font-size: 0.9em; margin-bottom:25px;">
-    Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. This has been liked <span style=""><%=h @link.like_count %></span> times.
+<div class="span-3" style="margin-bottom:10px;">
+    <%= render :partial=>'/layouts/likeButton', :locals=>{:link=>@link} %>
 </div>
 
-<div style="margin-bottom: 10px;" id="link_preview_container">
+<div class="span-11 last">
+    <h2 style="padding:0;margin:0; font-size: 2.4em;"><%=h @link.title %></h2>
+    <div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
+        Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. This has been liked <span style=""><%=h @link.like_count %></span> times.
+    </div>
+</div>
+
+<div style="margin-bottom: 10px; border-bottom: 1px dotted #ccc;" id="link_preview_container">
     <%= @link.preview_html %>
 </div>
 
 <br/>
 
 <% if @link.show_link %>
-    <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 10px;">
-        <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>View - <%= link_to @link.url, @link.url %></h3>
+    <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 30px;">
+        <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>Via - <%= link_to @link.url, @link.url %></h3>
     </div>
 <% end %>
 
@@ -22,6 +28,10 @@
     <%= link_to 'Edit', edit_link_path(@link) %> |
     <%= link_to 'Back', links_path %>
 <% end %>
+
+
+<fb:comments></fb:comments>
+
 
 </div>
 

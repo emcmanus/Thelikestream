@@ -26,7 +26,8 @@
     
     <% for @link in @links %>
         <span style="font-size: 1.2em;">
-            <div>
+            <div class="span-2">Test</div>
+            <div class="prepend-2">
                 <h4 style="padding:0;margin:0;">
                     <%= link_to truncate(@link.title, :length=>100), @link, :class=>"quotelink" %>
                 </h4>

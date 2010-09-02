@@ -5,19 +5,15 @@
 var k = "<%= @user_key %>";
 var t = escape(document.getElementsByTagName("title")[0].innerHTML);
 var u = escape(window.location.href);
-<% if RAILS_ENV == 'development' %>
-var src = "http://localhost:3000/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
-<% else %>
-var src = "http://likeloft.com/bookmarklet/submit/?k="+k+"&t="+t+"&u="+u;
-<% end %>
+var src = "<%= bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
 
 var ourStyle = document.createElement('style');
 ourStyle.setAttribute('type', 'text/css');
 ourStyle.innerHTML = "\
-#likeLoftSubmitStatusBox { \
+#likeStreamSubmitStatusBox { \
 	text-align: left; color: black;\
 }\
-#likeLoftSubmitStatusBox a {\
+#likeStreamSubmitStatusBox a {\
 	text-decoration: underline; color: #00f; \
 }";
 
@@ -26,7 +22,7 @@ document.getElementsByTagName("head")[0].appendChild(ourStyle);
 
 // Append status box
 var e = document.createElement('div');
-e.setAttribute("id", "likeLoftSubmitStatusBox");
+e.setAttribute("id", "likeStreamSubmitStatusBox");
 e.style.position = "fixed";
 e.style.zIndex = 99999;
 e.style.fontSize = "20px";
@@ -39,7 +35,7 @@ e.style.border="5px solid black";
 e.style.backgroundColor="white";
 document.body.insertBefore(e, document.body.firstChild);
 
-window.__likeLoftBookmarketResponseHandler = function( response )
+window.__likeStreamBookmarketResponseHandler = function( response )
 {
 	if (response.completed == true)
 	{
@@ -47,7 +43,8 @@ window.__likeLoftBookmarketResponseHandler = function( response )
 	}
 	else if (response.require_login)
 	{
-		e.innerHTML = "Please log in first.";
+		e.innerHTML = '<%= link_to 'Please login first', login_url, :target=>'_blank' %><br/>';
+		e.innerHTML += "Please use the popup to log in, then <a href='javascript:window.__likeStreamBookmarkletSubmit(\""+src+"\");' style='color:#00f'>click here</a> to continue.";
 	}
 	else if (response.message)
 	{
@@ -62,9 +59,14 @@ window.__likeLoftBookmarketResponseHandler = function( response )
 
 e.innerHTML = "Submitting";
 
-// "Submit" link
-var s = document.createElement("script");
-s.setAttribute("src", src);
-document.body.appendChild(s);
+window.__likeStreamBookmarkletSubmit = function(requestPath)
+{
+	// "Submit" link
+	var s = document.createElement("script");
+	s.setAttribute("src", requestPath);
+	document.body.appendChild(s);
+}
+
+window.__likeStreamBookmarkletSubmit(src);
 
 })();

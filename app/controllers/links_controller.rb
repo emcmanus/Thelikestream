@@ -14,6 +14,8 @@ class LinksController < ApplicationController
   # GET /links/1
   def show
     @link = Link.find(params[:id])
+    @showIntroBanner = false
+    @page_title = @link.title
   end
   
   def bookmarklet
@@ -98,11 +100,16 @@ class LinksController < ApplicationController
     if key.valid?
       link = Link.new
       link.user = key.user
-      link.secure_update({ :title=>user_title, :url=>user_url, :preview_html=>"", :like_count=>0, :show_link=>true }, key.user)
+      link.title = user_title
+      link.url = user_url
+      link.like_count = 0
+      link.show_link = true
+      
       fill_in_link_using_url link
       unless link.valid?
         @response[:completed] = false
         @response[:message] += "Link validation error. "
+        logger.warn "Link validation errors: #{link.errors.inspect}"
       end
     else
       # Invalid key, no user object
@@ -110,7 +117,7 @@ class LinksController < ApplicationController
       @response[:require_login] = true if current_user.nil?
     end
     
-    if link.save
+    if link and link.save
       @response[:completed] = true
       @response[:link] = url_for link
     else

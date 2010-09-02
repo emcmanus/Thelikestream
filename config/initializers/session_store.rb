@@ -5,7 +5,7 @@
 # Make sure the secret is at least 30 characters and all random, 
 # no regular words or you'll be exposed to dictionary attacks.
 ActionController::Base.session = {
-  :key         => '_likeloft_session',
+  :key         => '_likestream_session',
   :secret      => 'c1bd119d3e076fa053b14630b98238207f4c554167d8c293fb516fbede55e5ff43fe5ac50468f28076eafe2be2221f53f1dafdaab5f2a9ce6c36c63fc870ad76'
 }
 

@@ -1,8 +1,6 @@
 
-<!-- DO NOT CACHE THIS PARTIAL!!!!!! -->
-
-<% if RAILS_ENV == 'development' %>
-	<a href="javascript:void((function(){if(!document.body){alert('Page%20not%20ready.');}else{var%20e=document.createElement('scr'+'ipt');e.setAttribute('src','http://localhost:3000/bookmarklet/js?v=1&k=<%= SecureRandom.hex(10) %>&c='+(new%20Date()).getTime().toString());e.setAttribute('type','text/javascript');document.body.appendChild(e);}})())" class="btn" style="font-size:0.7em; position:relative;bottom: 1px;"><span><span><b>&nbsp;</b><u>★ LikeStream</u></span></span></a>
-<% else %>
-	<a href="javascript:void((function(){if(!document.body){alert('Page%20not%20ready.');}else{var%20e=document.createElement('scr'+'ipt');e.setAttribute('src','http://likeloft.com/bookmarklet/js?v=1&k=<%= SecureRandom.hex(10) %>&c='+(new%20Date()).getTime().toString());e.setAttribute('type','text/javascript');document.body.appendChild(e);}})())" class="btn" style="font-size:0.7em; position:relative;bottom: 1px;"><span><span><b>&nbsp;</b><u>★ LikeStream</u></span></span></a>
+<% if false %>
+                <!-- DO NOT CACHE!!!!!! -->
 <% end %>
+
+<a href="javascript:void((function(){if(!document.body){alert('Page%20not%20ready.');}else{var%20e=document.createElement('scr'+'ipt');e.setAttribute('src','<%= bookmarklet_js_url %>?v=1&k=<%= SecureRandom.hex(10) %>&c='+(new%20Date()).getTime().toString());e.setAttribute('type','text/javascript');document.body.appendChild(e);}})())" class="btn" style="font-size:0.7em; position:relative;bottom: 1px;"><span><span><b>&nbsp;</b><u>★ LikeStream</u></span></span></a>

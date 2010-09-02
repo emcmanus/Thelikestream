@@ -1,5 +1,5 @@
-set :application, "likeloft"
-set :repository,  "ssh://git@184.106.218.75:2298/home/git/likeloft"
+set :application, "likestream"
+set :repository,  "ssh://git@184.106.218.75:2298/home/git/likestream"
 set :port, 2298
 
 set :scm, :git
@@ -7,7 +7,7 @@ set :scm, :git
 
 set :deploy_to, "/home/git/#{application}"
 
-set :location, "likeloft.com"
+set :location, "thelikestream.com"
 
 role :web, location
 role :app, location
