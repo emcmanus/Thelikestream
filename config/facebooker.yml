@@ -10,7 +10,7 @@ staging:
     api_key: b21984c84c9047f23987e403bf8f62a8
 
 production:
-    app_id: 108534055871304
-    secret: 505864ea72c581aa739af213e5937641
-    api_key: b21984c84c9047f23987e403bf8f62a8
+    app_id: 115776415143563
+    secret: f20bf822dbe4ecbb9dd29995f36a0aca
+    api_key: a68394d3dfe2a0073d30dff25cae8798
 
