@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       redirect_to session[:return_to] || root_path
       session[:return_to] = nil
     else
-      flash[:error] = "Unable to log you in. Try logging out from Facebook, first."  # Happens when you are signed in to facebook, but not the website
+      flash[:error] = "Unable to log you in. Try logging out of Facebook first."  # Happens when you are signed in to facebook, but not the website
       render :action=>"new"
     end
   end
