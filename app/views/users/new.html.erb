@@ -1,8 +1,30 @@
 <h1>New user</h1>
 
+<script type="text/javascript" charset="utf-8">
+    function changeNewUserId(newId){
+        $('fbNewUserName').innerHTML = "<fb:name uid='"+newId+"'></fb:name>";
+        FB.XFBML.parse(document.getElementById('fbNewUserName'));
+    }
+</script>
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
-
+  
+  <p>
+    <%= f.label :facebook_id %><br />
+    <%= f.text_field :facebook_id, :onkeyup=>'javascript:changeNewUserId(this.value)' %><br/>
+    <span id="fbNewUserName"></span>
+  </p>
+  
+  <p>
+     <%= f.label :can_admin %><br />
+     <%= f.check_box :can_admin %>
+ </p>
+     
+ <p>
+     <%= f.label :can_edit_raw_html %><br />
+     <%= f.check_box :can_edit_raw_html %>
+ </p>
+  
   <p>
     <%= f.submit 'Create' %>
   </p>

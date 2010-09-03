@@ -23,10 +23,15 @@
     </div>
     
     <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
-    
+    <script type="text/javascript" charset="utf-8">
+        function writeLikeButton(targetId, encodedLink)
+        {
+            $(targetId).innerHTML = '<iframe src="http://www.facebook.com/plugins/like.php?href='+encodedLink+'&amp;layout=button_count&amp;show_faces=false&amp;width=70&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe>';
+        }
+    </script>
     <% for @link in @links %>
         <span style="font-size: 1.2em;">
-            <div class="span-2">Test</div>
+            <div class="span-2"><%= render :partial=>'/layouts/likeButtonSmall', :locals=>{:link=>@link} %></div>
             <div class="prepend-2">
                 <h4 style="padding:0;margin:0;">
                     <%= link_to truncate(@link.title, :length=>100), @link, :class=>"quotelink" %>
@@ -43,6 +48,8 @@
 
         <hr class="space" />
     <% end %>
+    
+    
     
 </div>
 

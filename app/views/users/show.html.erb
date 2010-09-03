@@ -1,14 +1,23 @@
 
 <div class="prepend-1 append-1 span-20 last">
-    <h3>Links</h3>
+    <h2><%= fb_name @user.facebook_id, :capitalize=>'true', :linked=>'false' %></h2>
+    <h3>Pages</h3>
     <ul>
     <% for link in @user.links %>
         <li><%= link_to link.title, link %></li>
+    <% end %>
+    <% if @user.links.empty? %>
+        <span style="color: #aaa;">User has not submitted any pages.</span>
     <% end %>
     </ul>
     
     <hr class="space" />
     
-    <h3>Other</h3>
+    <h3>User Info</h3>
     <p>Facebook ID: <%= @user.facebook_id %></p>
+    <% if current_user.is_admin %>
+        <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>
+        <p>Can Admin: <input type='checkbox' <% if @user.is_admin %> checked='' <% end %> /></p>
+        <p>Can Edit Raw HTML: <input type='checkbox' <% if @user.is_content_editor %> checked='' <% end %> /></p>
+    <% end %>
 </div>

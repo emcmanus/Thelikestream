@@ -30,6 +30,7 @@ More: http://articles.slicehost.com/rails
 MySQL root user DOES require a password. It's s3rv3rp455
 MySQL Socket is located at /var/run/mysqld/mysqld.sock
 
+
 	[ Apache: ]
 
 Config located in /etc/apache2/apache2.conf

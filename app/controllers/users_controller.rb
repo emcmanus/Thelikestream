@@ -40,8 +40,10 @@ class UsersController < ApplicationController
   
   
   def create
+    unless current_user.is_god
+      params[:user][:is_god] = 0
+    end
     @user = User.create!(params[:user])
-    session[:user_id] = @user.id
     redirect_to @user
   rescue ActiveRecord::RecordInvalid => e
     @user = e.record

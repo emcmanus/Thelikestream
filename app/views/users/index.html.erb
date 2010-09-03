@@ -3,11 +3,14 @@
 <table>
   <tr>
       <th>Facebook User ID</th>
+      <th>Name</th>
+      <th>Actions</th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.facebook_id %></td>
+    <td><%= link_to user.facebook_id, user %></td>
+    <td><%= fb_name user.facebook_id %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
