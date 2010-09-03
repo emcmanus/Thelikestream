@@ -17,7 +17,7 @@ Highlights:
 - Using apache, passenger
 
 MySQL:
-MySQL root user DOES require a password. It's your insecure pass.
+MySQL root user DOES require a password. It's s3rv3rp455
 
 Apache:
 Config located in /etc/apache2/apache2.conf

@@ -44,5 +44,5 @@ production:
   database: likestream_production
   pool: 5
   username: root
-  password: 
-  socket: /tmp/mysql.sock
+  password: s3rv3rp455
+  socket: /var/run/mysqld/mysqld.sock
