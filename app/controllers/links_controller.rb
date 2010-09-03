@@ -161,7 +161,7 @@ class LinksController < ApplicationController
     link.secure_update(params[:link], current_user)
     
     if link.save
-      redirect_to(@link, :notice => 'Link was successfully updated.')
+      redirect_to(link, :notice => 'Link was successfully updated.')
     else
       render :action => "edit"
     end
