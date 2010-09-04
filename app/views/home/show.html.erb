@@ -44,9 +44,8 @@
                     | <%= link_to "Source", @link.url %>
                 <% end %>
                 <% if current_user && current_user.is_content_editor %>
-                    <b style="color: black;">Admin: </b>
-                    <%= link_to 'Edit', edit_link_path(@link) %> |
-                    <%= link_to 'All Links', links_path %>
+                    | <%= link_to 'Edit', edit_link_path(@link) %>
+                    | <%= link_to 'All Links', links_path %>
                 <% end %>
             </div>
         </span>
