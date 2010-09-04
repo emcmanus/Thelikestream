@@ -1,5 +1,5 @@
 
-PLUGINS/GEMS
+	[ PLUGINS/GEMS ]
 
 Authlogic
 REMOVED - With setup info here: http://github.com/binarylogic/authlogic_example
@@ -20,7 +20,35 @@ And the awesome ruby-readability
 REMOVED - http://github.com/iterationlabs/ruby-readability
 ADDED - git@github.com:emcmanus/ruby-readability.git
 
-CAPISTRANO
+
+	[ CAPISTRANO ]
 
 Followed this guide from slicehost:
 http://articles.slicehost.com/2008/1/18/capistrano-series-configuring-capistrano-1
+
+
+	[ RANKING ALGORITHM ]
+	
+Essentially the reddit algoirthm with a slower decay. See: http://news.ycombinator.com/item?id=231168
+
+Algorithm: Ts + 45000 * log( like_count )
+
+Key:
+Ts => Time, in Seconds, since 12:00am Sept. 1st
+45000 => in seconds, eq. 12.5 hours
+log => use log base 8, for a slower decay
+
+Every vote pushes the submission into the future, with a weighted decay to compensate for popular stories.
+
+
+	[ "EVIL" PAGES ]
+
+Will use bitly to cloak redirects. Need to also use the following facebook credentials:
+http://developers.facebook.com/setup/done?id=157023087646197&locale=en_US
+
+App Name:	BitlyRedirector
+App URL:	http://bitly.com/
+App ID:		157023087646197
+App Secret:	b75c695107ff04d32dd75a2cc1a1d762
+
+

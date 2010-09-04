@@ -32,23 +32,19 @@
   <% if @evil_link %>
       <!-- Facebook Open Graph -->
       <meta property="og:type" content="activity" />
-      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" /> <!-- Article title -->
-      
-      <!-- RANDOM SQUARE INTERESTING IMAGE -->
-      <meta property="og:image" content="" />
+      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %>★" /> <!-- Article title -->
+      <meta property="og:image" content="http://thelikestream.com/images/like-72-72.png" />
       <meta property="og:url" content="<%= @like_url || request.url %>" /> <!-- this page -->
-      <meta property="og:site_name" content="★likestream" />
-      
-      <!-- NEED FAKE USER!! -->
-      <meta property="og:admins" content="904678" /> <!-- admin user ids -->
+      <meta property="og:site_name" content="★" />
+      <meta property="og:admins" content="100000925070212" /> <!-- admin user ids -->
       
   <% else %>
       <!-- Facebook Open Graph -->
       <meta property="og:type" content="article" />  <!-- Not if for the root domain -->
-      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" /> <!-- Article title -->
-      <meta property="og:image" content="" /> <!-- URL to the first image on the page, or empty -->
+      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %> on TheLikeStream.com" /> <!-- Article title -->
+      <meta property="og:image" content="http://thelikestream.com/images/like-72-72.png" /> <!-- URL to the first image on the page, or empty -->
       <meta property="og:url" content="<%= @like_url || request.url %>" /> <!-- this page -->
-      <meta property="og:site_name" content="LikeStream.com" />
+      <meta property="og:site_name" content="TheLikeStream.com" />
       <meta property="og:admins" content="904678" /> <!-- admin user ids -->
   <% end %>
   
