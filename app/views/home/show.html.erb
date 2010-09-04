@@ -45,7 +45,6 @@
                 <% end %>
                 <% if current_user && current_user.is_content_editor %>
                     | <%= link_to 'Edit', edit_link_path(@link) %>
-                    | <%= link_to 'All Links', links_path %>
                 <% end %>
             </div>
         </span>
