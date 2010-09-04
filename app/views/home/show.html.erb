@@ -38,7 +38,7 @@
                 </h4>
             </div>
             <div class="prepend-2" style="font-size: 0.7em; color: #ccc;">
-                Shared by <%= fb_name @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. 
+                Shared by <%= link_to fb_name(@link.user, :linked=>"false"), @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. 
                 <%= link_to "Comments", @link %> 
                 <% unless @link.url.blank? %>
                     | <%= link_to "Source", @link.url %>
