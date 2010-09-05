@@ -1,60 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+         
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-  
-  <% unless @page_title.blank? %>
-    <title>TheLikeStream - <%= @page_title %></title>
-  <% else %>
-    <title>TheLikeStream - <%= controller.controller_name.titleize %></title>
-  <% end %>
-  
-  <%= javascript_include_tag :defaults %>
-  
-  <%= stylesheet_link_tag 'blueprint/screen', :media => "screen, projection" %>
-  <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
-  <!--[if lt IE 8]>
-    <%= stylesheet_link_tag 'blueprint/ie', :media => "screen, projection" %>
-  <![endif]-->
-  <%= stylesheet_link_tag 'application' %>
-  
-  <% if false %>
-        We have to sections to the site. The above-board content, and everything else. Quotes, quizes, and games will
-        be marked as "evil", and we'll use a bit.ly link which points to a LikeStream subdomain. This would just give a 
-        little extra protection on questionable content.
-        
-        It looks like the number of like buttons on a single page may matter. For instance: http://op.golikeus.org/712540
-        is still active.
-  <% end %>
-  
-  <% if @evil_link %>
-      <!-- Facebook Open Graph -->
-      <meta property="og:type" content="activity" />
-      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %>★" /> <!-- Article title -->
-      <meta property="og:image" content="http://thelikestream.com/images/like-72-72.png" />
-      <meta property="og:url" content="<%= @like_url || request.url %>" /> <!-- this page -->
-      <meta property="og:site_name" content="★" />
-      <meta property="og:admins" content="100000925070212" /> <!-- admin user ids -->
-      
-  <% else %>
-      <!-- Facebook Open Graph -->
-      <meta property="og:type" content="article" />  <!-- Not if for the root domain -->
-      <meta property="og:title" content="<%= @like_title || @page_title || "TheLikeStream - #{controller.controller_name.titleize}" %> on TheLikeStream.com" /> <!-- Article title -->
-      <meta property="og:image" content="http://thelikestream.com/images/like-72-72.png" /> <!-- URL to the first image on the page, or empty -->
-      <meta property="og:url" content="<%= @like_url || request.url %>" /> <!-- this page -->
-      <meta property="og:site_name" content="TheLikeStream.com" />
-      <meta property="og:admins" content="904678" /> <!-- admin user ids -->
-  <% end %>
-  
-  <%= yield :head %>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+
+    <% unless @html_title.blank? %>
+        <title>TheLikeStream - <%= @html_title %></title>
+    <% else %>
+        <title>TheLikeStream - <%= controller.controller_name.titleize %></title>
+    <% end %>
+
+    <%= javascript_include_tag :defaults %>
+
+    <%= stylesheet_link_tag 'blueprint/screen', :media => "screen, projection" %>
+    <%= stylesheet_link_tag 'blueprint/print', :media => "print" %>
+    <!--[if lt IE 8]>
+        <%= stylesheet_link_tag 'blueprint/ie', :media => "screen, projection" %>
+    <![endif]-->
+    <%= stylesheet_link_tag 'application' %>
+
+    <!-- OpenGraph Meta Tags -->
+    <% if page %>
+        <%= render :partial => '/layouts/ogTags', :locals => {:page=>page} %>
+    <% else %>
+        <%= render :partial => '/layouts/ogTags' %>
+    <% end %>
+    
+    
+    <%= yield :head %>
   
 </head>
 
 <body>
     
-    <%= fb_connect_async_js %>
+    <% if page and page.is_cloaked %>
+        <%= fb_connect_async_js :app_id=>"157023087646197" %>
+    <% else %>
+        <%= fb_connect_async_js %>
+    <% end %>
     
     <style type="text/css" media="screen">
         .nav_link.current {

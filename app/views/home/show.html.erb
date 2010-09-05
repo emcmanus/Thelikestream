@@ -29,27 +29,8 @@
             $(targetId).innerHTML = '<iframe src="http://www.facebook.com/plugins/like.php?href='+encodedLink+'&amp;layout=button_count&amp;show_faces=false&amp;width=70&amp;action=like&amp;colorscheme=light&amp;height=20" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:20px;" allowTransparency="true"></iframe>';
         }
     </script>
-    <% for @link in @links %>
-        <span style="font-size: 1.2em;">
-            <div class="span-2"><%= render :partial=>'/layouts/likeButtonSmall', :locals=>{:link=>@link} %></div>
-            <div class="prepend-2">
-                <h4 style="padding:0;margin:0;">
-                    <%= link_to truncate(@link.title, :length=>100), @link, :class=>"quotelink" %>
-                </h4>
-            </div>
-            <div class="prepend-2" style="font-size: 0.7em; color: #ccc;">
-                Shared by <%= link_to fb_name(@link.user, :linked=>"false"), @link.user %> <%= distance_of_time_in_words @link.created_at, Time.now %> ago. 
-                <%= link_to "Comments", @link %> 
-                <% unless @link.url.blank? %>
-                    | <%= link_to "Source", @link.url %>
-                <% end %>
-                <% if current_user && current_user.is_content_editor %>
-                    | <%= link_to 'Edit', edit_link_path(@link) %>
-                <% end %>
-            </div>
-        </span>
-
-        <hr class="space" />
+    <% for link in @links %>
+        <%= render :partial => '/page/homeRow', :locals => {:link=>link} %>
     <% end %>
     
     

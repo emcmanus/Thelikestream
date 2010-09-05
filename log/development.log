@@ -1008,3 +1008,164 @@ Rendered layouts/introBanner/_gettingStarted (0.4ms)
 Rendered layouts/introBanner/_intro (0.7ms)
 Rendered layouts/introBanner/_introBanner (4.0ms)
 Completed in 27ms (View: 20, DB: 3) | 200 OK [http://localhost/]
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-09-04 15:28:39) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.3ms)[0m   [0;1mSELECT * FROM `links` ORDER BY created_at DESC LIMIT 30[0m
+Rendering template within layouts/application
+Rendering home/show
+Rendered layouts/_likeButtonSmall (0.3ms)
+  [4;35;1mLink Columns (2.9ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (1.1ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (18.1ms)
+Rendered layouts/_likeButtonSmall (0.2ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (2.2ms)
+
+ActionView::TemplateError (undefined local variable or method `page' for #<ActionView::Base:0x1034b24a0>) on line #33 of app/views/layouts/application.html.erb:
+30:         is still active.
+31:     <% end %>
+32:     
+33:     <% if page %>
+34:         <%= render :partial => '/layouts/ogTags', :locals => {:page=>page} %>
+35:     <% else %>
+36:         <%= render :partial => '/layouts/ogTags', :locals => {:evil=>false, :url=>request.url, :image=>image_url('like-72-72.png'), :title=>(@html_title || "TheLikeStream - #{controller.controller_name.titleize}")} %>
+
+    app/views/layouts/application.html.erb:33
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (29.7ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;35;1mSQL (0.1ms)[0m   [0mSET NAMES 'utf8'[0m
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-09-04 16:30:12) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;35;1mLink Load (0.3ms)[0m   [0mSELECT * FROM `links` ORDER BY created_at DESC LIMIT 30[0m
+Rendering template within layouts/application
+Rendering home/show
+Rendered layouts/_likeButtonSmall (0.6ms)
+  [4;36;1mLink Columns (2.6ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mUser Columns (1.1ms)[0m   [0mSHOW FIELDS FROM `users`[0m
+  [4;36;1mUser Load (0.2ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (16.8ms)
+Rendered layouts/_likeButtonSmall (0.2ms)
+  [4;35;1mCACHE (0.0ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (2.3ms)
+
+ActionView::TemplateError (undefined local variable or method `page' for #<ActionView::Base:0x1036d0020>) on line #24 of app/views/layouts/application.html.erb:
+21:     <%= stylesheet_link_tag 'application' %>
+22: 
+23:     <!-- OpenGraph Meta Tags -->
+24:     <% if page %>
+25:         <%= render :partial => '/layouts/ogTags', :locals => {:page=>page} %>
+26:     <% else %>
+27:         <%= render :partial => '/layouts/ogTags' %>
+
+    app/views/layouts/application.html.erb:24
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (32.8ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+
+
+Processing HomeController#show (for 127.0.0.1 at 2010-09-04 18:14:17) [GET]
+  Parameters: {"action"=>"show", "controller"=>"home"}
+  [4;36;1mLink Load (0.3ms)[0m   [0;1mSELECT * FROM `links` ORDER BY created_at DESC LIMIT 30[0m
+Rendering template within layouts/application
+Rendering home/show
+Rendered layouts/_likeButtonSmall (0.3ms)
+  [4;35;1mLink Columns (2.8ms)[0m   [0mSHOW FIELDS FROM `links`[0m
+  [4;36;1mUser Columns (1.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mUser Load (0.2ms)[0m   [0mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (16.2ms)
+Rendered layouts/_likeButtonSmall (0.2ms)
+  [4;36;1mCACHE (0.0ms)[0m   [0;1mSELECT * FROM `users` WHERE (`users`.`id` = 2) [0m
+Rendered page/_homeRow (2.1ms)
+
+ActionView::TemplateError (undefined local variable or method `page' for #<ActionView::Base:0x102ebd900>) on line #24 of app/views/layouts/application.html.erb:
+21:     <%= stylesheet_link_tag 'application' %>
+22: 
+23:     <!-- OpenGraph Meta Tags -->
+24:     <% if page %>
+25:         <%= render :partial => '/layouts/ogTags', :locals => {:page=>page} %>
+26:     <% else %>
+27:         <%= render :partial => '/layouts/ogTags' %>
+
+    app/views/layouts/application.html.erb:24
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:104:in `service'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/httpserver.rb:65:in `run'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:173:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:162:in `start_thread'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:95:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `each'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:92:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:23:in `start'
+    /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/lib/ruby/1.8/webrick/server.rb:82:in `start'
+
+Rendered rescues/_trace (115.9ms)
+Rendered rescues/_request_and_response (0.3ms)
+Rendering rescues/layout (internal_server_error)
+  [4;36;1mSQL (0.1ms)[0m   [0;1mSET NAMES 'utf8'[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSET SQL_AUTO_IS_NULL=0[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (43.5ms)[0m   [0mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW KEYS FROM `schema_migrations`[0m
+  [4;35;1mSQL (17.6ms)[0m   [0mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`)[0m
+  [4;36;1mSQL (0.3ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSELECT version FROM schema_migrations[0m
+Migrating to CreateUsers (20100822064819)
+  [4;36;1mSQL (9.9ms)[0m   [0;1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `is_god` tinyint(1) DEFAULT 0 NOT NULL, `can_admin` tinyint(1) DEFAULT 0 NOT NULL, `can_edit_raw_html` tinyint(1) DEFAULT 0 NOT NULL, `facebook_id` varchar(255), `facebook_session_key` varchar(255), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100822064819')[0m
+Migrating to CreateLinks (20100822064821)
+  [4;36;1mSQL (10.2ms)[0m   [0;1mCREATE TABLE `links` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `preview_html` text, `title` varchar(255) NOT NULL, `url` varchar(255), `show_link` tinyint(1) DEFAULT 1 NOT NULL, `like_count` int(11) DEFAULT 0 NOT NULL, `user_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100822064821')[0m
+Migrating to CreateBookmarkletKeys (20100828000244)
+  [4;36;1mSQL (9.5ms)[0m   [0;1mCREATE TABLE `bookmarklet_keys` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `value` varchar(255) NOT NULL, `user_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100828000244')[0m
+Migrating to CreatePages (20100904210854)
+  [4;36;1mSQL (11.2ms)[0m   [0;1mCREATE TABLE `pages` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `media_category` varchar(255), `thumbnail_small` varchar(255) DEFAULT '', `thumbnail_small_width` int(11) DEFAULT 0, `thumbnail_small_height` int(11) DEFAULT 0, `thumbnail_full` varchar(255) DEFAULT '', `thumbnail_full_width` int(11) DEFAULT 0, `thumbnail_full_height` int(11) DEFAULT 0, `introduction` text DEFAULT '', `html_body` text DEFAULT '', `title` varchar(255) DEFAULT '', `like_title` varchar(255) DEFAULT '', `source_url` varchar(255), `shortened_url` varchar(255) DEFAULT '', `show_link` tinyint(1) DEFAULT 1, `is_cloaked` tinyint(1) DEFAULT 0, `like_count` int(11) DEFAULT 0, `weighted_score` int(11) DEFAULT 0, `user_id` int(11) NOT NULL, `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [4;35;1mSQL (0.4ms)[0m   [0mINSERT INTO schema_migrations (version) VALUES ('20100904210854')[0m
+  [4;36;1mSQL (0.4ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (0.1ms)[0m   [0mSELECT version FROM schema_migrations[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW TABLES[0m
+  [4;35;1mSQL (2.4ms)[0m   [0mSHOW FIELDS FROM `bookmarklet_keys`[0m
+  [4;36;1mSQL (0.7ms)[0m   [0;1mdescribe `bookmarklet_keys`[0m
+  [4;35;1mSQL (0.2ms)[0m   [0mSHOW KEYS FROM `bookmarklet_keys`[0m
+  [4;36;1mSQL (0.9ms)[0m   [0;1mSHOW FIELDS FROM `links`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mdescribe `links`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW KEYS FROM `links`[0m
+  [4;35;1mSQL (1.0ms)[0m   [0mSHOW FIELDS FROM `pages`[0m
+  [4;36;1mSQL (1.3ms)[0m   [0;1mdescribe `pages`[0m
+  [4;35;1mSQL (2.5ms)[0m   [0mSHOW KEYS FROM `pages`[0m
+  [4;36;1mSQL (1.0ms)[0m   [0;1mSHOW FIELDS FROM `users`[0m
+  [4;35;1mSQL (1.1ms)[0m   [0mdescribe `users`[0m
+  [4;36;1mSQL (0.2ms)[0m   [0;1mSHOW KEYS FROM `users`[0m

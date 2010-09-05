@@ -9,8 +9,8 @@ ActionController::Routing::Routes.draw do |map|
   map.create_session  "/session/create",  :controller => "sessions",  :action => "create"
   
   # Bookmarklet
-  map.bookmarklet_js      "/bookmarklet/js",      :controller => :links,   :action => :bookmarklet_js
-  map.bookmarklet_submit  "/bookmarklet/submit",  :controller => :links,   :action => :bookmarklet_submit
+  map.bookmarklet_js      "/bookmarklet/show",    :controller => :bookmarklet,   :action => :show
+  map.bookmarklet_submit  "/bookmarklet/submit",  :controller => :bookmarklet,   :action => :page_create
   
   # Global Nav
   map.home    "/home",    :controller => :home,   :action => :show
@@ -18,7 +18,11 @@ ActionController::Routing::Routes.draw do |map|
   map.submit  "/submit",  :controller => :links,  :action => :new
   map.tools   "/tools",   :controller => :tools,  :action => :show
   
+  # Like Pages
+  map.page      "/p/:slug", :controller => :page, :action => :show
+  map.resources :pages
+  
   # Root
-  map.root                :controller => :home,  :action => :show
+  map.root      :controller => :home,  :action => :show
   
 end
