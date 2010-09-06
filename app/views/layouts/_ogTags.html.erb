@@ -1,17 +1,17 @@
 <!-- Page -->
-<% if page %>
+<% if @page %>
     <!-- Facebook Open Graph -->
-    <meta property="og:title" content="<%= page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
-    <meta property="og:image" content="<%= page.og_image || image_url "like-72-72.png" %>" />
-    <meta property="og:url" content="<%= page.og_url || url_for page %>" />
+    <meta property="og:title" content="<%= @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
+    <meta property="og:image" content="<%= @page.og_image || "#{root_path}/images/like-72-72.png" %>" />
+    <meta property="og:url" content="<%= @page.og_url || url_for(@page) %>" />
 <% else %>
     <meta property="og:title" content="<%= @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
-    <meta property="og:image" content="<%= image_url "like-72-72.png" %>" />
+    <meta property="og:image" content="<%= "#{root_path}/images/like-72-72.png" %>" />
     <meta property="og:url" content="<%= request.url %>" />
 <% end %>
 
 <!-- Other -->
-<% if evil %>
+<% if @page and @page.is_cloaked %>
     <meta property="og:type" content="activity" />
     <meta property="og:site_name" content="★" />
     <meta property="og:admins" content="100000925070212" /> <!-- admin user ids -->

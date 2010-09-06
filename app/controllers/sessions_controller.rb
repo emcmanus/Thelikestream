@@ -7,6 +7,14 @@ class SessionsController < ApplicationController
     end
   end
   
+  def new_from_bookmarklet
+    session[:return_to] = login_bookmarklet_success_path
+    flash[:notice] = ""
+    redirect_to create_session_path
+  end
+  
+  def new_from_bookmarklet_success
+  end
   
   def create
     create_connected_user
@@ -16,10 +24,13 @@ class SessionsController < ApplicationController
     end
     
     if current_user
+      flash[:notice] = "You're logged in."
       redirect_to session[:return_to] || root_path
       session[:return_to] = nil
+    elsif @user.nil?
+      render :action=>"new"
     else
-      flash[:error] = "Unable to log you in. Try logging out of Facebook first."  # Happens when you are signed in to facebook, but not the website
+      flash[:error] = "Unable to log you in. Try again."
       render :action=>"new"
     end
   end

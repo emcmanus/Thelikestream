@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   helper :all
-  helper_method :current_user, :top_links
+  helper_method :current_user, :top_pages
   
   private
     def current_user
@@ -24,8 +24,8 @@ class ApplicationController < ActionController::Base
       @current_user
     end
     
-    def top_links
-      Link.all(:order=>"created_at DESC", :limit=>10)
+    def top_pages
+      Page.all(:order=>"created_at DESC", :limit=>10)
     end
     
     

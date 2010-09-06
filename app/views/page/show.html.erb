@@ -1,0 +1,40 @@
+
+<div class="span-14" style="overflow: hidden;">
+
+<div class="span-3" style="margin-bottom:10px;">
+    <%= render :partial=>'/layouts/likeButton', :locals=>{:page=>@page} %>
+</div>
+
+<div class="span-11 last">
+    <h2 style="padding:0;margin:0; font-size: 2.4em;"><%=h @page.title %></h2>
+    
+    <div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
+        Shared by <%= link_to fb_name(@page.user, :linked=>"false"), @page.user %> <%= distance_of_time_in_words @page.created_at, Time.now %> ago. This has been liked <span style=""><%=h @page.like_count %></span> times.
+        <% if current_user && current_user.is_content_editor %>
+            <b style="color: black;">Admin: </b>
+            <%= link_to 'Edit', edit_page_path(@page) %> |
+            <%= link_to 'All Pages', pages_path %>
+        <% end %>
+    </div>
+</div>
+
+<div style="margin-bottom: 10px; border-bottom: 1px dotted #ccc;" id="page_preview_container">
+    <%= @page.html_body %>
+</div>
+
+<br/>
+
+<% if @page.show_link %>
+    <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 30px;">
+        <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>Via - <%= link_to @page.source_url, @page.source_url %></h3>
+    </div>
+<% end %>
+
+
+<fb:comments></fb:comments>
+
+
+</div>
+
+
+<%= render :partial=>"/layouts/sidePanel" %>

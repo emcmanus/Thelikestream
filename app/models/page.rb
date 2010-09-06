@@ -1,5 +1,9 @@
+require 'open-uri'
+
 class Page < ActiveRecord::Base
   belongs_to :user
+  
+  acts_as_url :title, :url_attribute => :slug, :only_when_blank => true
   
   validates_format_of_url   :source_url
   validates_presence_of     :title
@@ -7,28 +11,60 @@ class Page < ActiveRecord::Base
   
   before_save :scrape_source_url
   
+  def to_param
+    "#{self.id}-#{self.slug}"
+  end
+  
   def scrape_source_url
+    # Try to extract some useful content from the remote URL
+    
     return if self.source_url.blank?
     
-    raw_html = open(self.source_url).read
+    # Only run when there are empty fields
+    return unless self.html_body.blank? or self.title.blank? or self.thumbnail_full.blank?
     
-    # Body and introduction
+    # Get HTML source
+    begin
+      raw_html = open(self.source_url).read
+    rescue
+      logger.error $!
+      return
+    end
+    
+    # Body
     begin
       readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], 
-                :attributes=>%w[src href], :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url
-      self.html_body = readability_doc.content
-      self.introduction = ActionView::Helpers::TextHelper::truncate(Nokogiri::HTML(self.html_body).text, :length=>140, :separator=>" ")
+                :attributes=>%w[src href], :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url, :debug => true
+      self.html_body ||= readability_doc.content
+    rescue
+      logger.error $!
+    end
+    
+    parsed_doc = Nokogiri::HTML(raw_html)
+    
+    # Thumbnail
+    begin
+      if self.thumbnail_full.blank?
+        img = parsed_doc.css('img').first
+        unless img.blank? or img[:width].blank? or img[:height].blank?
+          self.thumbnail_full = img[:src]
+          self.thumbnail_full_width = img[:width].to_i
+          self.thumbnail_full_height = img[:height].to_i
+          # TODO Create small and square thumbnails
+        end
+      end
     rescue
       logger.error $!
     end
     
     # Title
     begin
-      self.title ||= Nokogiri::HTML(raw_html).css('title').first.try :content
+      self.title ||= parsed_doc.css('title').first.try :content
     rescue
       logger.error $!
     end
   end
+  
   
   # def secure_update(unsafe_fields, editing_user)
   #   if unsafe_fields.blank? or editing_user.nil?

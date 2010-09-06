@@ -20,6 +20,9 @@ And the awesome ruby-readability
 REMOVED - http://github.com/iterationlabs/ruby-readability
 ADDED - git@github.com:emcmanus/ruby-readability.git
 
+Stringex, for acts_as_url model slugs
+Installed as gem, more info: http://github.com/rsl/stringex
+
 
 	[ CAPISTRANO ]
 

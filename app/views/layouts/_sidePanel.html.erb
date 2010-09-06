@@ -18,8 +18,8 @@
     <div style="border: 3px solid #ddd; padding: 20px; padding-bottom: 5px;">
         <h2 style="font-weight: 400; color:#00ccff; padding-bottom:0; margin-bottom: 10px; line-height: 1em;">Latest</h2>
         <ul>
-            <% for link in top_links %>
-                <li><%= link_to truncate(link.title, :length=>100), link %></li>
+            <% for page in top_pages %>
+                <li><%= link_to truncate(page.title, :length=>100), page %></li>
             <% end %>
         </ul>
     </div>

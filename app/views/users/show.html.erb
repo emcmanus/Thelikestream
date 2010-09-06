@@ -3,10 +3,10 @@
     <h2><%= fb_name @user.facebook_id, :capitalize=>'true', :linked=>'false' %></h2>
     <h3>Pages</h3>
     <ul>
-    <% for link in @user.links %>
-        <li><%= link_to link.title, link %></li>
+    <% for page in @user.pages %>
+        <li><%= link_to page.title, page %></li>
     <% end %>
-    <% if @user.links.empty? %>
+    <% if @user.pages.empty? %>
         <span style="color: #aaa;">User has not submitted any pages.</span>
     <% end %>
     </ul>

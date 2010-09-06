@@ -6,9 +6,9 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
     <% unless @html_title.blank? %>
-        <title>TheLikeStream - <%= @html_title %></title>
+        <title><% if RAILS_ENV == "development" %> DEV - <% end %>TheLikeStream - <%= @html_title %></title>
     <% else %>
-        <title>TheLikeStream - <%= controller.controller_name.titleize %></title>
+        <title><% if RAILS_ENV == "development" %> DEV - <% end %>TheLikeStream - <%= controller.controller_name.titleize %></title>
     <% end %>
 
     <%= javascript_include_tag :defaults %>
@@ -21,11 +21,7 @@
     <%= stylesheet_link_tag 'application' %>
 
     <!-- OpenGraph Meta Tags -->
-    <% if page %>
-        <%= render :partial => '/layouts/ogTags', :locals => {:page=>page} %>
-    <% else %>
-        <%= render :partial => '/layouts/ogTags' %>
-    <% end %>
+    <%= render :partial => '/layouts/ogTags' %>
     
     
     <%= yield :head %>
@@ -34,7 +30,8 @@
 
 <body>
     
-    <% if page and page.is_cloaked %>
+<% unless @empty_layout %>
+    <% if @page and @page.is_cloaked %>
         <%= fb_connect_async_js :app_id=>"157023087646197" %>
     <% else %>
         <%= fb_connect_async_js %>
@@ -90,11 +87,11 @@
                 </div>
                 <div style="float:left;width:30px;text-align:center;">|</div>
                 <div style="float: left;">
-                    <%= link_to "manage links", links_path %>
+                    <%= link_to "manage links", pages_path %>
                 </div>
                 <div style="float:left;width:30px;text-align:center;">|</div>
                 <div style="float: left;">
-                    <%= fb_logout_link "logout", logout_path %> 
+                    <%= fb_logout_link "logout", logout_path %>
                 </div>
                 <div style="float: right;">
                     <a href="javascript:closeAdminPanel()">X</a>
@@ -155,6 +152,11 @@
   <hr class="space" />
   
 </div>
+
+<% else %>
+	<!-- Empty Layout -->
+	<%= yield %>
+<% end %>
  
 </body>
 </html>

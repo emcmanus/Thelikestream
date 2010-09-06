@@ -17,7 +17,7 @@ class BookmarkletController < ApplicationController
     
     unless key.valid?
       key.user = current_user
-      unless key.save
+      unless current_user.nil? or key.save
         logger.warn "Unable to save key with info: #{key.inspect}, errors: #{key.errors.inspect}"
         @response[:completed] = false
         @response[:message] += "Key validation error. "

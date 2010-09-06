@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   
-  has_many :links
+  has_many :pages
   has_many :bookmarklet_keys
   
   validates_presence_of   :facebook_id

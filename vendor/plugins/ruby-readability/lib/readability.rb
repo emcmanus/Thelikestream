@@ -29,7 +29,7 @@ module Readability
         :unlikelyCandidatesRe => /combx|comment|disqus|foot|header|menu|meta|nav|rss|shoutbox|sidebar|sponsor/i,
         :okMaybeItsACandidateRe => /and|article|body|column|main/i,
         :positiveRe => /article|body|content|entry|hentry|page|pagination|post|text/i,
-        :negativeRe => /combx|comment|contact|foot|footer|footnote|link|media|meta|promo|related|scroll|shoutbox|sponsor|tags|widget/i,
+        :negativeRe => /combx|comment|contact|foot|footer|footnote|link|media|meta|promo|related|scroll|shoutbox|sponsor|tags|widget|responses/i,
         :divToPElementsRe => /<(a|blockquote|dl|div|img|ol|p|pre|table|ul)/i,
         :replaceBrsRe => /(<br[^>]*>[ \n\r\t]*){2,}/i,
         :replaceFontsRe => /<(\/?)font[^>]*>/i,
@@ -37,6 +37,12 @@ module Readability
         :normalizeRe => /\s{2,}/,
         :killBreaksRe => /(<br\s*\/?>(\s|&nbsp;?)*){1,}/,
         :videoRe => /http:\/\/(www\.)?(youtube|vimeo)\.com/i
+    }
+    
+    # Apply these filters if hostRe matches
+    SPECIAL_RULES = {
+        :hostRe => /http:\/\/(www\.)?(buzzfeed)/i,
+        :unlikelyCandidatesRe => /contribution|response/i
     }
 
     def content(remove_unlikely_candidates = true)
@@ -52,7 +58,15 @@ module Readability
       article = get_article(candidates, best_candidate)
 
       cleaned_article = sanitize(article, candidates, options)
+      
+      # Check the text length of the returned article, make sure it passes the threshold
       if remove_unlikely_candidates && article.text.strip.length < (options[:retry_length] || RETRY_LENGTH)
+        
+        # No need to re-run, we have content with an image
+        if options[:score_images] && article.css('img').length > 0
+          return cleaned_article
+        end
+        
         make_html
         return content(false)
       else
@@ -207,6 +221,10 @@ module Readability
         str = "#{elem[:class]}#{elem[:id]}"
         if str =~ REGEXES[:unlikelyCandidatesRe] && str !~ REGEXES[:okMaybeItsACandidateRe] && elem.name.downcase != 'body'
           debug("Removing unlikely candidate - #{str}")
+          elem.remove
+        elsif (options[:resolve_relative_urls_with_path]||"") =~ SPECIAL_RULES[:hostRe] && str =~ SPECIAL_RULES[:unlikelyCandidatesRe]
+          # Check for special cases
+          debug("Special case: removing unlikely candidate - #{str}")
           elem.remove
         end
       end
