@@ -1,12 +1,11 @@
-# create_table "users", :force => true do |t|
-#   t.boolean  "is_god",               :default => false, :null => false
-#   t.boolean  "can_admin",            :default => false, :null => false
-#   t.boolean  "can_edit_raw_html",    :default => false, :null => false
-#   t.string   "facebook_id"
-#   t.string   "facebook_session_key"
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-# end
+# t.boolean  "is_god",               :default => false, :null => false
+# t.boolean  "can_admin",            :default => false, :null => false
+# t.boolean  "can_edit_raw_html",    :default => false, :null => false
+# t.string   "facebook_id"
+# t.string   "facebook_session_key"
+# t.datetime "created_at"
+# t.datetime "updated_at"
+# t.boolean  "is_puppet",            :default => false
 
 class User < ActiveRecord::Base
   
@@ -24,8 +23,8 @@ class User < ActiveRecord::Base
   
   # Lookup of permissions -> editable attributes
   EDIT_PERMISSIONS = {
-    :god => %w[is_god can_admin can_edit_raw_html facebook_id facebook_session_key created_at updated_at],
-    :admin => %w[can_edit_raw_html facebook_id],
+    :god => %w[is_god can_admin can_edit_raw_html facebook_id facebook_session_key created_at updated_at is_puppet],
+    :admin => %w[can_edit_raw_html facebook_id is_puppet],
     :editor => %w[],
     :owner => %w[]
   }

@@ -46,7 +46,7 @@ class PageController < ApplicationController
     
     @page.update_attributes!(update_values)
     flash[:notice] = "Updates saved!"
-    redirect_to @page
+    redirect_to @page and return
   rescue ActiveRecord::RecordInvalid => e
     @page = e.record
     flash[:error] = @page.errors.full_messages.to_sentance

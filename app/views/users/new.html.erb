@@ -1,4 +1,4 @@
-<h1>New user</h1>
+<h2>New user</h2>
 
 <script type="text/javascript" charset="utf-8">
     function changeNewUserId(newId){
@@ -10,7 +10,7 @@
   <%= f.error_messages %>
   
   <p>
-    <%= f.label :facebook_id %><br />
+    <b>Facebook id: </b> (live update)<br/>
     <%= f.text_field :facebook_id, :onkeyup=>'javascript:changeNewUserId(this.value)' %><br/>
     <span id="fbNewUserName"></span>
   </p>
@@ -24,10 +24,15 @@
      <%= f.label :can_edit_raw_html %><br />
      <%= f.check_box :can_edit_raw_html %>
  </p>
+ 
+ <p>
+     <%= f.label :is_puppet %><br />
+     <%= f.check_box :is_puppet %>
+ </p>
   
   <p>
     <%= f.submit 'Create' %>
   </p>
 <% end %>
 
-<%= link_to 'Back', user_path %>
+<%= link_to 'Back', users_path %>

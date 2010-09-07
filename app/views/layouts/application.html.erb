@@ -99,24 +99,28 @@
         <% if current_user.is_content_editor %>
             <div class="prepend-1 span-22 append-1 last" style="background-color: white; border: 1px solid #ccc; padding-top: 10px; padding-bottom: 10px;" id="admin_panel">
                 <div style="float: left;">
-                    <strong>Admin Panel:</strong> You're logged in, #<%= current_user.facebook_id %>.
+                    <strong>Admin Panel:</strong> Logged in as <%= fb_name current_user.facebook_id, :linked=>false %>, #<%= current_user.facebook_id %>.
                 </div>
                 <div style="float:left;width:5px;text-align:center;">&nbsp;</div>
-                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float:left;width:20px;text-align:center;">|</div>
                 <div style="float: left;">
                     <%= link_to "manage users", users_path %>
                 </div>
-                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float:left;width:20px;text-align:center;">|</div>
                 <div style="float: left;">
                     <%= link_to "manage all pages", page_index_path %>
                 </div>
                 <% if current_user.is_admin %>
-                    <div style="float:left;width:30px;text-align:center;">|</div>
+                    <div style="float:left;width:20px;text-align:center;">|</div>
                     <div style="float: left;">
                         <%= link_to "switch to puppet", spoof_path %>
                     </div>
                 <% end %>
-                <div style="float:left;width:30px;text-align:center;">|</div>
+                <div style="float:left;width:20px;text-align:center;">|</div>
+                <div style="float: left;">
+                    <%= link_to "launch queue", future_page_queue_path %>
+                </div>
+                <div style="float:left;width:20px;text-align:center;">|</div>
                 <div style="float: left;">
                     <%= fb_logout_link "logout", logout_path %>
                 </div>
@@ -153,7 +157,7 @@
  </div>
  
 <!-- Get Started Banner -->
-<% unless current_user %>
+<% unless current_user or @hide_banner %>
     <%= render :partial=>'/layouts/introBanner/introBanner' %>
 <% end %>
 

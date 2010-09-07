@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
     # You can only edit yourself, unless you're an admin
-    redirect_to root_url unless @user == current_user or current_user.is_admin
+    redirect_to root_url and return unless @user == current_user or current_user.is_admin
   end
   
   
@@ -56,7 +56,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     
     # You can only edit yourself, unless you're an admin
-    redirect_to root_url unless @user == current_user or current_user.is_admin
+    redirect_to root_url and return unless @user == current_user or current_user.is_admin
 
     # Default perms
     accept_fields = []
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
     # Update
     @user.update_attributes!(update_values)
     flash[:notice] = "Updates saved!"
-    redirect_to @user
+    redirect_to @user and return
   rescue ActiveRecord::RecordInvalid => e
     @user = e.record
     flash[:error] = @user.errors.full_messages.to_sentance
@@ -91,10 +91,14 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     
       # You can only edit yourself, unless you're an admin
-      redirect_to root_url unless @user == current_user or current_user.is_admin
-    
-      @user.destroy
-      flash[:notice] = "User destroyed"
+      redirect_to root_url and return unless @user == current_user or current_user.is_admin
+      
+      if @user.is_puppet or current_user.is_god
+        @user.destroy
+        flash[:notice] = "User destroyed"
+      else
+        flash[:notice] = "Only God can deleting normal users"
+      end
     rescue
       flash[:notice] = "User does not exist" if current_user.is_admin
     end

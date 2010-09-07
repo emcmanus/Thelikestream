@@ -5,7 +5,7 @@
     		<% logger.warn page.thumbnail_full_width %>
     		<% thumb_height = (thumb_width.to_f/page.thumbnail_full_width * page.thumbnail_full_height).to_i %>
     		<div style="overflow: hidden; width: <%=thumb_width%>px; height: <%=[thumb_height, 70].min%>px;"
-    			<%= image_tag page.thumbnail_full, :width=>thumb_width, :height=>thumb_height %>
+    			<%= link_to image_tag(page.thumbnail_full, :width=>thumb_width, :height=>thumb_height), page %>
     		</div>
     	<% else %>
             <!-- TODO: Default thumb -->
@@ -23,7 +23,7 @@
 			<% else %>
 				<%=h truncate(strip_tags(page.introduction), :length=>140) %>
 			<% end %>
-			<a href="#"><%= image_tag 'view-page.png' %></a>
+			<%= link_to image_tag('view-page.png'), page %></a>
 		</span><br/>
 		<span style="font-size: 0.8em; color: #ccc;">
 	        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 

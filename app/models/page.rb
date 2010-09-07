@@ -110,7 +110,9 @@ class Page < ActiveRecord::Base
     
     # Title
     begin
-      self.title ||= Nokogiri::HTML(raw_html).css('title').first.try :content
+      if self.title.blank?
+        self.title = Nokogiri::HTML(raw_html).css('title').first.try :content
+      end
     rescue
       logger.error $!
     end

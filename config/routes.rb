@@ -28,6 +28,14 @@ ActionController::Routing::Routes.draw do |map|
   map.spoof_submit  "/admin/spoof/submit", :controller => :spoof, :action => :submit
   map.spoof_create  "/admin/spoof/create", :controller => :spoof, :action => :make_new_puppet
   
+  # Launch queue
+  map.future_page_queue           "/admin/launch_queue",              :controller => :future_page_queue,  :action => :index
+  map.new_future_page_queue       "/admin/launch_queue/new",          :controller => :future_page_queue,  :action => :new
+  map.prefill_future_page_queue   "/admin/launch_queue/prefill",      :controller => :future_page_queue,  :action => :prefill
+  map.edit_future_page_queue      "/admin/launch_queue/edit/:id",     :controller => :future_page_queue,  :action => :edit
+  map.update_future_page_queue    "/admin/launch_queue/update/:id",   :controller => :future_page_queue,  :action => :update
+  map.destroy_future_page_queue   "/admin/launch_queue/destroy/:id",  :controller => :future_page_queue,  :action => :destroy
+  
   # Root
   map.root      :controller => :home,  :action => :show
   
