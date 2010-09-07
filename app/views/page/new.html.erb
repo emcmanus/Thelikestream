@@ -1,39 +1,27 @@
 
-<div style="padding: 20px;">
-    <% form_for(@link) do |f| %>
-      <%= f.error_messages %>
-  
-      <p>
-        <%= f.label :title %><br />
-        <%= f.text_field :title %>
-      </p>
-  
-      <% if current_user.is_content_editor %>
-        <h3>Editor Fields</h3>
-        <p>
-            <%= f.label :preview_html %><br />
-            <%= f.text_area :preview_html %>
-        </p>
-        <p>
-            <%= f.label :url %><br />
-            <%= f.text_field :url %>
-        </p>
-        <p>
-            <%= f.label :show_link %><br />
-            <%= f.check_box :show_link %>
-        </p>
-      <% end %>
-  
-      <% if current_user.is_admin %>
-        <h3>Admin Fields</h3>
-        <p>
-            <%= f.label :like_count %><br />
-            <%= f.text_field :like_count %>
-        </p>
-      <% end %>
-  
-      <p>
-        <%= f.submit 'Update' %>
-      </p>
-    <% end %>
+<div style="x-border: 1px solid #d4d4d4; padding: 20px;">
+	<div style="width: 300px; float: left; border-right: 1px dotted #ccc;">
+		<h2>New Page</h2>
+		<% form_for(@new_page, :url=>"/page/") do |f| %>
+			<%= f.error_messages %>
+			<p>
+				<%= f.label :title %><br />
+				<%= f.text_field :title, :placeholder=>"Page Title" %>
+			</p>
+			<p>
+				<b>Create from URL</b><br />
+				<%= f.text_field :source_url, :placeholder=>"http://example.com/" %>
+			</p>
+			<p>
+				<%= f.submit 'Submit!' %>
+			</p>
+		<% end %>
+	</div>
+	<div style="float: left; padding-left: 30px;">
+		<h2>Or, Install Our Bookmarklet</h2>
+		<div style="font-size: 1.3em">
+			<%= render :partial => '/layouts/introBanner/condensedGettingStarted' %>
+		</div>
+	</div>
+	<div style="clear: both">&nbsp;</div>
 </div>

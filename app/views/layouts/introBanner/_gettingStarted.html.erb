@@ -1,8 +1,13 @@
-<div class="prepend-1 span-5 append-1" style="">
-    <h2 style="font-weight: 400; color:#00ccff; font-size: 2.5em; padding-bottom:0; margin-bottom: 5px; line-height: 1em;">Get Started</h2>
-    <h4 style="color: #999; padding-bottom: 0; margin-bottom: 10px;">Install the bookmarklet</h4>
-</div>
+<% condensed ||= false %>
+<% unless condensed %>
+	<div class="prepend-1 span-5 append-1" style="">
+	    <h2 style="font-weight: 400; color:#00ccff; font-size: 2.5em; padding-bottom:0; margin-bottom: 5px; line-height: 1em;">Get Started</h2>
+	    <h4 style="color: #999; padding-bottom: 0; margin-bottom: 10px;">Install the bookmarklet</h4>
+	</div>
+
 <div class="span-14 last" style="font-size:1.4em; color:#333;">
+<% end %>
+
     1. Drag this button onto your bookmarks bar
         <%= render :partial=>'/layouts/bookmarklet' %> <a href="javascript:showBookmarkletHelp();void(0);" style="font-size: 0.7em; color: #00ccff;">(Show Help)</a>
         <br/>
@@ -20,5 +25,8 @@
         <p style="">If you don't want to display the Bookmark toolbar, you can add the bookmarklet to your Bookmarks menu. You can do this by right-clicking on the button above and selecting "Add link to bookmarks." Then to share content on <strong>TheLikeStream</strong>, click it like any other bookmark.</p>
         <button onclick="closeBookmarkletHelp()" type="button" class="btn"><span><span><b>&nbsp;</b><u>Close</u></span></span></button>
     </div>
-</div>
-<div style="width:1px; clear: both; height: 1px;">&nbsp;</div>
+
+<% unless condensed %>
+	</div>
+	<div style="width:1px; clear: both; height: 1px;">&nbsp;</div>
+<% end %>

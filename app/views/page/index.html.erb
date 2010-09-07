@@ -1,22 +1,27 @@
-<h1>Listing links</h1>
+<h2>Most Recent Pages</h2>
 
 <table>
   <tr>
     <th>Title</th>
+	<th>Submitted By</th>
     <th>Like count</th>
+	<th>Score</th>
+	<th>Age</th>
   </tr>
 
-<% @links.each do |link| %>
+<% @pages.each do |page| %>
   <tr>
-    <td><%=h link.title %></td>
-    <td><%=h link.like_count %></td>
-    <td><%= link_to 'Show', link %></td>
-    <td><%= link_to 'Edit', edit_link_path(link) %></td>
-    <td><%= link_to 'Destroy', link, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td><%= link_to h(page.title), page %></td>
+	<td><%= link_to fb_name(page.user, :linked=>"false"), page.user %></td>
+    <td><%=h page.like_count %></td>
+	<td><%=h page.weighted_score %></td>
+	<td><%= distance_of_time_in_words page.created_at, Time.now %></td>
+    <td><%= link_to 'Edit', edit_page_path(page) %></td>
+    <td><%= link_to 'Destroy', "/page/#{page.id}", :confirm => 'Are you sure?', :method =>:delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New link', new_link_path %>
+<%= link_to 'New Page', new_page_path %>

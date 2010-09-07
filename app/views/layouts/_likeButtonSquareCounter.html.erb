@@ -1,0 +1,25 @@
+<% like_target_id = "likeTarget#{(rand * 999999).floor}" %>
+
+<div style="border: 1px solid #e6e6e6; border-radius: 5px;">
+
+	<div style="width:65px; text-align: center;margin: 4px 0;">
+		<% if page.like_count < 100 %>
+			<div style="font-size:2em; line-height: 0.85em"><%= page.like_count %></div>
+		<% elsif page.like_count < 1000 %>
+			<div style="font-size:1.8em; line-height: 0.85em"><%= page.like_count %></div>
+		<% elsif page.like_count < 10000 %>
+			<div style="font-size:1.5em; line-height: 0.85em"><%= page.like_count %></div>
+		<% else %>
+			<div style="font-size:1.5em; line-height: 0.85em"><%= page.like_count/1000 %>k</div>
+		<% end %>
+		<span style="color:#ccc;font-size:0.3em;">LIKES</span>
+	</div>
+	
+
+<div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px;"></div>
+
+<script type="text/javascript" charset="utf-8">
+    writeLikeButton('<%= like_target_id %>', '<%= url_for :page=>nil, :only_path => false %>');
+</script>
+
+</div>

@@ -1,7 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.resources :users  
-  map.resources :pages
+  map.resources :users
+  map.resources :page
   
   # Session
   map.create_session  "/session/create",  :controller => :sessions,  :action => :create
@@ -23,7 +23,6 @@ ActionController::Routing::Routes.draw do |map|
   # Root
   map.root      :controller => :home,  :action => :show
   
-  # Page slugs
-  map.page      "/:id", :controller => :page, :action => :show
-  
+  # Page via slug
+  map.page      "/:id",           :controller => :page, :action => :show
 end

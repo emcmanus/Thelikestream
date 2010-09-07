@@ -1,0 +1,27 @@
+<!-- This is getting nasty. -->
+<script type="text/javascript" charset="utf-8">
+    // Show "install bookmarklet" help
+    function closeBookmarkletHelp(){
+        $('bookmarkletHelp').hide();
+    }
+    function showBookmarkletHelp(){
+        $('bookmarkletHelp').show();
+    }
+
+    // Close entire thing
+    function closeBanner(){
+        $('introBannerOutterContainer').hide();
+        // TODO add cookie
+    }
+
+    // Switch to "Getting Started"
+    function showGettingStartedBanner(){
+        $('getStartedContainer').show();
+        $('introBannerContainer').hide();
+    }
+    function showIntroBanner(){
+        $('getStartedContainer').hide();
+        $('introBannerContainer').show();
+    }
+</script>
+<%= render :partial => '/layouts/introBanner/gettingStarted', :locals=>{:condensed=>true} %>

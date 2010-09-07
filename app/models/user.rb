@@ -1,3 +1,13 @@
+# create_table "users", :force => true do |t|
+#   t.boolean  "is_god",               :default => false, :null => false
+#   t.boolean  "can_admin",            :default => false, :null => false
+#   t.boolean  "can_edit_raw_html",    :default => false, :null => false
+#   t.string   "facebook_id"
+#   t.string   "facebook_session_key"
+#   t.datetime "created_at"
+#   t.datetime "updated_at"
+# end
+
 class User < ActiveRecord::Base
   
   has_many :pages
@@ -11,6 +21,13 @@ class User < ActiveRecord::Base
   validates_inclusion_of   :can_admin, :in => [true, false]
   validates_inclusion_of   :can_edit_raw_html, :in => [true, false]
   
+  # Lookup of permissions -> editable attributes
+  EDIT_PERMISSIONS = {
+    :god => %w[is_god can_admin can_edit_raw_html facebook_id facebook_session_key created_at updated_at],
+    :admin => %w[can_edit_raw_html facebook_id],
+    :editor => %w[],
+    :owner => %w[]
+  }
   
   def self.create_from_validated_id(validated_id)
     return if validated_id.blank?

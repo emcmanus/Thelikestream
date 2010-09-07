@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     end
     
     if current_user
-      flash[:notice] = "You're logged in."
+      flash[:notice] = "You're now logged in."
       redirect_to session[:return_to] || root_path
       session[:return_to] = nil
     elsif @user.nil?

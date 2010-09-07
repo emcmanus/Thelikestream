@@ -1,18 +1,33 @@
 <span style="font-size: 1.2em;">
-    <div class="span-2"><%= render :partial=>'/layouts/likeButtonSmall', :locals=>{:page=>page} %></div>
-    <div class="prepend-2">
-        <h4 style="padding:0;margin:0;">
-            <%= link_to truncate(page.title, :length=>100), page_url(page), :class=>"quotelink" %>
+	<div class="span-3">
+		<% thumb_width = [page.thumbnail_full_width, 100].min %>
+		<% thumb_height = thumb_width.to_f/page.thumbnail_full_width * page.thumbnail_full_height %>
+		<div style="overflow: hidden; width: <%=thumb_width%>px; height: <%=[thumb_height, 70].min%>px;"
+			<%= image_tag page.thumbnail_full, :width=>thumb_width, :height=>thumb_height %>
+		</div>
+	</div>
+    <div class="span-2"><%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>page} %></div>
+    <div class="span-12">
+        <h4 style="padding:0; margin:0;">
+            <%= link_to truncate(page.title, :length=>100), page_url(page), :class=>"mainlink" %>
         </h4>
-    </div>
-    <div class="prepend-2" style="font-size: 0.7em; color: #ccc;">
-        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 
-        <% unless page.source_url.blank? %>
-            | <%= link_to "Source", page.source_url %>
-        <% end %>
-        <% if current_user && current_user.is_content_editor %>
-            | <%= link_to 'Edit', edit_page_path(page) %>
-        <% end %>
+		<span style="color:#666; font-size:0.8em;">
+			<% if page.introduction.blank? %>
+				<%= truncate(strip_tags(page.html_body), :length=>140, :separator=>" ") %>
+			<% else %>
+				<%=h page.introduction %>
+			<% end %>
+			<a href="#"><%= image_tag 'view-page.png' %></a>
+		</span><br/>
+		<span style="font-size: 0.8em; color: #ccc;">
+	        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 
+	        <% unless page.source_url.blank? %>
+	            | <%= link_to "Source", page.source_url %>
+	        <% end %>
+	        <% if current_user && current_user.is_content_editor %>
+	            | <%= link_to 'Edit', edit_page_path(page) %>
+	        <% end %>
+	    </span>
     </div>
 </span>
 

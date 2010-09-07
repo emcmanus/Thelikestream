@@ -40,6 +40,6 @@ class UsersControllerTest < ActionController::TestCase
       delete :destroy, :id => users(:one).to_param
     end
 
-    assert_redirected_to users_path
+    assert_redirected_to user_path
   end
 end

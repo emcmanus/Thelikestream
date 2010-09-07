@@ -40,15 +40,7 @@ class UsersController < ApplicationController
   
   
   def create
-    unless current_user.is_god
-      params[:user][:is_god] = 0
-    end
-    @user = User.create!(params[:user])
-    redirect_to @user
-  rescue ActiveRecord::RecordInvalid => e
-    @user = e.record
-    flash[:error] = @user.errors.full_messages.to_sentence
-    render :action=>"new"
+    # You cannot make users this way!
   end
   
   
@@ -59,12 +51,33 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    @user.update_attributes!(params[:user])
+
+    # Default perms
+    accept_fields = []
+    update_values = {}
+
+    if current_user.is_god
+      accept_fields = User.EDIT_PERMISSIONS[:god]
+    elsif current_user.is_admin
+      accept_fields = User.EDIT_PERMISSIONS[:admin]
+    elsif current_user.is_content_editor
+      accept_fields = User.EDIT_PERMISSIONS[:editor]
+    elsif current_user == @user
+      accept_fields = User.EDIT_PERMISSIONS[:owner]
+    end
+
+    params["user"].each do |key, value|
+      update_values[key] = value if accept_fields.include? key
+    end
+    
+    # Update
+    @user.update_attributes!(update_values)
+    flash[:notice] = "Updates saved!"
     redirect_to @user
   rescue ActiveRecord::RecordInvalid => e
     @user = e.record
-    flash[:error] = @user.errors.full_messages.to_sentence
-    render :action=>"show"    
+    flash[:error] = @user.errors.full_messages.to_sentance
+    render :action => "show"
   end
   
   

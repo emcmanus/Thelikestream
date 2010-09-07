@@ -6,8 +6,8 @@ class BookmarkletController < ApplicationController
   
   def page_create
     user_key = params[:k]
-    user_title = CGI::unescape(params[:t])
-    user_url = CGI::unescape(params[:u])
+    unsafe_title = CGI::unescape(params[:t])
+    unsafe_url = CGI::unescape(params[:u])
     
     # JSON Response
     @response = { :completed=>false, :message=>"", :require_login=>false }
@@ -30,8 +30,8 @@ class BookmarkletController < ApplicationController
       
       # User params
       page.user = key.user
-      page.title = user_title
-      page.source_url = user_url
+      page.title = unsafe_title
+      page.source_url = unsafe_url
       
       unless page.valid?
         @response[:completed] = false
