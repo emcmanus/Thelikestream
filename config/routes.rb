@@ -23,6 +23,11 @@ ActionController::Routing::Routes.draw do |map|
   # Voting
   map.vote_cast "/vote_cast",   :controller => :vote,   :action => :vote_for_url
   
+  # Admin
+  map.spoof   "/admin/spoof",    :controller => :spoof,   :action => :show_form
+  map.spoof_submit  "/admin/spoof/submit", :controller => :spoof, :action => :submit
+  map.spoof_create  "/admin/spoof/create", :controller => :spoof, :action => :make_new_puppet
+  
   # Root
   map.root      :controller => :home,  :action => :show
   

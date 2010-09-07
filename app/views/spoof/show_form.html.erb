@@ -1,0 +1,55 @@
+<h2>Puppet</h2>
+
+<div style="width:100%; border-top: 1px dotted #ccc;">&nbsp;</div>
+
+<b>Important</b>
+<p>You can switch into and between puppet accounts, but never into a real user. To log back in as yourself, first use the logout link in the admin panel.</p>
+<p>Bookmarklets are associated with the current user the first time they're used. So your old bookmarklets will continue submitting under your original account, and new bookmarklets will be associated with whoever you happen to be logged in to.</p>
+
+<div style="width:100%; border-top: 1px dotted #ccc;">&nbsp;</div>
+
+<h3>Puppet Accounts</h3>
+
+<ul>
+    <% for puppet in @puppets %>
+        <li><a href="javascript:setId(<%= puppet.id %>)"><%= puppet.facebook_id %> - <%= fb_name(puppet, :linked=>"false") %></a></li>
+    <% end %>
+</ul>
+
+
+<% form_tag(spoof_submit_path, :method=>:put) do -%>
+    
+    <p>
+        <b>LikeStream Id:</b><br/>
+        <%= text_field_tag 'user_id', nil, :id=>'user_id_field' %>
+    </p>
+    
+    <p>
+        <%= submit_tag 'Switch to user' %>
+    </p>
+    
+<% end -%>
+
+<div style="width:100%; border-top: 1px dotted #ccc;">&nbsp;</div>
+
+<h3>Make a Puppet</h3>
+
+<p>Please destroy puppets with a name of null.</p>
+
+<a href="javascript:makeNewPuppet()" class="btn" style="font-size:1.1em; position:relative; bottom: 1px;"><span><span><b>&nbsp;</b><u>Click to Create</u></span></span></a>
+
+
+<script type="text/javascript" charset="utf-8">
+    function setId(id)
+    {
+        $('user_id_field').value = id;
+    }
+    function makeNewPuppet()
+    {
+        var createRequestPath = "<%= spoof_create_url %>";
+        var s = document.createElement('script');
+        s.setAttribute('src', createRequestPath + "?c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
+        document.body.appendChild(s);
+        setTimeout(function(){window.location.reload()}, 200);
+    }
+</script>

@@ -110,6 +110,12 @@
                 <div style="float: left;">
                     <%= link_to "manage all pages", page_index_path %>
                 </div>
+                <% if current_user.is_admin %>
+                    <div style="float:left;width:30px;text-align:center;">|</div>
+                    <div style="float: left;">
+                        <%= link_to "switch to puppet", spoof_path %>
+                    </div>
+                <% end %>
                 <div style="float:left;width:30px;text-align:center;">|</div>
                 <div style="float: left;">
                     <%= fb_logout_link "logout", logout_path %>

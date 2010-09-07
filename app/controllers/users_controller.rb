@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   # 
   
   before_filter :require_user, :except => [:show]
-  before_filter :require_admin, :only => [:index, :new, :create, :edit, :update]
+  before_filter :require_admin, :except => [:show, :profile, :edit, :update]
   
   def profile
     @user = current_user
@@ -46,11 +46,17 @@ class UsersController < ApplicationController
   
   def edit
     @user = User.find(params[:id])
+    
+    # You can only edit yourself, unless you're an admin
+    redirect_to root_url unless @user == current_user or current_user.is_admin
   end
   
   
   def update
     @user = User.find(params[:id])
+    
+    # You can only edit yourself, unless you're an admin
+    redirect_to root_url unless @user == current_user or current_user.is_admin
 
     # Default perms
     accept_fields = []
@@ -80,6 +86,19 @@ class UsersController < ApplicationController
     render :action => "show"
   end
   
-  
+  def destroy
+    begin
+      @user = User.find(params[:id])
+    
+      # You can only edit yourself, unless you're an admin
+      redirect_to root_url unless @user == current_user or current_user.is_admin
+    
+      @user.destroy
+      flash[:notice] = "User destroyed"
+    rescue
+      flash[:notice] = "User does not exist" if current_user.is_admin
+    end
+    redirect_to users_path
+  end
   
 end

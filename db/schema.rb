@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907093808) do
+ActiveRecord::Schema.define(:version => 20100907105059) do
 
   create_table "bookmarklet_keys", :force => true do |t|
     t.string   "value",      :null => false
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20100907093808) do
     t.string   "facebook_session_key"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_puppet",            :default => false
   end
 
 end
