@@ -30,11 +30,19 @@ require 'open-uri'
 class Page < ActiveRecord::Base
   belongs_to :user
   
+  has_many :page_votes
+  
   acts_as_url :title, :url_attribute => :slug, :only_when_blank => true
   
   validates_format_of_url   :source_url
   validates_presence_of     :title
   validates_associated      :user
+  
+  validates_numericality_of :thumbnail_small_width, :greater_than_or_equal_to=>1, :allow_nil=>true,   :unless => Proc.new { |page| page.thumbnail_small.blank? }
+  validates_numericality_of :thumbnail_small_height, :greater_than_or_equal_to=>1, :allow_nil=>true,  :unless => Proc.new { |page| page.thumbnail_small.blank? }
+  
+  validates_numericality_of :thumbnail_full_width, :greater_than_or_equal_to=>1, :allow_nil=>true,    :unless => Proc.new { |page| page.thumbnail_full.blank? }
+  validates_numericality_of :thumbnail_full_height, :greater_than_or_equal_to=>1, :allow_nil=>true,   :unless => Proc.new { |page| page.thumbnail_full.blank? }
   
   before_save :scrape_source_url
   
@@ -82,11 +90,17 @@ class Page < ActiveRecord::Base
     # Thumbnail
     begin
       if self.thumbnail_full.blank?
-        img = Nokogiri::HTML(self.html_body).css('img').first
-        unless img.blank? or img[:width].blank? or img[:height].blank?
+        imgs = Nokogiri::HTML(self.html_body).css('img')
+        imgs.each do |img|
+          # Use the first image with dimensions
+          continue if img.blank? or img[:width].blank? or img[:width].to_i < 1 or img[:height].blank? or img[:height].to_i < 1
+          
           self.thumbnail_full = img[:src]
           self.thumbnail_full_width = img[:width].to_i
           self.thumbnail_full_height = img[:height].to_i
+          
+          break # Done
+          
           # TODO Create small and square thumbnails
         end
       end
@@ -102,28 +116,20 @@ class Page < ActiveRecord::Base
     end
   end
   
-  
-  # def secure_update(unsafe_fields, editing_user)
-  #   if unsafe_fields.blank? or editing_user.nil?
-  #     logger.warn "Early return from secure_update, params unsafe_fields: #{unsafe_fields.inspect}, editing_user: #{editing_user.inspect}"
-  #     return false
-  #   end
-  #   
-  #   self.title = unsafe_fields[:title]
-  #   
-  #   # Secure fields
-  #   if editing_user.is_content_editor
-  #     self.url = unsafe_fields[:url] 
-  #     self.show_link = unsafe_fields[:show_link]
-  #     self.preview_html = unsafe_fields[:html_body]
-  #   end
-  #   
-  #   if editing_user.is_admin
-  #     self.like_count = unsafe_fields[:like_count]
-  #   end
-  #   
-  #   return
-  # end
+  def calculate_weighted_score!
+    # Ranking algorithm as described in RAILS_SETUP_NOTES
+    
+    # Ts => Time, in Seconds, since 12:00am Sept. 1st
+    epoch = Time.local 2010, "sep", 1, 0, 0, 0
+    t_s = self.created_at - epoch
+    
+    # log_b8( like_count )
+    weighted_votes = Math.log(self.like_count)/Math.log(8)
+    
+    # Ts + 45000 * log_b8( like_count )
+    self.weighted_score = t_s + 45000 * weighted_votes
+    self.save
+  end
   
   
   # 

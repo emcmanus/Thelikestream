@@ -1,0 +1,9 @@
+// Increment counter given ID
+
+(function(){
+    <% if @page_id && @increment_counter %>
+        $$('.likeCounterLabel<%= @page_id %>').each(function(el){
+            el.innerHTML = parseInt(el.innerHTML)+1;
+        });
+    <% end %>
+})();

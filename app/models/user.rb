@@ -10,6 +10,7 @@
 
 class User < ActiveRecord::Base
   
+  has_many :page_votes
   has_many :pages
   has_many :bookmarklet_keys
   

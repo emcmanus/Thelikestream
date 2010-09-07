@@ -20,6 +20,9 @@ ActionController::Routing::Routes.draw do |map|
   map.submit  "/submit",  :controller => :page,   :action => :new
   map.tools   "/tools",   :controller => :tools,  :action => :show
   
+  # Voting
+  map.vote_cast "/vote_cast",   :controller => :vote,   :action => :vote_for_url
+  
   # Root
   map.root      :controller => :home,  :action => :show
   

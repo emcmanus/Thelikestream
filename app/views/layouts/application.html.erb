@@ -31,10 +31,31 @@
 <body>
     
 <% unless @empty_layout %>
+	<script type="text/javascript" charset="utf-8">
+	    if (!window.queuedFacebookCalls) window.queuedFacebookCalls = [];
+	   function facebookApiReady()
+	   {
+	       if (window.queuedFacebookCalls.length)
+	       {
+	           var proc;
+	           while ( proc = window.queuedFacebookCalls.pop() )
+	           {
+	               proc();
+               }
+	       }
+	   }
+	   function fbSafe(func){
+	       window.queuedFacebookCalls.push(func);
+	   }
+	</script>
     <% if @page and @page.is_cloaked %>
-        <%= fb_connect_async_js :app_id=>"157023087646197" %>
+        <% fb_connect_async_js :app_id=>"157023087646197" do -%>
+			facebookApiReady();
+		<% end %>
     <% else %>
-        <%= fb_connect_async_js %>
+        <% fb_connect_async_js do -%>
+			facebookApiReady();
+		<% end %>
     <% end %>
     
     <style type="text/css" media="screen">
@@ -116,6 +137,9 @@
      <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
      <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
+  	 <% unless current_user %>
+		<%= link_to "LOGIN", login_path, :class=>"nav_link" %>
+	 <% end %>
  </div>
  
  <div class="span-6 last" style="padding-top: 24px; text-align: right;">
@@ -128,8 +152,6 @@
 <% end %>
 
   <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff;">
-    
-    
 
       
     <div class="span-20 prepend-1 append-1 last">
@@ -152,6 +174,18 @@
   <hr class="space" />
   
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    fbSafe(function(){
+        FB.Event.subscribe('edge.create', function(href, widget) {
+            // It doesn't matter what was clicked at this point, just notify the server
+            pingSrc = "<%= vote_cast_url %>?vote=" + escape(href);
+            var s = document.createElement("script");
+            s.setAttribute("src", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
+            document.body.appendChild(s);
+        });
+    });
+</script>
 
 <% else %>
 	<!-- Empty Layout -->
