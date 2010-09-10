@@ -198,6 +198,14 @@
             document.body.appendChild(s);
         });
     });
+    <% if current_user and current_user.is_content_editor %>
+        function boostScore(href){
+            pingSrc = "<%= vote_cast_url %>?vote=" + encodeURIComponent(href);
+            var s = document.createElement("script");
+            s.setAttribute("src", pingSrc + "&boost=true&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
+            document.body.appendChild(s);
+        }
+    <% end %>
 </script>
 
 <% else %>

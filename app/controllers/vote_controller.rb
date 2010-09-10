@@ -25,7 +25,13 @@ class VoteController < ApplicationController
     if recognized_path[:controller] == "page"
       @record_receiving_vote = Page.find recognized_path[:id]
       
-      if current_user && @record_receiving_vote
+      if current_user && current_user.is_content_editor && params[:boost]
+        # BOOST Score
+        @record_receiving_vote.increment! :like_count
+        @record_receiving_vote.calculate_weighted_score!
+        @increment_counter = true
+      elsif current_user && @record_receiving_vote
+        # Check to see if this user has already voted
         vote = PageVote.find_by_user_id_and_page_id(current_user.id, @record_receiving_vote.id)
         if vote.nil?
           # user has not already voted for this page
