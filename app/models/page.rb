@@ -42,8 +42,6 @@ class Page < ActiveRecord::Base
   
   has_many :page_votes
   
-  acts_as_url :title, :url_attribute => :slug, :only_when_blank => true
-  
   validates_format_of_url   :source_url
   validates_presence_of     :title
   validates_associated      :user
@@ -57,6 +55,14 @@ class Page < ActiveRecord::Base
   # We'll check the state of the object to make sure these aren't run on updates
   before_save :scrape_source_url
   before_save :process_images
+  before_save :set_slug
+  
+  def set_slug
+    if self.slug.blank?
+      # Some non-word characters were being included in the slug. This was screwing up voting later on.
+      self.slug = self.title.to_url.scan(/\w+/).join("-")
+    end
+  end
   
   def to_param
     "#{self.id}-#{self.slug}"

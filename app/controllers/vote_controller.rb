@@ -10,19 +10,19 @@ class VoteController < ApplicationController
     # Whether to increment the HTML "like counter"
     @increment_counter = false
     
-    # Get just the path from URL
-    vote_uri = URI.parse params[:vote]
-    
-    path_to_parse = vote_uri.path
-    
-    unless vote_uri.query.blank?
-      path_to_parse += "?#{vote_uri.query}"
+    # Attempt to parse URL and recognize the path
+    begin
+      vote_uri = URI.parse params[:vote]
+      path_to_parse = vote_uri.path
+      unless vote_uri.query.blank?
+        path_to_parse += "?#{vote_uri.query}"
+      end
+      recognized_path = ActionController::Routing::Routes.recognize_path(path_to_parse)
+    rescue
+      logger.error $!
     end
     
-    # Get corresponding object
-    recognized_path = ActionController::Routing::Routes.recognize_path(path_to_parse)
-    
-    if recognized_path[:controller] == "page"
+    if recognized_path && recognized_path[:controller] == "page"
       @record_receiving_vote = Page.find recognized_path[:id]
       
       if current_user && current_user.is_content_editor && params[:boost]
