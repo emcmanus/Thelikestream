@@ -189,7 +189,7 @@ class Page < ActiveRecord::Base
       tag_specific_attributes = {
         "img" => %w[width height]
       }
-      readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], 
+      readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], :debug => true,
                 :attributes=>%w[src href], :tag_specific_attributes=>tag_specific_attributes, :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url
       self.html_body ||= readability_doc.content
     rescue
@@ -234,7 +234,7 @@ class Page < ActiveRecord::Base
   end
   
   def og_image
-    return self.thumbnail_small unless self.thumbnail_small.blank?
+    return self.thumbnail_square unless self.thumbnail_square.blank?
     nil
   end
   

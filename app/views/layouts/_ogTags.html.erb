@@ -3,7 +3,7 @@
     <!-- Facebook Open Graph -->
     <meta property="og:title" content="<%= @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= @page.og_image || "#{root_path}/images/like-72-72.png" %>" />
-    <meta property="og:url" content="<%= @page.og_url || url_for(@page) %>" />
+    <meta property="og:url" content="<%= @page.og_url || page_url(@page, :only_path => false) %>" />
 <% else %>
     <meta property="og:title" content="<%= @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= "#{root_path}/images/like-72-72.png" %>" />
@@ -17,6 +17,6 @@
     <meta property="og:admins" content="100000925070212" /> <!-- admin user ids -->
 <% else %>
     <meta property="og:type" content="article" />  <!-- Not if for the root domain -->
-    <meta property="og:site_name" content="TheLikeStream.com" />
+    <meta property="og:site_name" content="★TheLikeStream" />
     <meta property="og:admins" content="904678" /> <!-- admin user ids -->
 <% end %>
