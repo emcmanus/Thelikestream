@@ -1,49 +1,41 @@
 # 
-# create_table "pages", :force => true do |t|
-#   t.string   "media_category"
-# 
-#   t.string   "thumbnail_small",        :default => ""
-#   t.integer  "thumbnail_small_width",  :default => 0
-#   t.integer  "thumbnail_small_height", :default => 0
-# 
-#   t.string   "thumbnail_full",         :default => ""
-#   t.integer  "thumbnail_full_width",   :default => 0
-#   t.integer  "thumbnail_full_height",  :default => 0
-# 
-# t.string    :thumbnail_page
-# t.string    :thumbnail_page_width
-# t.string    :thumbnail_page_height
-# 
-# t.string    :thumbnail_small
-# t.string    :thumbnail_small_width
-# t.string    :thumbnail_small_height
-# 
-# # Constrained dimensions
-# t.string    :thumbnail_thumb
-# t.string    :thumbnail_square
-# t.string    :thumbnail_tiny
-# 
-#   t.text     "introduction"
-#   t.text     "html_body"
-#   t.string   "title",                  :default => ""
-#   t.string   "like_title",             :default => ""
-#   t.string   "source_url"
-#   t.string   "shortened_url",          :default => ""
-#   t.boolean  "show_link",              :default => true
-#   t.boolean  "is_cloaked",             :default => false
-#   t.integer  "like_count",             :default => 0
-#   t.integer  "weighted_score",         :default => 0
-#   t.integer  "user_id",                                   :null => false
-#   t.datetime "created_at"
-#   t.datetime "updated_at"
-#   t.string   "slug"
-# end
+# t.string   "media_category"
+# t.string   "thumbnail_small",           :default => ""
+# t.integer  "thumbnail_small_width",     :default => 0
+# t.integer  "thumbnail_small_height",    :default => 0
+# t.string   "thumbnail_full",            :default => ""
+# t.integer  "thumbnail_full_width",      :default => 0
+# t.integer  "thumbnail_full_height",     :default => 0
+# t.text     "introduction"
+# t.text     "html_body"
+# t.string   "title",                     :default => ""
+# t.string   "like_title",                :default => ""
+# t.string   "source_url"
+# t.string   "shortened_url",             :default => ""
+# t.boolean  "show_link",                 :default => true
+# t.boolean  "is_cloaked",                :default => false
+# t.integer  "like_count",                :default => 0
+# t.integer  "weighted_score",            :default => 0
+# t.integer  "user_id",                                      :null => false
+# t.datetime "created_at"
+# t.datetime "updated_at"
+# t.string   "slug"
+# t.string   "thumbnail_page"
+# t.string   "thumbnail_page_width"
+# t.string   "thumbnail_page_height"
+# t.string   "thumbnail_thumb"
+# t.string   "thumbnail_square"
+# t.string   "thumbnail_tiny"
+# t.boolean  "image_processing_started",  :default => false
+# t.boolean  "image_processing_finished", :default => false
+# t.boolean  "remote_url_scraped",        :default => false
 # 
 
 
 require 'open-uri'
 require 'tempfile'
 require 'aws/s3'
+require 'timeout'
 
 class Page < ActiveRecord::Base
   belongs_to :user
@@ -156,9 +148,29 @@ class Page < ActiveRecord::Base
     # Only run when there are empty fields
     return unless self.html_body.blank? or self.title.blank? or self.thumbnail_full.blank?
     
+    # 
+    # SPECIAL SUBMISSION TYPES
+    # 
+    
+    # IMG
+    if self.source_url.index /\.(gif|tiff|png|jpeg|jpg|bmp)$/i
+      self.html_body = "<p><img src='#{self.source_url}'/></p>"
+      # Skip the rest, there's nothing else we can do
+      return true
+    end
+    
+    # DO NOTHING:
+    if self.source_url.index /\.(pdf|ps)$/i
+      self.html_body = "" # We'll link back to this object automatically
+      return true
+    end
+    
+    # END SPECIAL TYPES
+    
+    
     # Get HTML source
     begin
-      raw_html = open(self.source_url).read
+        raw_html = open(self.source_url).read
     rescue
       logger.error "in scrape_source_url 1 #{$!}"
       return
@@ -171,10 +183,11 @@ class Page < ActiveRecord::Base
         "img" => %w[width height]
       }
       readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], 
-                :attributes=>%w[src href], :tag_specific_attributes=>tag_specific_attributes, :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url, :debug => true
+                :attributes=>%w[src href], :tag_specific_attributes=>tag_specific_attributes, :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url
       self.html_body ||= readability_doc.content
     rescue
       logger.error "in scrape_source_url 2 #{$!}"
+      return
     end
     
     # Title
@@ -184,6 +197,7 @@ class Page < ActiveRecord::Base
       end
     rescue
       logger.error "in scrape_source_url 3 #{$!}"
+      return
     end
   end
   

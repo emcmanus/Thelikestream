@@ -2,11 +2,25 @@
 
 (function(){
 
-// Assemble the submit path
+var safeSend = false;
+
+// If this looks like an image, let's change our strategy
+if (window.location.href.match( /\.(gif|tiff|png|jpeg|jpg|bmp)$/i ))
+{
+    safeSend = true;
+}
+
+// Assemble submit path
 
 var k = "<%= @user_key %>";
-var t = encodeURIComponent(document.getElementsByTagName("title")[0].innerHTML);
 var u = encodeURIComponent(window.location.href);
+var t;
+if (!safeSend){
+    t = encodeURIComponent(document.getElementsByTagName("title")[0].innerHTML);
+} else {
+    t = encodeURIComponent(prompt("Please enter a title for this image:", ""));
+    alert(t);
+}
 var src = "<%= bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
 
 var ourStyle = document.createElement('style');
@@ -20,7 +34,7 @@ ourStyle.innerHTML = "\
 }";
 
 // Append submission box styles
-document.getElementsByTagName("head")[0].appendChild(ourStyle);
+if (!safeSend) document.getElementsByTagName("head")[0].appendChild(ourStyle);
 
 // Append status box
 var e = document.createElement('div');
@@ -34,7 +48,7 @@ e.style.padding = "15px";
 e.style.top="15px";
 e.style.right="15px";
 e.style.width="450px";
-e.style.height="70px";
+e.style.height="60px";
 e.style.border="5px solid black";
 e.style.backgroundColor="white";
 document.body.insertBefore(e, document.body.firstChild);
