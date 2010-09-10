@@ -54,8 +54,9 @@ class Page < ActiveRecord::Base
   validates_numericality_of :thumbnail_full_width, :greater_than_or_equal_to=>1, :allow_nil=>true,    :unless => Proc.new { |page| page.thumbnail_full.blank? }
   validates_numericality_of :thumbnail_full_height, :greater_than_or_equal_to=>1, :allow_nil=>true,   :unless => Proc.new { |page| page.thumbnail_full.blank? }
   
-  before_save :scrape_source_url, :unless => :remote_url_scraped
-  before_save :process_images,    :unless => :image_processing_started
+  # We'll check the state of the object to make sure these aren't run on updates
+  before_save :scrape_source_url
+  before_save :process_images
   
   def to_param
     "#{self.id}-#{self.slug}"
@@ -72,7 +73,7 @@ class Page < ActiveRecord::Base
   
   def process_images
     
-    return if self.html_body.blank?
+    return if self.html_body.blank? or self.image_processing_started
     
     # Otherwise, mark as started
     self.image_processing_started = true
@@ -140,7 +141,7 @@ class Page < ActiveRecord::Base
   def scrape_source_url
     # Try to extract some useful content from the remote URL
     
-    return if self.source_url.blank?
+    return if self.source_url.blank? or self.remote_url_scraped
     
     # Mark as finished, even if we bail out due to an error
     self.remote_url_scraped = true
