@@ -19,7 +19,6 @@ if (!safeSend){
     t = encodeURIComponent(document.getElementsByTagName("title")[0].innerHTML);
 } else {
     t = encodeURIComponent(prompt("Please enter a title for this image:", ""));
-    alert(t);
 }
 var src = "<%= bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
 
