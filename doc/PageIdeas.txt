@@ -1,0 +1,59 @@
+============================================================
+
+When do the most successful Hacker News/Reddit stories get submitted?
+
+Watch voting patterns on active stories for a week. Process looks like this:
+
+Repeat every 15 mins: Scrape the first n pages of HN. Store observations like so:
+
+{
+	Story ID => [[time,pts,position,observedOnPageX], [time,pts,position,observedOnPageX], ...]
+}
+
+Then find the hourly deltas.
+
+for every observation in every story, skipping the first observation:
+	DeltaForHour [ getHour(currentTimestamp, previousTimestamp) ] += currentObservation - previousObservation
+end
+
+Now you have votes cast per hour.
+
+Given the lifetime total score, look at the percent-contributed-per-hour for every story. See if there are any patterns. E.g. 90% of stories have 80% of their total score after 3 hours. If there's a strong correllation here, regardless of submission time, that might be interesting.
+
+Convert this into scaled points contributed during the hour, taking into account submission time. If you submit story X at time Y, at time Y + 3hrs, the story would gain X points.
+
+You can now optimize for several things:
+- Maximum time on first page
+- Maximize time in the top 3
+- Maximize number of votes
+	- model votes for every possible submission time
+
+Reddit algorithm trivia: downvotes only serve to "bury" stories. They don't lower the rank of stories, rather it's a binary is/is_not buried. Most users probably have no idea this is the case. But yeah, downvotes don't matter, and past X points upvotes have a trivially small affect of a story's score. So little that it's probably not rational to spend the effort giving the story your points ;)
+
+This could actually yield an interesting metric: track how many upvotes come from old users. An upvote is a token of approval. The more upvotes in a given day, the more users like the content. By looking at the relative frequency of voting over time, it might be possible to establish an "enjoyment index" that show that, no, voting patterns are no different today than they were X months ago.
+
+
+============================================================
+
+
+7 Most Beautiful Oases: http://www.oddee.com/item_92692.aspx
+
+
+============================================================
+
+
+Celebrity Like Fight! Who's hotter?
+
+	[ X ]			  [ X ]
+
+	like	  	      like
+  X Fan Page	    Y Fan Page
+
+			[SKIP]
+
+Last Round: X Celebrity has a Y% rating, X wins!
+
+You actually like the fan page, not the "concept" of the celebrity
+
+
+============================================================

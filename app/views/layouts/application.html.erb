@@ -157,7 +157,7 @@
  </div>
  
 <!-- Get Started Banner -->
-<% unless current_user or @hide_banner %>
+<% unless current_user or @hide_banner and false %>
     <%= render :partial=>'/layouts/introBanner/introBanner' %>
 <% end %>
 
@@ -189,7 +189,7 @@
     fbSafe(function(){
         FB.Event.subscribe('edge.create', function(href, widget) {
             // It doesn't matter what was clicked at this point, just notify the server
-            pingSrc = "<%= vote_cast_url %>?vote=" + escape(href);
+            pingSrc = "<%= vote_cast_url %>?vote=" + encodeURIComponent(href);
             var s = document.createElement("script");
             s.setAttribute("src", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
             document.body.appendChild(s);

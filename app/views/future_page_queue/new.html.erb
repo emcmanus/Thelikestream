@@ -15,7 +15,7 @@
 	</p>
 	<p>
 		<b>When to launch? </b> (Default: 3 hours from now)<br />
-		<%= f.datetime_select :launch_threshold, :default=>(Time.now+3.hours) %>
+		<%= f.datetime_select :launch_threshold, :default=>(3.hours.from_now) %>
 	</p>
 	<p>
  		Submitting as <b><%= fb_name current_user.facebook_id, :linked=>false %></b> <%= f.submit 'Next...' %>

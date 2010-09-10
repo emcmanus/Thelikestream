@@ -5,8 +5,8 @@
 // Assemble the submit path
 
 var k = "<%= @user_key %>";
-var t = escape(document.getElementsByTagName("title")[0].innerHTML);
-var u = escape(window.location.href);
+var t = encodeURIComponent(document.getElementsByTagName("title")[0].innerHTML);
+var u = encodeURIComponent(window.location.href);
 var src = "<%= bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
 
 var ourStyle = document.createElement('style');
@@ -34,7 +34,7 @@ e.style.padding = "15px";
 e.style.top="15px";
 e.style.right="15px";
 e.style.width="450px";
-e.style.height="100px";
+e.style.height="70px";
 e.style.border="5px solid black";
 e.style.backgroundColor="white";
 document.body.insertBefore(e, document.body.firstChild);
@@ -83,7 +83,11 @@ window.__likeStreamBookmarkletSubmit = function(requestPath)
 	s.setAttribute("src", requestPath + "&c_buster=" + Math.floor(Math.random()*10000));	// Don't cache
 	document.body.appendChild(s);
 	
-	e.innerHTML = "Submitting... <br/>(This may take a few seconds.)";
+    // e.innerHTML = "Submitting... <br/>(This may take a few seconds.)";
+    
+    // UNTIL YOU MOVE IMAGE PROCESSING INTO A BACKGROUND THREAD
+    e.innerHTML = "<span style='background-color:#ff0;'><b>Submitted!</b></span><br/>(Content will be available in about 30 seconds.)";
+    setTimeout( function(){e.style.display = "none";}, 2000 );	// Close in 2 seconds
 }
 
 window.__likeStreamBookmarkletSubmit(src);

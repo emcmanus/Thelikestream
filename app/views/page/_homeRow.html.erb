@@ -1,11 +1,8 @@
 <span style="font-size: 1.2em;">
 	<div class="span-3">
-	    <% unless page.thumbnail_full.blank? %>
-    		<% thumb_width = [page.thumbnail_full_width, 100].min %>
-    		<% logger.warn page.thumbnail_full_width %>
-    		<% thumb_height = (thumb_width.to_f/page.thumbnail_full_width * page.thumbnail_full_height).to_i %>
-    		<div style="overflow: hidden; width: <%=thumb_width%>px; height: <%=[thumb_height, 70].min%>px;"
-    			<%= link_to image_tag(page.thumbnail_full, :width=>thumb_width, :height=>thumb_height), page %>
+	    <% unless page.thumbnail_thumb.blank? %>
+    		<div style="overflow: hidden; width: 100px; height: 70px;"
+    			<%= link_to image_tag(page.thumbnail_thumb), page %>
     		</div>
     	<% else %>
             <!-- TODO: Default thumb -->

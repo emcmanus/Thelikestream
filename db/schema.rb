@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100907123049) do
+ActiveRecord::Schema.define(:version => 20100909102731) do
 
   create_table "bookmarklet_keys", :force => true do |t|
     t.string   "value",      :null => false
@@ -59,26 +59,35 @@ ActiveRecord::Schema.define(:version => 20100907123049) do
 
   create_table "pages", :force => true do |t|
     t.string   "media_category"
-    t.string   "thumbnail_small",        :default => ""
-    t.integer  "thumbnail_small_width",  :default => 0
-    t.integer  "thumbnail_small_height", :default => 0
-    t.string   "thumbnail_full",         :default => ""
-    t.integer  "thumbnail_full_width",   :default => 0
-    t.integer  "thumbnail_full_height",  :default => 0
+    t.string   "thumbnail_small",           :default => ""
+    t.integer  "thumbnail_small_width",     :default => 0
+    t.integer  "thumbnail_small_height",    :default => 0
+    t.string   "thumbnail_full",            :default => ""
+    t.integer  "thumbnail_full_width",      :default => 0
+    t.integer  "thumbnail_full_height",     :default => 0
     t.text     "introduction"
     t.text     "html_body"
-    t.string   "title",                  :default => ""
-    t.string   "like_title",             :default => ""
+    t.string   "title",                     :default => ""
+    t.string   "like_title",                :default => ""
     t.string   "source_url"
-    t.string   "shortened_url",          :default => ""
-    t.boolean  "show_link",              :default => true
-    t.boolean  "is_cloaked",             :default => false
-    t.integer  "like_count",             :default => 0
-    t.integer  "weighted_score",         :default => 0
-    t.integer  "user_id",                                   :null => false
+    t.string   "shortened_url",             :default => ""
+    t.boolean  "show_link",                 :default => true
+    t.boolean  "is_cloaked",                :default => false
+    t.integer  "like_count",                :default => 0
+    t.integer  "weighted_score",            :default => 0
+    t.integer  "user_id",                                      :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "slug"
+    t.string   "thumbnail_page"
+    t.string   "thumbnail_page_width"
+    t.string   "thumbnail_page_height"
+    t.string   "thumbnail_thumb"
+    t.string   "thumbnail_square"
+    t.string   "thumbnail_tiny"
+    t.boolean  "image_processing_started",  :default => false
+    t.boolean  "image_processing_finished", :default => false
+    t.boolean  "remote_url_scraped",        :default => false
   end
 
   create_table "users", :force => true do |t|

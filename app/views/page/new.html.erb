@@ -5,7 +5,7 @@
 		<% form_for(@new_page, :url=>"/page/") do |f| %>
 			<%= f.error_messages %>
 			<p>
-				<%= f.label :title %><br />
+				<%= f.label :title %> - Optional<br />
 				<%= f.text_field :title, :placeholder=>"Page Title" %>
 			</p>
 			<p>
@@ -18,7 +18,7 @@
 		<% end %>
 	</div>
 	<div style="float: left; padding-left: 30px;">
-		<h2>Or, Install Our Bookmarklet</h2>
+		<h2>Or, Use Our Bookmarklet</h2>
 		<div style="font-size: 1.3em">
 			<%= render :partial => '/layouts/introBanner/condensedGettingStarted' %>
 		</div>
