@@ -7,8 +7,12 @@ ActionController::Routing::Routes.draw do |map|
   map.create_session  "/session/create",  :controller => :sessions,  :action => :create
   map.logout          "/logout",          :controller => :sessions,  :action => :destroy
   map.login           "/login",           :controller => :sessions,  :action => :new
+  map.register        "/register",        :controller => :sessions,  :action => :register
   map.login_bookmarklet           "/login/bookmarklet",       :controller => :sessions, :action => :new_from_bookmarklet
   map.login_bookmarklet_success   "/login/bookmarklet/done",  :controller => :sessions, :action => :new_from_bookmarklet_success
+  
+  # New Users
+  map.get_started     "/get_started",     :controller => :tools,  :action => :get_started
   
   # Bookmarklet
   map.bookmarklet_js      "/bookmarklet/show",    :controller => :bookmarklet,   :action => :show

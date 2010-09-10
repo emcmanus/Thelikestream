@@ -41,6 +41,7 @@ Config located in /etc/apache2/apache2.conf
 Setup through slicehost management panel
 43200 TTL
 http://articles.slicehost.com/2007/10/24/creating-dns-records
+Info on redirects/rewrites: http://www.webmasterworld.com/apache/3223535.htm
 
 
 	[ SliceHost Management Panel ]

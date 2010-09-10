@@ -3,9 +3,15 @@ class SessionsController < ApplicationController
   def new
     if current_facebook_user
       flash[:notice] = ""
-      redirect_to create_session_path
+      redirect_to create_session_path and return
     end
   end
+  
+  def register
+    session[:return_to] = get_started_path
+    redirect_to :action => :new and return
+  end
+    
   
   def new_from_bookmarklet
     session[:return_to] = login_bookmarklet_success_path

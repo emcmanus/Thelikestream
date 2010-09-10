@@ -1,0 +1,23 @@
+<div style="width: 300px; float: left; border-right: 1px dotted #ccc;">
+	<h3>Create a New Page</h3>
+	<% form_for(@new_page, :url=>"/page/") do |f| %>
+		<%= f.error_messages %>
+		<p>
+			<%= f.label :title %> - Optional<br />
+			<%= f.text_field :title, :placeholder=>"Page Title" %>
+		</p>
+		<p>
+			<b>Create from URL</b><br />
+			<%= f.text_field :source_url, :placeholder=>"http://example.com/" %>
+		</p>
+		<p>
+			<%= f.submit 'Submit!' %>
+		</p>
+	<% end %>
+</div>
+<div style="float: left; padding-left: 30px;">
+	<h3>Or, Use Our Bookmarklet <span class="highlight" style="font-size:0.7em">Recommended</span></h3>
+	<div style="font-size: 1.3em">
+		<%= render :partial => '/layouts/introBanner/condensedGettingStarted' %>
+	</div>
+</div>

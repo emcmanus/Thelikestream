@@ -145,10 +145,13 @@
  </div>
  <div class="span-12" style="padding-top: 24px;">
      <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
-     <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
+     <% if current_user %>
+        <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
+     <% end %>
      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
   	 <% unless current_user %>
 		<%= link_to "LOGIN", login_path, :class=>"nav_link" %>
+		<%= link_to "REGISTER", register_path, :class=>"nav_link" %>
 	 <% end %>
  </div>
  
@@ -157,7 +160,7 @@
  </div>
  
 <!-- Get Started Banner -->
-<% unless current_user or @hide_banner and false %>
+<% unless current_user or @hide_banner %>
     <%= render :partial=>'/layouts/introBanner/introBanner' %>
 <% end %>
 
