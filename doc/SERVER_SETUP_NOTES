@@ -12,7 +12,7 @@ ssh -p 2298 emcmanus@184.106.218.75
 
 http://articles.slicehost.com/2009/5/13/capistrano-series-setting-up-your-slice-2
 http://articles.slicehost.com/2008/4/25/ubuntu-hardy-setup-page-1 (user accounts, firewall, ssh config)
-http://articles.slicehost.com/2008/4/25/ubuntu-hardy-setup-page-2 (mostly bash config)
+http://articles.slicehost.com/2008/4/25/ubuntu-hardy-setup-page-2 (mostly bash config, introduction to free)
 http://articles.slicehost.com/2009/5/13/capistrano-series-setting-up-git (making a git repository on the server)
 More: http://articles.slicehost.com/rails
 
