@@ -29,10 +29,10 @@
             <h2 style="font-size: 22px; color: white; font-weight: 500;margin-bottom: 20px;">add a facebook comment</h2>
         </div>
         <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 50px; overflow: hidden;"></div>
-        <div id="below<%= like_target_id %>" style="display:none; color:white; margin-top: -30px;">
-            <div style="float: left;padding-top: 6px; padding-left: 95px; font-size: 12px; font-weight:200; color: #666;">roll over this button</div>
+        <div id="below<%= like_target_id %>" style="display:none; color:white; margin-top: 35px;">
+            <div style="float: left;margin-top:-58px; padding-left: 95px; font-size: 12px; font-weight:200; color: #666;">roll over this button</div>
             <a href="javascript:closeCustomizeDialog_<%= page.id %>();false" class="btn" style="font-size:1.1em; position:relative; bottom: 1px; float: right;margin-right:10px;"><span><span><b>&nbsp;</b><u>Close</u></span></span></a>
-            <div style="float:right; margin-right: -45px; margin-top:-75px;"><a href="javascript:closeCustomizeDialog_<%= page.id %>();false" style="color:white;">X</a></div>
+            <div style="float:right; margin-right: -45px; margin-top:-135px;"><a href="javascript:closeCustomizeDialog_<%= page.id %>();false" style="color:white;">X</a></div>
         </div>
     </div>
 </div>
@@ -43,7 +43,7 @@
     function showCustomizeDialog_<%= page.id %>()
     {
         var diagWidth = 675;
-        var diagHeight = 150;
+        var diagHeight = 210;
         var winWidth = document.viewport.getDimensions()["width"];
         var winHeight = document.viewport.getDimensions()["height"];
         $('outteroutter<%= like_target_id %>').setAttribute("style", "position: fixed; z-index:9999; width: 100%; height: 100%; background-color:rgba(0,0,0,0.65); overflow:display; top: 0; left: 0;");

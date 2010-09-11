@@ -16,19 +16,20 @@
         </h4>
 		<span style="color:#666; font-size:0.8em;">
 			<% if page.introduction.blank? %>
-				<%=h truncate(strip_tags(page.html_body), :length=>140) %>
+			    <% unless strip_tags(page.html_body).blank? %>
+				    <%=h truncate(strip_tags(page.html_body), :length=>140) %><br/>
+				<% end %>
 			<% else %>
-				<%=h truncate(strip_tags(page.introduction), :length=>140) %>
+				<%=h truncate(strip_tags(page.introduction), :length=>140) %><br/>
 			<% end %>
-			<%= link_to image_tag('view-page.png'), page %></a>
-		</span><br/>
+		</span>
 		<span style="font-size: 0.8em; color: #ccc;">
-	        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 
+	        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user, :style=>"color:#7f7f7f;" %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 
 	        <% unless page.source_url.blank? %>
-	            | <%= link_to "Source", page.source_url %>
+	            | <%= link_to "Source", page.source_url, :style=>"color:#7f7f7f;" %>
 	        <% end %>
 	        <% if current_user && current_user.is_content_editor %>
-	            | <%= link_to 'Edit', edit_page_path(page) %>
+	            | <%= link_to 'Edit', edit_page_path(page), :style=>"color:#7f7f7f;" %>
 	        <% end %>
 	    </span>
     </div>
