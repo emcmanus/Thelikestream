@@ -24,17 +24,6 @@
     
     <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
 
-    <script type="text/javascript" charset="utf-8">
-        function writeLikeButton(targetId, encodedLink)
-        {
-            $(targetId).innerHTML = '<fb:like layout="button_count" show_faces="no" href="'+encodedLink+'"></fb:like>';
-            if (typeof FB != "undefined")
-            {
-                FB.XFBML.parse($(targetId));
-            }
-        }
-    </script>
-
     <% for page in @pages %>
         <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
     <% end %>
