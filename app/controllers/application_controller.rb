@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
     
     def top_pages
-      Page.all(:order=>"created_at DESC", :limit=>6, :offset=>rand(10))
+      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(20))
     end
     
     
