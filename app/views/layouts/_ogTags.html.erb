@@ -11,18 +11,19 @@
     <meta property="og:url" content="<%= request.url %>" />
     <meta property="og:description" content="You'll love this. Find and Share Interesting Content. No Login Required!" />
 <% end %>
-
-<!-- Other -->
 <% if @page and @page.is_cloaked %>
     <meta property="og:type" content="activity" />
     <meta property="og:site_name" content="★" />
     <meta property="og:app_id" content="157023087646197">    
 <% else %>
-    <% if false %>
-        <!-- Old type -->
-        <meta property="og:type" content="article" />
-    <% end %>
-    <meta property="og:type" content="activity" />  <!-- Not if for the root domain -->
+    <meta property="og:type" content="activity" />
     <meta property="og:site_name" content="★TheLikeStream" />
     <meta property="og:app_id" content="115776415143563" />
+    <meta property="fb:admins" content="904678" />
+<% end %>
+
+
+<% if false %>
+    <!-- Old type -->
+    <meta property="og:type" content="article" />
 <% end %>
