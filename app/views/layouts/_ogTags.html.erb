@@ -16,7 +16,10 @@
     <meta property="og:site_name" content="★" />
     <meta property="og:app_id" content="157023087646197">    
 <% else %>
-    <meta property="og:type" content="article" />  <!-- Not if for the root domain -->
+    <% if false %>
+        <meta property="og:type" content="article" />
+    <% end %>
+    <meta property="og:type" content="activity" />  <!-- Not if for the root domain -->
     <meta property="og:site_name" content="★TheLikeStream" />
     <meta property="og:app_id" content="115776415143563">
 <% end %>
