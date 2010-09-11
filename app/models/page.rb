@@ -243,6 +243,12 @@ class Page < ActiveRecord::Base
     nil
   end
   
+  def og_description
+    return self.introduction unless self.introduction.blank?
+    nil
+  end
+  
+  
   private
   
     # Caller is responsible for unlinking tmp_full!

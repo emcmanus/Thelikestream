@@ -4,10 +4,12 @@
     <meta property="og:title" content="<%= @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= @page.og_image || image_url("like-72-72.png") %>" />
     <meta property="og:url" content="<%= @page.og_url || page_url(@page, :only_path => false) %>" />
+    <meta property="og:description" content="<%= h @page.og_description || "You'll love this. Find and Share Interesting Content. No Login Required!" %>" />
 <% else %>
     <meta property="og:title" content="<%= @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= "#{root_path}/images/like-72-72.png" %>" />
     <meta property="og:url" content="<%= request.url %>" />
+    <meta property="og:description" content="You'll love this. Find and Share Interesting Content. No Login Required!" />
 <% end %>
 
 <!-- Other -->
@@ -17,6 +19,7 @@
     <meta property="og:app_id" content="157023087646197">    
 <% else %>
     <% if false %>
+        <!-- Old type -->
         <meta property="og:type" content="article" />
     <% end %>
     <meta property="og:type" content="activity" />  <!-- Not if for the root domain -->
