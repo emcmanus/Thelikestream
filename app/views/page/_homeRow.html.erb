@@ -10,17 +10,17 @@
 		<% end %>
 	</div>
     <div class="span-2"><%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>page} %></div>
-    <div class="span-12">
+    <div class="span-8">
         <h4 style="padding:0; margin:0;">
             <%= link_to truncate(page.title, :length=>100), page_url(page), :class=>"mainlink" %>
         </h4>
 		<span style="color:#666; font-size:0.8em;">
 			<% if page.introduction.blank? %>
 			    <% unless strip_tags(page.html_body).blank? %>
-				    <%=h truncate(strip_tags(page.html_body), :length=>140) %><br/>
+				    <%=h truncate(strip_tags(page.html_body), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
 				<% end %>
 			<% else %>
-				<%=h truncate(strip_tags(page.introduction), :length=>140) %><br/>
+				<%=h truncate(strip_tags(page.introduction), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
 			<% end %>
 		</span>
 		<span style="font-size: 0.8em; color: #ccc;">

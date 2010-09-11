@@ -23,12 +23,15 @@
     </div>
     
     <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
-
+    
+    <div class="span-14">
     <% for page in @pages %>
         <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
     <% end %>
+    </div>
     
     
+    <%= render :partial=>"/layouts/sidePanel" %>
     
 </div>
 
