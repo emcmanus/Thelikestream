@@ -1,10 +1,45 @@
-<h1>Editing user</h1>
+<h2>Editing user</h2>
+
+<script type="text/javascript" charset="utf-8">
+    function changeNewUserId(newId){
+        $('fbNewUserName').innerHTML = "<fb:name uid='"+newId+"'></fb:name>";
+        FB.XFBML.parse(document.getElementById('fbNewUserName'));
+    }
+</script>
 
 <% form_for(@user) do |f| %>
   <%= f.error_messages %>
   <p>
       <%= f.label :facebook_id %>
-      <%= f.text_field :facebook_id %>
+      <%= f.text_field :facebook_id %><br/>
+      <span id="fbNewUserName"></span>
+      <script type="text/javascript" charset="utf-8">
+        changeNewUserId(<%= @user.facebook_id %>);
+      </script>
+  </p>
+  
+  <% if current_user.is_god %>
+  <p>
+       <%= f.label :is_god %><br />
+       <%= f.check_box :is_god %>
+   </p>
+  <% end %>
+  
+  <p>
+       <%= f.label :can_admin %><br />
+       <%= f.check_box :can_admin %>
+   </p>
+
+   <p>
+       <%= f.label :can_edit_raw_html %><br />
+       <%= f.check_box :can_edit_raw_html %>
+   </p>
+
+   <p>
+       <%= f.label :is_puppet %><br />
+       <%= f.check_box :is_puppet %>
+   </p>
+  
   <p>
     <%= f.submit 'Update' %>
   </p>

@@ -63,13 +63,13 @@ class UsersController < ApplicationController
     update_values = {}
 
     if current_user.is_god
-      accept_fields = User.EDIT_PERMISSIONS[:god]
+      accept_fields = User::EDIT_PERMISSIONS[:god]
     elsif current_user.is_admin
-      accept_fields = User.EDIT_PERMISSIONS[:admin]
+      accept_fields = User::EDIT_PERMISSIONS[:admin]
     elsif current_user.is_content_editor
-      accept_fields = User.EDIT_PERMISSIONS[:editor]
+      accept_fields = User::EDIT_PERMISSIONS[:editor]
     elsif current_user == @user
-      accept_fields = User.EDIT_PERMISSIONS[:owner]
+      accept_fields = User::EDIT_PERMISSIONS[:owner]
     end
 
     params["user"].each do |key, value|
