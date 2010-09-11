@@ -18,6 +18,7 @@
       </script>
   </p>
   
+  
   <% if current_user.is_god %>
   <p>
        <%= f.label :is_god %><br />
@@ -25,6 +26,7 @@
    </p>
   <% end %>
   
+  <% if current_user.is_admin %>
   <p>
        <%= f.label :can_admin %><br />
        <%= f.check_box :can_admin %>
@@ -39,6 +41,7 @@
        <%= f.label :is_puppet %><br />
        <%= f.check_box :is_puppet %>
    </p>
+  <% end %>
   
   <p>
     <%= f.submit 'Update' %>
