@@ -49,7 +49,7 @@
         $('outteroutter<%= like_target_id %>').setAttribute("style", "position: fixed; z-index:9999; width: 100%; height: 100%; background-color:rgba(0,0,0,0.65); overflow:display; top: 0; left: 0;");
         $('outter<%= like_target_id %>').setAttribute("style", "background-color: rgba(0,0,0,0.9); border-radius: 15px; width:"+diagWidth.toString()+"px; height:"+diagHeight.toString()+"px; margin-left:" + Math.floor((winWidth-diagWidth)/2).toString() + "px; margin-top:" + Math.floor((winHeight-diagHeight-100)/2).toString() + "px;");
         $('content<%= like_target_id %>').setAttribute("style", "padding: 20px;");
-        $("<%= like_target_id %>").style.overflow = "display";
+        $("<%= like_target_id %>").style.overflow = "visible";
         $('below<%= like_target_id %>').show();
         $('above<%= like_target_id %>').show();
     }
