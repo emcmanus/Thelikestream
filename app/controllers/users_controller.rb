@@ -40,7 +40,13 @@ class UsersController < ApplicationController
   
   
   def create
-    # You cannot make users this way!
+    @user = User.new params[:user]
+    if @user.save
+      redirect_to user_path(@user) and return
+    else
+      logger.warn @user.errors.inspect
+      redirect_to new_user_path and return
+    end
   end
   
   

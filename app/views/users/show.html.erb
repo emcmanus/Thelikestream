@@ -13,6 +13,20 @@
     
     <hr class="space" />
     
+    <h3>Votes</h3>
+    <ul>
+    <% for vote in @user.page_votes %>
+        <% if vote.page %>
+            <li><%= link_to vote.page.title, vote.page %></li>
+        <% end %>
+    <% end %>
+    </ul>
+    <% if @user.page_votes.empty? %>
+        <span style="color: #aaa;">User has no votes.</span>
+    <% end %>
+    
+    <hr class="space" />
+    
     <h3>User Info</h3>
     <p>Facebook ID: <%= @user.facebook_id %></p>
     
