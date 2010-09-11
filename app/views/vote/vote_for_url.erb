@@ -5,9 +5,9 @@
         $$('.likeCounterLabel<%= @page_id %>').each(function(el){
             el.innerHTML = parseInt(el.innerHTML)+1;
         });
-        if (typeof showCustomizeDialog_<%= @page.id %> != "undefined")
+        if (typeof showCustomizeDialog_<%= @page_id %> != "undefined")
         {
-            showCustomizeDialog_<%= @page.id %>();
+            showCustomizeDialog_<%= @page_id %>();
         }
     <% end %>
 })();
