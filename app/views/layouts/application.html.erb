@@ -115,7 +115,7 @@
         }
     </style>
 
-<% if get_unpublished_pages %>
+<% if get_unpublished_pages and get_unpublished_pages.length > 0 %>
     <%= render :partial=>'/layouts/unpublishedBanner' %>
 <% end %>
 
@@ -189,11 +189,6 @@
 	 <% end %>
  </div>
  
- <% if false %>
- <div class="span-6 last" style="padding-top: 24px; text-align: right;">
-      <%= link_to "GET THE BOOKMARKLET", tools_path, :class=>"nav_link" %>
- </div>
- <% end %>
  
 <!-- Get Started Banner -->
 <% unless current_user or @hide_banner %>
