@@ -18,7 +18,9 @@ REMOVED - http://github.com/jamesgolick/is_taggable
 
 And the awesome ruby-readability
 REMOVED - http://github.com/iterationlabs/ruby-readability
-ADDED - git@github.com:emcmanus/ruby-readability.git
+REMOVED - git@github.com:emcmanus/ruby-readability.git
+ADDED - /Users/edmcmanus/Code/ruby-readability-2 (just copy this directory into vendor/plugins/ruby-readability: cp -rf ~/Code/ruby-readability-2/ ~/Code/likestream/vendor/plugins/ruby-readability )
+
 
 Stringex, for acts_as_url model slugs
 Installed as gem, more info: http://github.com/rsl/stringex

@@ -13,4 +13,11 @@ module ApplicationHelper
      end 
      abs_path 
   end
+  
+  def get_unpublished_pages
+    return nil unless current_user
+    return @unpublished_pages if @unpublished_pages
+    @unpublished_pages = Page.all :conditions=>["user_id = ? AND like_count = 0", current_user.id]
+  end
+  
 end

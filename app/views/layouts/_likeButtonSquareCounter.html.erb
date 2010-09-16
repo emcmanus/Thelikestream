@@ -9,7 +9,9 @@
 <div style="border: 2px solid #e6e6e6; border-radius: 5px;">
 
 	<div style="width:65px; text-align: center;margin: 4px 0;">
-		<% if page.like_count < 100 %>
+	    <% if page.like_count == 0 %>
+	        <div style="font-size:1em; margin: 5px 0; font-weight: bold; line-height: 0.85em" class="likeCounterLabel<%= page.id %>">Publish:</div>
+		<% elsif page.like_count < 100 %>
 			<div style="font-size:2em; line-height: 0.85em" class="likeCounterLabel<%= page.id %>"><%= page.like_count %></div>
 		<% elsif page.like_count < 1000 %>
 			<div style="font-size:1.8em; line-height: 0.85em" class="likeCounterLabel<%= page.id %>"><%= page.like_count %></div>
@@ -18,17 +20,19 @@
 		<% else %>
 			<div style="font-size:1.5em; line-height: 0.85em"class="likeCounterLabel<%= page.id %>"><%= page.like_count/1000 %>k</div>
 		<% end %>
-		<span style="color:#ccc;font-size:0.3em;">LIKES</span>
+		<% unless page.like_count == 0 %>
+		    <span style="color:#ccc;font-size:0.3em;">LIKES</span>
+	    <% end %>
 	</div>
 	
 <div id="outteroutter<%= like_target_id %>">
 <div id="outter<%= like_target_id %>">
     <div id="content<%= like_target_id %>">
         <div id="above<%= like_target_id %>" style="padding-left:6px; display:none;">
-            <h1 style="color:#0cf; font-size: 28px; margin-bottom:0; font-weight: 200; letter-spacing:1;">Now's your chance to</h1>
+            <h1 style="color:#0cf; font-size: 28px; margin-bottom:0; font-weight: 200; letter-spacing:1;">Now's your chance</h1>
             <h2 style="font-size: 22px; color: white; font-weight: 500;margin-bottom: 20px;">add a facebook comment</h2>
         </div>
-        <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 50px; overflow: hidden;"></div>
+        <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 51px; overflow: hidden;"></div>
         <div id="below<%= like_target_id %>" style="display:none; color:white; margin-top: 35px;">
             <div style="float: left;margin-top:-58px; padding-left: 95px; font-size: 12px; font-weight:200; color: #666;">roll over this button</div>
             <a href="javascript:closeCustomizeDialog_<%= page.id %>();false" class="btn" style="font-size:1.1em; position:relative; bottom: 1px; float: right;margin-right:10px;"><span><span><b>&nbsp;</b><u>Close</u></span></span></a>
@@ -40,27 +44,30 @@
 
 <script type="text/javascript" charset="utf-8">
     writeLikeButton('<%= like_target_id %>', '<%= page_url(page, :only_path => false) %>');
-    function showCustomizeDialog_<%= page.id %>()
+    if ( typeof showCustomizeDialog_<%= page.id %> == "undefined" )
     {
-        var diagWidth = 675;
-        var diagHeight = 210;
-        var winWidth = document.viewport.getDimensions()["width"];
-        var winHeight = document.viewport.getDimensions()["height"];
-        $('outteroutter<%= like_target_id %>').setAttribute("style", "position: fixed; z-index:9999; width: 100%; height: 100%; background-color:rgba(0,0,0,0.65); overflow:display; top: 0; left: 0;");
-        $('outter<%= like_target_id %>').setAttribute("style", "background-color: rgba(0,0,0,0.9); border-radius: 15px; width:"+diagWidth.toString()+"px; height:"+diagHeight.toString()+"px; margin-left:" + Math.floor((winWidth-diagWidth)/2).toString() + "px; margin-top:" + Math.floor((winHeight-diagHeight-100)/2).toString() + "px;");
-        $('content<%= like_target_id %>').setAttribute("style", "padding: 20px;");
-        $("<%= like_target_id %>").style.overflow = "visible";
-        $('below<%= like_target_id %>').show();
-        $('above<%= like_target_id %>').show();
-    }
-    function closeCustomizeDialog_<%= page.id %>()
-    {
-        $('outteroutter<%= like_target_id %>').setAttribute("style", "");
-        $('outter<%= like_target_id %>').setAttribute("style", "");
-        $('content<%= like_target_id %>').setAttribute("style", "");
-        $("<%= like_target_id %>").style.overflow = "hidden";
-        $('below<%= like_target_id %>').hide();
-        $('above<%= like_target_id %>').hide();
+        var showCustomizeDialog_<%= page.id %> = function()
+        {
+            var diagWidth = 675;
+            var diagHeight = 210;
+            var winWidth = document.viewport.getDimensions()["width"];
+            var winHeight = document.viewport.getDimensions()["height"];
+            $('outteroutter<%= like_target_id %>').setAttribute("style", "position: fixed; z-index:9999; width: 100%; height: 100%; background-color:rgba(0,0,0,0.65); overflow:display; top: 0; left: 0;");
+            $('outter<%= like_target_id %>').setAttribute("style", "background-color: rgba(0,0,0,0.9); border-radius: 15px; width:"+diagWidth.toString()+"px; height:"+diagHeight.toString()+"px; margin-left:" + Math.floor((winWidth-diagWidth)/2).toString() + "px; margin-top:" + Math.floor((winHeight-diagHeight-100)/2).toString() + "px;");
+            $('content<%= like_target_id %>').setAttribute("style", "padding: 20px;");
+            $("<%= like_target_id %>").style.overflow = "visible";
+            $('below<%= like_target_id %>').show();
+            $('above<%= like_target_id %>').show();
+        }
+        var closeCustomizeDialog_<%= page.id %> = function()
+        {
+            $('outteroutter<%= like_target_id %>').setAttribute("style", "");
+            $('outter<%= like_target_id %>').setAttribute("style", "");
+            $('content<%= like_target_id %>').setAttribute("style", "");
+            $("<%= like_target_id %>").style.overflow = "hidden";
+            $('below<%= like_target_id %>').hide();
+            $('above<%= like_target_id %>').hide();
+        }
     }
 </script>
 

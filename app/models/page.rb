@@ -54,7 +54,7 @@ class Page < ActiveRecord::Base
   
   # We'll check the state of the object to make sure these aren't run on updates
   before_save :scrape_source_url
-  before_save :process_images
+  # before_save :process_images # we'll do this in a background process
   before_save :set_slug
   
   def set_slug
@@ -96,24 +96,34 @@ class Page < ActiveRecord::Base
     end
     
     # For every image
-    imgs = Nokogiri::HTML(self.html_body).css('img')
-    imgs.each do |img|
-      unless img[:src].blank?
+    parsed_source = Nokogiri::HTML(self.html_body)
+    parsed_source.css('img').each do |img|
+      # Don't re-convert images in our bucket
+      unless img["src"].blank? or img["src"] =~ Regexp.new("^http\\:\\/\\/#{s3_bucket}\\.s3\\.amazonaws\\.com\\/", true)
         
         # Setup tmp files
         tmp_full = Tempfile.new "tmp_thumb"   # Original
         tmp_page = Tempfile.new "tmp_thumb"   # 550x
         
         # Grab remote
-        tmp_full.syswrite open(img[:src]).read
+        tmp_full.syswrite open(img["src"]).read
         
         # Get size
         source_info = Mapel.info tmp_full.path
         source_width = source_info[:dimensions][0]
         source_height = source_info[:dimensions][1]
         
+        img["width"] = source_width.to_s
+        img["height"] = source_height.to_s
+        
         # Thumbnail generation
-        make_thumbnail(img[:src], tmp_full, s3_bucket, source_info) if self.thumbnail_full.blank?
+        make_thumbnail(img["src"], tmp_full, s3_bucket, source_info) if self.thumbnail_full.blank?
+        
+        # Other thumbnail options:
+        #   Iterate through website images, pick the largest with "logo" in the filename, or class/id if not in the filename
+        #   use the biggest image on the page
+        #   use the favicon
+        #   use a fake website screenshot.. (later, a real website screenshot?)
         
         # Resize if necessary
         if source_width > 550
@@ -127,20 +137,26 @@ class Page < ActiveRecord::Base
         img_name_full = "page_images/#{img_name_base}.#{source_info[:format].downcase}"
         img_name_page = "page_images/#{img_name_base}_page.#{source_info[:format].downcase}"
         
-        logger.warn "Uploading #{img[:src]} image to S3 as http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        logger.warn "Uploading #{img["src"]} image to S3 as http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
         
         # Copy files to S3
         AWS::S3::S3Object.store img_name_page, tmp_page, s3_bucket, :access => :public_read
         AWS::S3::S3Object.store img_name_full, tmp_full, s3_bucket, :access => :public_read
         
-        # Update html_body
-        self.html_body.sub! img[:src], "http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        new_width = [source_width, 550].min
+        new_height = ((source_height / source_width.to_f) * new_width).to_i
+        
+        # Update tag
+        img["src"] = "http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        img["width"] = new_width.to_s
+        img["height"] = new_height.to_s
       end
     end
+    self.html_body = parsed_source.css("body").first.inner_html
     # Done!
     self.image_processing_finished = true
-  rescue
-    logger.error "in process_images #{$!}"
+  rescue Exception => e
+    logger.warn "in process_images #{$!}, #{e.backtrace.first.inspect}"
   end
   
   
@@ -159,9 +175,30 @@ class Page < ActiveRecord::Base
     # SPECIAL SUBMISSION TYPES
     # 
     
+    # Youtube
+    if self.source_url =~ /http:\/\/(www\.)?(youtube)\.com\/watch?/i
+      # Get video info
+      video_id = CGI.parse(URI.parse(self.source_url).query)["v"].first
+      video_metadata = Nokogiri::XML open("http://gdata.youtube.com/feeds/api/videos/#{video_id}").read
+      
+      # Update model fields
+      self.introduction = video_metadata.xpath("//media:description").first.content
+      self.html_body = <<-eos
+        <object width="550" height="413">
+          <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
+          <param name="allowFullScreen" value="true"></param>
+          <param name="allowscriptaccess" value="always"></param>
+          <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
+            allowscriptaccess="always" allowfullscreen="true" width="550" height="413"></embed>
+        </object><br/>
+        <img src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
+      eos
+      return
+    end
+    
     # IMG
     if self.source_url.index /\.(gif|tiff|png|jpeg|jpg|bmp)$/i
-      self.html_body = "<p><img src='#{self.source_url}'/></p>"
+      self.html_body = "<p><a href='#{self.source_url}'><img src='#{self.source_url}'/></a></p>"
       # Skip the rest, there's nothing else we can do
       return true
     end
@@ -185,15 +222,36 @@ class Page < ActiveRecord::Base
     
     # Body
     begin
-      # Readabilty config
-      tag_specific_attributes = {
-        "img" => %w[width height]
+      
+      attributes_by_tag = {
+        "img" => %w[width height],
+        "embed" => %w[src type allowfullscreen width height],
+        "object" => %w[width height],
+        "param" => %w[name value]
       }
-      readability_doc = Readability::Document.new raw_html, :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul li a br], :debug => true,
-                :attributes=>%w[src href], :tag_specific_attributes=>tag_specific_attributes, :score_images=>true, :sanitize_links=>true, :resolve_relative_urls_with_path=>self.source_url
-      self.html_body ||= readability_doc.content
-    rescue
-      logger.error "in scrape_source_url 2 #{$!}"
+      readability_doc = Readability::Document.new raw_html, :score_multimedia=>true, :source_url=>self.source_url, :debug => true,
+                              :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul ol li a br object embed param], :attributes=>%w[src href], :attributes_by_tag=>attributes_by_tag
+      
+      # Special cleaning
+      parsed_doc = Nokogiri::HTML readability_doc.content
+      
+      # Fix embeds - set allowscriptaccess in both the param and embed tags
+      parsed_doc.css("embed").each do |el|
+        el["allowscriptaccess"] = "none"
+      end
+      parsed_doc.css("param").each do |el|
+        el.remove unless %w[movie allowfullscreen type src].include?(el["name"].downcase)
+      end
+      
+      # Add nofollow to links
+      parsed_doc.css("a").each do |el|
+        el["rel"] = "nofollow"
+      end
+      
+      # Update html_body
+      self.html_body ||= parsed_doc.css("body").first.inner_html
+    rescue Exception => e
+      logger.warn "in scrape_source_url #{$!}, #{e.backtrace.first.inspect}"
       return
     end
     
@@ -222,7 +280,6 @@ class Page < ActiveRecord::Base
     self.weighted_score = t_s + 45000 * weighted_votes
     self.save
   end
-  
   
   # 
   # Facebook Open Graph
@@ -266,6 +323,8 @@ class Page < ActiveRecord::Base
       
       source_width = source_info[:dimensions][0]
       source_height = source_info[:dimensions][1]
+      
+      logger.warn "thumbnail dimensions: #{source_width}x#{source_height}"
       
       return unless source_width && source_height && source_width >= 75 && source_height >= 75
       
@@ -336,17 +395,3 @@ class Page < ActiveRecord::Base
     end
     
 end
-
-# 
-# t.string    :thumbnail_page
-# t.string    :thumbnail_page_width
-# t.string    :thumbnail_page_height
-# 
-# t.string    :thumbnail_small
-# t.string    :thumbnail_small_width
-# t.string    :thumbnail_small_height
-# 
-# # Constrained dimensions
-# t.string    :thumbnail_thumb
-# t.string    :thumbnail_square
-# t.string    :thumbnail_tiny

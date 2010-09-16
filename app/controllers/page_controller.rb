@@ -60,7 +60,7 @@ class PageController < ApplicationController
       @page.destroy
       flash[:notice] = "Page removed."
     end
-    redirect_to page_index_path
+    redirect_to :back
   end
   
 end

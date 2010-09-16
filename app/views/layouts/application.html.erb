@@ -114,8 +114,13 @@
             color: #000;
         }
     </style>
-    
 
+<% if get_unpublished_pages %>
+    <%= render :partial=>'/layouts/unpublishedBanner' %>
+<% end %>
+
+
+    
 <div class="container" style="margin-top: 10px;">
     
     <% unless current_user.blank? %>
@@ -169,21 +174,26 @@
  </div>
  <div class="span-12" style="padding-top: 24px;">
      <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
-     <% if current_user %>
-        <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
-     <% end %>
      <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
-     <% if current_user %>
-        <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
-     <% else %>
-		<%= link_to "LOGIN", login_path, :class=>"nav_link" %>
-		<%= link_to "REGISTER", register_path, :class=>"nav_link" %>
+     <% if false %>
+         <% if current_user %>
+            <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
+         <% end %>
+         <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
+         <% if current_user %>
+            <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
+         <% else %>
+    		<%= link_to "LOGIN", login_path, :class=>"nav_link" %>
+    		<%= link_to "REGISTER", register_path, :class=>"nav_link" %>
+    	 <% end %>
 	 <% end %>
  </div>
  
+ <% if false %>
  <div class="span-6 last" style="padding-top: 24px; text-align: right;">
       <%= link_to "GET THE BOOKMARKLET", tools_path, :class=>"nav_link" %>
  </div>
+ <% end %>
  
 <!-- Get Started Banner -->
 <% unless current_user or @hide_banner %>
@@ -191,7 +201,6 @@
 <% end %>
 
   <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff;">
-
       
     <div class="span-20 prepend-1 append-1 last">
       <% unless flash[:notice].blank? %>

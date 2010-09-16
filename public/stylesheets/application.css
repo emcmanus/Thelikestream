@@ -187,17 +187,24 @@ h3 span.parenthetical
 }
 
 #page_preview_container img {
-  clear: both;
+  float:left;
+  margin: 10px 10px 10px 0;
 }
 
 #page_preview_container ul {
-  list-style-type:none;
+/*  list-style-type:none;*/
   padding: 0;
 }
 
 #page_preview_container li {
-  list-style-type:none;
+/*  list-style-type:none;*/
   margin: 15px 0;
+}
+
+#page_preview_container li img {
+  clear: both;
+  float: none;
+  margin: 10px 10px 10px 0;
 }
 
 /* Start custom button CSS here
