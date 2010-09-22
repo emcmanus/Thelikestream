@@ -24,7 +24,7 @@
     <h2 style="font-weight: 400; color:#333; padding:0; margin: 0;margin-bottom: 10px;">Favorites</h2>
     
     <% for page in top_pages %>
-        <% unless page.thumbnail_square.blank? %>
+        <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
             <div style="margin-top:15px; padding-top: 5px; border-top: 1px dotted #ccc;">
                 <%= link_to truncate(h(page.title), :length=>100), page, :style=>"font-size:1.4em; color: #333;" %>
                 <span style="color:#7f7f7f;"><%= h page.like_count %> like<%= 's' if page.like_count > 1 %></span>
