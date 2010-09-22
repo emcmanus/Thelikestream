@@ -91,10 +91,12 @@ class Page < ActiveRecord::Base
   # ONLY CALL IN BG_PROCESSOR
   def process_images
     
-    return if self.html_body.blank? or self.image_processing_started
+    return if self.image_processing_started
     
-    # Otherwise, mark as started
+    # Even if there's no body mark the object as processed
     self.image_processing_started = true
+    
+    return if self.html_body.blank?
     
     add_thumbnail_for_youtube_embeds
     
