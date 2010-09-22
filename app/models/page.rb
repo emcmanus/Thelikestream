@@ -88,7 +88,7 @@ class Page < ActiveRecord::Base
     :owner => %w[introduction title]
   }
   
-  
+  # ONLY CALL IN BG_PROCESSOR
   def process_images
     
     return if self.html_body.blank? or self.image_processing_started
@@ -147,7 +147,9 @@ class Page < ActiveRecord::Base
         img_name_full = "page_images/#{img_name_base}.#{source_info[:format].downcase}"
         img_name_page = "page_images/#{img_name_base}_page.#{source_info[:format].downcase}"
         
-        logger.warn "Uploading #{img["src"]} image to S3 as http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        puts "Uploading #{img["src"]} image to S3 as http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        # logger.warn "Uploading #{img["src"]} image to S3 as http://#{s3_bucket}.s3.amazonaws.com/#{img_name_page}"
+        # debug
         
         # Copy files to S3
         AWS::S3::S3Object.store img_name_page, tmp_page, s3_bucket, :access => :public_read
@@ -166,7 +168,9 @@ class Page < ActiveRecord::Base
     # Done!
     self.image_processing_finished = true
   rescue Exception => e
-    logger.warn "in process_images #{$!}, #{e.backtrace.first.inspect}"
+    puts "in process_images #{$!}, #{e.backtrace.first.inspect}"
+    # logger.warn "in process_images #{$!}, #{e.backtrace.first.inspect}"
+    # debug
   end
   
   
@@ -201,9 +205,9 @@ class Page < ActiveRecord::Base
           <object width="550" height="413">
             <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
             <param name="allowFullScreen" value="true"></param>
-            <param name="allowscriptaccess" value="always"></param>
+            <param name="allowscriptaccess" value="never"></param>
             <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
-              allowscriptaccess="always" allowfullscreen="true" width="550" height="413"></embed>
+              allowscriptaccess="never" allowfullscreen="true" width="550" height="413"></embed>
           </object><br/>
           <img src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
         eos
@@ -311,7 +315,9 @@ class Page < ActiveRecord::Base
       end
     end
   rescue
-    logger.warn "In rescue in add_thumbnail_for_youtube_embeds"
+    puts "In rescue in add_thumbnail_for_youtube_embeds"
+    # logger.warn "In rescue in add_thumbnail_for_youtube_embeds"
+    # debug
   end
   
   
@@ -373,7 +379,9 @@ class Page < ActiveRecord::Base
       source_width = source_info[:dimensions][0]
       source_height = source_info[:dimensions][1]
       
-      logger.warn "thumbnail dimensions: #{source_width}x#{source_height}"
+      puts "thumbnail dimensions: #{source_width}x#{source_height}"
+      # logger.warn "thumbnail dimensions: #{source_width}x#{source_height}"
+      # debug
       
       return unless source_width && source_height && source_width >= 75 && source_height >= 75
       
@@ -440,7 +448,9 @@ class Page < ActiveRecord::Base
       self.thumbnail_tiny = s3_path_prefix + img_name_tiny
 
     rescue
-      logger.error "in make_thumbnail: #{$!}"
+      # logger.error "in make_thumbnail: #{$!}"
+      # debug
+      puts "in make_thumbnail: #{$!}"
     end
     
     # Return "safe" HTML - only permitted builder tags
