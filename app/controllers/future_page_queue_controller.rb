@@ -40,20 +40,23 @@ class FuturePageQueueController < ApplicationController
     # Set launch_threshold
     # Save
     
-    unless params[:future_page][:source_url].blank?
-      @tmp_page = Page.new
-      @tmp_page.source_url = params[:future_page][:source_url]
-      @tmp_page.user = current_user
-      @tmp_page.scrape_source_url
+    # Yep, and this is broken before anyone uses it.
+    render :text => "took queueing offline for a bit"
     
-      @page = FuturePage.new params[:future_page]
-      @page.update_attributes @tmp_page.attributes
-      
-      redirect_to edit_future_page_queue_path(@page) and return
-    end
-    
-    flash[:notice] = "Unable to save page."
-    redirect_to future_page_queue_path
+    # unless params[:future_page][:source_url].blank?
+    #   @tmp_page = Page.new
+    #   @tmp_page.source_url = params[:future_page][:source_url]
+    #   @tmp_page.user = current_user
+    #   @tmp_page.scrape_source_url
+    # 
+    #   @page = FuturePage.new params[:future_page]
+    #   @page.update_attributes @tmp_page.attributes
+    #   
+    #   redirect_to edit_future_page_queue_path(@page) and return
+    # end
+    # 
+    # flash[:notice] = "Unable to save page."
+    # redirect_to future_page_queue_path
   end
   
   def edit

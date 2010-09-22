@@ -1,0 +1,25 @@
+<% iframe_name = SecureRandom.hex(5) %>
+
+<!-- Submit frame -->
+<iframe style="display:none" name="<%=iframe_name%>" src="about:blank" onload="formFrameLoaded(this,'<%=iframe_name%>', '<%=h @full_object_path %>')"></iframe>
+
+<form action="<%=h @form_action %>" method="post" name="<%=iframe_name%>_form_tag" id="<%=iframe_name%>_form_tag" enctype="multipart/form-data" target="<%=iframe_name%>">
+    <div id="<%=iframe_name%>_success" style="display:none;">
+        <%= image_tag 'builder/photo-small.png', :style=>"float:left;" %> <div style="float: left; padding-top: 2px; padding-left: 5px;"><span id="<%=iframe_name%>_filename" style="font-weight:bold;font-size: 1.2em;"></span> <span style="color:#777;">(uploaded)</span></div>
+    </div>
+    <div id="<%=iframe_name%>_spinner" style="display:none;">
+        <%= image_tag 'builder/load-spinner.gif' %>
+    </div>
+    <div id="<%=iframe_name%>_form" style="padding-top:3px;">
+        <input type="hidden" value="<%=h @file_key %>" name="key" />
+        <input type="hidden" value="public-read" name="acl" />
+        <input type="hidden" value="<%=h @success_action_status %>" name="success_action_status" />
+    	<input type="hidden" value="<%=h @access_key %>" name="AWSAccessKeyId" />
+    	<input type="hidden" value="<%=h @policy %>" name="policy" />
+    	<input type="hidden" value="<%=h @signature %>" name="signature" />
+	
+    	<label>Pick a File:</label> <input type="file" id="<%=iframe_name%>_file" name="file" style="width: 300px;" />
+    	
+    	<a href="#" onclick="$('<%=iframe_name%>_form_tag').submit();$('<%=iframe_name%>_form').hide();$('<%=iframe_name%>_spinner').show();false" class="btn" style="margin-left: 5px;"><span><span><b>&nbsp;</b><u>Upload</u></span></span></a>
+	</div>
+</form>

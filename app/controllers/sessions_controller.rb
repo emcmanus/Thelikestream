@@ -5,11 +5,13 @@ class SessionsController < ApplicationController
       flash[:notice] = ""
       redirect_to create_session_path and return
     end
+    @nav_page ||= 'login'
   end
   
   def register
-    session[:return_to] = get_started_path
-    redirect_to :action => :new and return
+    @nav_page = 'register'
+    # session[:return_to] = get_started_path
+    render :action => :new and return
   end
     
   

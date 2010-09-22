@@ -21,9 +21,14 @@ REMOVED - http://github.com/iterationlabs/ruby-readability
 REMOVED - git@github.com:emcmanus/ruby-readability.git
 ADDED - /Users/edmcmanus/Code/ruby-readability-2 (just copy this directory into vendor/plugins/ruby-readability: cp -rf ~/Code/ruby-readability-2/ ~/Code/likestream/vendor/plugins/ruby-readability )
 
-
 Stringex, for acts_as_url model slugs
 Installed as gem, more info: http://github.com/rsl/stringex
+
+will_paginate:
+to install this just use sudo rake gems:install, environment.rb takes care of the rest
+
+Sanitize:
+http://github.com/rgrove/sanitize/#readme
 
 
 	[ CAPISTRANO ]

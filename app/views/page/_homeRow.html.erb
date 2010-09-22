@@ -5,16 +5,15 @@
     			<%= link_to image_tag(page.thumbnail_thumb), page %>
     		</div>
     	<% else %>
-            <!-- TODO: Default thumb -->
-            &nbsp;
+            <%= link_to image_tag("default-thumb.png"), page %>
 		<% end %>
 	</div>
     <div class="span-2"><%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>page} %></div>
     <div class="span-8">
         <h4 style="padding:0; margin:0;">
-            <%= link_to truncate(page.title, :length=>100), page_url(page), :class=>"mainlink" %>
+            <%= link_to truncate(h(page.title), :length=>100), page_url(page), :class=>"mainlink" %>
         </h4>
-		<span style="color:#666; font-size:0.8em;">
+		<span style="color:#666; font-size:0.75em;">
 			<% if page.introduction.blank? %>
 			    <% unless strip_tags(page.html_body).blank? %>
 				    <%=h truncate(strip_tags(page.html_body), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
@@ -23,10 +22,10 @@
 				<%=h truncate(strip_tags(page.introduction), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
 			<% end %>
 		</span>
-		<span style="font-size: 0.8em; color: #ccc;">
-	        Shared by <%= link_to fb_name(page.user, :linked=>"false"), page.user, :style=>"color:#7f7f7f;" %> <%= distance_of_time_in_words page.created_at, Time.now %> ago. 
+		<span style="font-size: 0.75em; color: #0cf;">
+	        SHARED BY <%= link_to fb_name(page.user, :linked=>"false"), page.user, :style=>"color:#0cf;" %> <%= h(distance_of_time_in_words page.created_at, Time.now).upcase %> AGO. 
 	        <% unless page.source_url.blank? %>
-	            | <%= link_to "Source", page.source_url, :style=>"color:#7f7f7f;" %>
+	            <br/><%= image_tag 'tiny-link.png' %> <%= link_to h(get_host(page.source_url)), page.source_url, :style=>"color:#7f7f7f;" %>
 	        <% end %>
 	        <% if current_user && current_user.is_content_editor %>
 	            | <%= link_to 'Edit', edit_page_path(page), :style=>"color:#7f7f7f;" %>

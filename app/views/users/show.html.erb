@@ -1,10 +1,10 @@
 
-<div class="prepend-1 append-1 span-20 last">
+<div class="prepend-1 append-1 span-22 last">
     <h2><%= fb_name @user.facebook_id, :capitalize=>'true', :linked=>'false' %></h2>
     <h3>Pages</h3>
     <ul>
     <% for page in @user.pages %>
-        <li><%= link_to page.title, page %></li>
+        <li><%= link_to h(page.title), page %></li>
     <% end %>
     <% if @user.pages.empty? %>
         <span style="color: #aaa;">User has not submitted any pages.</span>
@@ -17,7 +17,7 @@
     <ul>
     <% for vote in @user.page_votes %>
         <% if vote.page %>
-            <li><%= link_to vote.page.title, vote.page %></li>
+            <li><%= link_to h(vote.page.title), vote.page %></li>
         <% end %>
     <% end %>
     </ul>
@@ -28,7 +28,7 @@
     <hr class="space" />
     
     <h3>User Info</h3>
-    <p>Facebook ID: <%= @user.facebook_id %></p>
+    <p>Facebook ID: <%= h @user.facebook_id %></p>
     
     <% if current_user.is_admin %>
         <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>

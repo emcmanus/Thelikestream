@@ -12,7 +12,12 @@ ActionController::Routing::Routes.draw do |map|
   map.login_bookmarklet_success   "/login/bookmarklet/done",  :controller => :sessions, :action => :new_from_bookmarklet_success
   
   # New Users
-  map.get_started     "/get_started",     :controller => :tools,  :action => :get_started
+  # map.get_started     "/get_started",     :controller => :tools,  :action => :get_started
+  
+  # Page Builder
+  map.page_builder              "/pagebuilder",         :controller => :page_builder, :action => :new
+  map.page_builder_submit       "/pagebuilder/submit",  :controller => :page_builder, :action => :create
+  map.page_builder_image_upload "/pagebuilder/image",   :controller => :page_builder, :action => :image_upload_form
   
   # Bookmarklet
   map.bookmarklet_js      "/bookmarklet/show",    :controller => :bookmarklet,   :action => :show
@@ -22,7 +27,7 @@ ActionController::Routing::Routes.draw do |map|
   map.home    "/home",    :controller => :home,   :action => :show
   map.profile "/profile", :controller => :users,  :action => :profile
   map.submit  "/submit",  :controller => :page,   :action => :new
-  map.tools   "/tools",   :controller => :tools,  :action => :show
+  # map.tools   "/tools",   :controller => :tools,  :acion => :show
   
   # Voting
   map.vote_cast "/vote_cast",   :controller => :vote,   :action => :vote_for_url
@@ -42,6 +47,10 @@ ActionController::Routing::Routes.draw do |map|
   
   # Root
   map.root      :controller => :home,  :action => :show
+  
+  # AJAX navigation
+  map.page_title_partial  "/:id/partial/title", :controller => :page, :action => :title_partial
+  map.page_body_partial   "/:id/partial/body",  :controller => :page, :action => :body_partial
   
   # Page via slug
   map.page      "/:id",           :controller => :page, :action => :show

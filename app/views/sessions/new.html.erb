@@ -1,13 +1,25 @@
-<div class="prepend-1 span-20 append-1 last">
+<div class="span-24">
     <% unless flash[:error].blank? %>
-        <h3><span class="highlight"><%= flash[:error] %></span></h3>
+        <h3><span class="highlight"><%=h flash[:error] %></span></h3>
     <% end %>
 
     <% if current_user %>
         <h2>You're already logged in!</h2>
     <% else %>
-        <h2>Login via Facebook</h2>
-        <p>Click the button below to log in.</p>
-        <%= fb_login_and_redirect create_session_url %>
+        
+        <div style="padding: 30px; border: 5px solid #e0e0e0;">
+        <div class="span-8" style="border: 0px solid #e0e0e0;">
+            <h2 style="margin-bottom:0;">Login Through Facebook</h2>
+            <%= fb_login_and_redirect create_session_url, {"show-faces"=>true} %>
+        </div>
+        
+        <div class="prepend-1" style="height: 60px; border-right: 1px dotted #ccc; float:left;">&nbsp;</div>
+        
+        <div class="span-8 prepend-1">
+            <span style="font-size:24px; color:#333;">Not registered?</span><br/>
+            <span style="font-size:14px; color:#7f7f7f;">No problem. You can still log in to the left.</span>
+        </div>
+        <div style="height:1px;clear:both;">&nbsp;</div>
+        </div>
     <% end %>
 </div>

@@ -32,6 +32,7 @@ class BookmarkletController < ApplicationController
       page.user = key.user
       page.title = unsafe_title
       page.source_url = unsafe_url
+      page.scrape_source_url
       
       unless page.valid?
         @response[:completed] = false

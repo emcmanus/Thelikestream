@@ -1,5 +1,83 @@
 
-<div style="x-border: 1px solid #d4d4d4; padding: 20px;">
-    <%= render :partial => "submitOptions" %>
-	<div style="clear: both">&nbsp;</div>
-</div>
+    <h2 style="margin-bottom: 2px;">Submit Options</h2>
+    
+    <div style="height:15px; border-top: 1px dotted #ccc;">&nbsp;</div>
+    
+    <div class="span-9" style="">
+        <span style="font-size:18px; color:#7f7f7f;">Submit a Link:</span><br/>
+        <% form_for(@new_page, :url=>"/page/") do |f| %>
+    		<%=h f.error_messages %>
+			<%=h f.text_field :source_url, :placeholder=>"http://example.com/", :style=>"margin:0; margin-top:2px;" %>
+			<button onclick="this.parentNode.submit()" class="btn" style="font-size: 1.6em; margin-left: 5px;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></button>
+    	<% end %>
+    </div>
+    
+    <div class="span-2" style="padding-top: 33px; text-align: center;">
+        <span class="highlight" style="font-size:18px; font-weight:bold;">OR</span>
+    </div>
+    
+    <div class="span-12" style="padding-left: 8px;">
+        <span style="font-size:18px; color:#7f7f7f;">Upload Content:</span><br/>
+        <a href="<%= page_builder_path %>" class="btn" style="font-size: 1.6em; margin-top: 5px;"><span><span><b>&nbsp;</b><u>Go To Page Builder</u></span></span></a>
+    </div>
+    
+    <div style="height: 40px; clear:both;">&nbsp;</div>
+    
+    <h2 style="margin-bottom: 2px;">Bookmarklet</h2>
+    
+    <div style="height:15px; border-top: 1px dotted #ccc;">&nbsp;</div>
+    
+    <div class="span-24">
+        <span style="font-size:18px; color:#7f7f7f;">Drag this button into your toolbar:</span>
+        <div style="clear:both; height:5px;">&nbsp;</div>
+        <%= render :partial=>'/layouts/bookmarklet' %> <a href="javascript:showBookmarkletHelp();void(0);" style="font-size: 10px; color: #7f7f7f;">Help</a>
+    </div>
+    
+    <div style="height:1px; clear:both;">&nbsp;</div>
+    
+    <div id="bookmarkletHelp" style="display: none; width: 500px; position: relative; left: 75px; color: white; background-color: rgba(0, 0, 0, 0.9); padding: 10px; border-radius: 6px; font-size:11px">
+        <h2 style="color: white; width: 400px; float: left;">Bookmarklet Help</h2><div style="float:left; text-align: right; width: 100px;"><div style="padding-right: 10px; padding-top: 10px;"><a href="javascript:closeBookmarkletHelp();void(0);" style="color: white; font-weight: bold;">X</a></div></div>
+        <div style="width:100%; height: 1px;clear:both;">&nbsp;</div>
+        <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> What is a bookmarklet? </h4>
+        <p>A bookmarklet is simply a link which performs an action when clicked. It's a small, safe tool for sharing content on <strong>TheLikeStream</strong> and cannot harm your computer or access personal information.</p>
+        <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Can I remove it later? </h4>
+        <p>Yes. The bookmarklet can be "uninstalled" simply by removing the link from your bookmark toolbar or menu.</p>
+        <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> I don't see my Bookmark toolbar</h4>
+        <p>Some browsers don't show the bookmark toolbar by default. In this case, you can usually display the bookmark toolbar using your browser's "View" menu.</p>
+        <h4 style="color:#00ccff; font-weight: bold; margin-bottom:5px;padding:0;"> Other Options </h4>
+        <p style="">If you don't want to display the bookmark toolbar, you can add the bookmarklet to your bookmarks menu. You can do this by right-clicking on the button above and selecting "Add link to bookmarks." Then to share content on <strong>TheLikeStream</strong>, click it like any other bookmark.</p>
+        <button onclick="closeBookmarkletHelp()" type="button" class="btn"><span><span><b>&nbsp;</b><u>Close</u></span></span></button>
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+        function closeBookmarkletHelp(){
+            $('bookmarkletHelp').hide();
+        }
+        function showBookmarkletHelp(){
+            $('bookmarkletHelp').show();
+        }
+    </script>
+
+<% if false %>    
+    <div style="border:2px solid #ccc; font-weight: bold;">
+        <div style="padding: 15px;">
+            1. Use content from an existing webpage.<br/>
+            
+        </div>
+    </div>
+    
+    <div style="border:2px solid #ccc; font-weight: bold; margin-top: 25px;">
+        <div style="padding: 15px;">
+            <%= image_tag 'builder.png' %>
+            2. Build a page from scratch using our Page Builder. <a href="<%= page_builder_path %>" class="btn" style="float: right; margin-left: 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Get Started</u></span></span></a>
+        </div>
+    </div>
+    
+    <div style="border:2px solid #ccc; font-weight: bold; margin-top: 25px;">
+        <div style="padding: 15px;">
+            3. Use our bookmarklet. Currently the fastest and easiest way to submit content.  <a href="<%= tools_path %>" class="btn" style="float: right; margin-left: 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Get Started</u></span></span></a>
+        </div>
+    </div>
+    
+    <hr class="space" />
+<% end %>

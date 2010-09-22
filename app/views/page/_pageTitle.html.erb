@@ -1,0 +1,16 @@
+<div class="span-2" style="margin-bottom:10px;">
+	<%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>@page} %>
+</div>
+
+<div class="span-12 last">
+    <h2 style="padding:0;margin:0;line-height:1.1em;font-size: 2.4em;">
+		<%=h @page.title %>
+		<% if (current_user && current_user.is_content_editor) or (current_user && @page.user == current_user) %>
+	        <%= link_to '(Edit)', edit_page_path(@page), :style=>"font-size:60%;" %>
+	    <% end %>
+	</h2>
+
+    <div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
+        Shared by <%= link_to fb_name(@page.user, :linked=>"false"), @page.user %> <%= h distance_of_time_in_words @page.created_at, Time.now %> ago. This has been liked <span style=""><%=h @page.like_count %></span> times.
+    </div>
+</div>

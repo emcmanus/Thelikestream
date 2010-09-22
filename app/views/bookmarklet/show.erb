@@ -12,7 +12,7 @@ if (window.location.href.match( /\.(gif|tiff|png|jpeg|jpg|bmp)$/i ))
 
 // Assemble submit path
 
-var k = "<%= @user_key %>";
+var k = "<%=h @user_key %>";
 var u = encodeURIComponent(window.location.href);
 var t;
 if (!safeSend){
@@ -20,7 +20,7 @@ if (!safeSend){
 } else {
     t = encodeURIComponent(prompt("Please enter a title for this image:", ""));
 }
-var src = "<%= bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
+var src = "<%=h bookmarklet_submit_url %>?k="+k+"&t="+t+"&u="+u;
 
 var ourStyle = document.createElement('style');
 ourStyle.setAttribute('type', 'text/css');

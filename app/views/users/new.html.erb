@@ -7,27 +7,27 @@
     }
 </script>
 <% form_for(@user) do |f| %>
-  <%= f.error_messages %>
+  <%=h f.error_messages %>
   
   <p>
     <b>Facebook id: </b> (live update)<br/>
-    <%= f.text_field :facebook_id, :onkeyup=>'javascript:changeNewUserId(this.value)' %><br/>
+    <%=h f.text_field :facebook_id, :onkeyup=>'javascript:changeNewUserId(this.value)' %><br/>
     <span id="fbNewUserName"></span>
   </p>
   
   <p>
-     <%= f.label :can_admin %><br />
-     <%= f.check_box :can_admin %>
+     <%=h f.label :can_admin %><br />
+     <%=h f.check_box :can_admin %>
  </p>
      
  <p>
-     <%= f.label :can_edit_raw_html %><br />
-     <%= f.check_box :can_edit_raw_html %>
+     <%=h f.label :can_edit_raw_html %><br />
+     <%=h f.check_box :can_edit_raw_html %>
  </p>
  
  <p>
-     <%= f.label :is_puppet %><br />
-     <%= f.check_box :is_puppet %>
+     <%=h f.label :is_puppet %><br />
+     <%=h f.check_box :is_puppet %>
  </p>
   
   <p>

@@ -1,10 +1,25 @@
 class PageController < ApplicationController
   
-  before_filter   :require_user, :except => [:show]
+  before_filter   :require_user, :except => [:show, :title_partial, :body_partial]
   before_filter   :require_content_editor, :only => [:index]
+  
+  def title_partial
+    # Ajax request to navigate to new page
+    @page = Page.find params[:id]
+    render :partial => "pageTitle"
+  end
+  
+  def body_partial
+    # Ajax request to navigate to new page
+    @page = Page.find params[:id]
+    render :partial => "pageBody"
+  end
   
   def show
     @page = Page.find(params[:id])  # find automatically calls to_i
+    # For ajax story loading
+    @lower_five = Page.find :all, :select=>:id, :order=>"weighted_score DESC", :conditions=>["like_count > 0 AND weighted_score < ?", @page.weighted_score], :limit=>5
+    @higher_five = Page.find :all, :select=>:id, :order=>"weighted_score", :conditions=>["like_count > 0 AND weighted_score > ?", @page.weighted_score], :limit=>5
   end
   
   def index
@@ -13,10 +28,14 @@ class PageController < ApplicationController
   
   def new
     @new_page = Page.new
+    @nav_page = "submit"
   end
   
   def create
-    # 
+    # Given only the URL
+    @page = Page.new params[:page]
+    @page.scrape_source_url
+    redirect_to page_path(@page) and return
   end
   
   def edit
@@ -49,7 +68,7 @@ class PageController < ApplicationController
     redirect_to @page and return
   rescue ActiveRecord::RecordInvalid => e
     @page = e.record
-    flash[:error] = @page.errors.full_messages.to_sentance
+    flash[:error] = @page.errors.full_messages.to_sentence
     render :action => "edit"
   end
   

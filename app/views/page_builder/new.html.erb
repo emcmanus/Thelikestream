@@ -1,0 +1,463 @@
+<style type="text/css" media="screen">
+    
+    /* Input interactions */
+    input.title_entry { padding: 5px 7px 7px 7px; border: 1px solid #ccc; }
+    input.title_entry:hover { padding: 4px 6px 6px 6px; border: 2px solid #0cf; }
+    input.title_entry:focus { padding: 4px 6px 6px 6px; border: 2px solid #0cf; }
+    
+    input.heading_entry { border: 1px solid #ccc; padding: 7px 5px 5px 5px; }
+    input.heading_entry:hover { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    input.heading_entry:focus { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    
+    input.subheading_entry { border: 1px solid #ccc; padding: 7px 5px 5px 5px; }
+    input.subheading_entry:hover { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    input.subheading_entry:focus { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    
+    input.sectionheading_entry { border: 1px solid #ccc; padding: 7px 5px 5px 5px; }
+    input.sectionheading_entry:hover { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    input.sectionheading_entry:focus { border: 2px solid #0cf !important; padding: 6px 4px 4px 4px !important; }
+    
+    textarea.paragraph_entry { border: 1px solid #ccc; padding: 5px 5px 5px 5px; }
+    textarea.paragraph_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
+    textarea.paragraph_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
+    
+    input.fileurl_entry { border: 1px solid #ccc; padding: 7px 5px 7px 7px; }
+    input.fileurl_entry:hover { border: 2px solid #0cf !important; padding: 6px 4px 6px 6px !important; }
+    input.fileurl_entry:hover { border: 2px solid #0cf !important; padding: 6px 4px 6px 6px !important; }
+    
+    textarea.embed_entry { border: 1px solid #ccc; padding: 5px 5px 5px 5px; }
+    textarea.embed_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
+    textarea.embed_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
+    
+    .widget {
+        border:2px solid #ccc; color: #aaa;
+    }
+    .widget:hover {
+        border:2px solid #666; color: #444;
+        cursor: pointer;
+    }
+    #pageCanvas {
+        min-height: 800px;
+        border:2px dotted #ccc;
+    }
+    #pageCanvas.widgetOver {
+        border:2px solid #ccc;
+    }
+    .staticWidget {
+        border: 1px solid #ccc;
+        margin: 15px;
+        padding: 4px;
+    }
+    .sortableWidget {
+        border: 1px solid #ccc;
+        margin: 15px;
+        padding: 4px;
+    }
+    .handle {
+        cursor: move;
+    }
+    .trash {
+        cursor: pointer;
+    }
+    #widgetTrash {
+        border:1px solid #ddd;
+    }
+    #widgetTrash.widgetOver {
+        border: 2px solid red;
+    }
+</style>
+
+<% unless flash[:error].blank? %>
+    <h3><span class="highlight"><%=h flash[:error] %></span></h3>
+<% end %>
+
+<!-- Preview target -->
+<div id="page_preview_container" style="position: absolute; top:0; left: 0; z-index:9999; width: 100%; background-color: rgba(0,0,0,0.75); display:none;">
+    <div class="span-7 prepend-8" style="float: none; margin: 100px auto; margin-bottom:10px; color: #fff;">
+        <div class="span-3" style="text-align: right;"><a href="javascript:submitPage();false" class="btn" style="position:relative;right:-25px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></a></div>
+        <div class="span-4 last" style="text-align: right;"><a href="javascript:$('page_preview_container').hide();false" class="btn" style="position:relative;right:-15px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>(X) - Close Preview</u></span></span></a></div>
+        <div style="height:1px; clear: both;">&nbsp;</div>
+    </div>
+    <div class="span-15" style="float: none; margin: 0 auto; margin-bottom:100px; background-color: #000; padding: 15px;">
+        <div style="background-color: #fff; padding: 15px;" id="previewTarget">&nbsp;</div>
+        <div style="height:1px; clear: both;">&nbsp;</div>
+    </div>
+</div>
+
+<% form_tag(page_builder_submit_path, :name=>"page_form_tag", :id=>"page_form_tag") do %>
+    <input type="hidden" id="page_html_body" name="html_body" value="" />
+    <input type="hidden" id="page_title" name="title" value="" />
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+     function submitPage()
+     {
+         // Send whatever is in the preview field
+         $('page_form_tag').submit();
+     }
+     
+     function previewPage()
+     {
+         // Check that the canvas is valid
+         if ($('pageCanvas').select('#canvasIntro').length > 0)
+         {
+            alert("Before you can preview this page, drag a widget into the container below.");
+            return;
+         }
+         
+         // Define some utility objects
+         var verticalSpacer = "<span class='builder_space_widget'><div style='height:5px; clear:both;'>&nbsp;</div></span>";
+         
+         // Serialize the canvas
+         var serializedPage = "";
+         
+         // Mark this as a builder submission
+         serializedPage += "<div class='builder_container_v1'>";
+         
+         // Title
+         var titleValue = $('canvasTitleContainer').select('.title_entry')[0].value;
+         var titlePreview = "<h2 style='padding:0;margin:0;margin-bottom: 15px;line-height:1.1em;font-size: 2.4em;'>";
+         titlePreview += titleValue;
+         titlePreview += "</h2>";
+         
+         $A($('pageCanvas').childNodes).each(
+             function(element)
+             {    
+                 if (!element.id)
+                    return;
+                    
+                 if(element.id.indexOf('h1')==0)
+                 {
+                     serializedPage += verticalSpacer;
+                     serializedPage += "<span class='builder_h1_widget'>";
+                     serializedPage += "<h1 class='builder_val'>" + element.select('.heading_entry')[0].value + "</h1>";
+                     serializedPage += "</span>";
+                 }
+                 else if(element.id.indexOf('h2')==0)
+                 {
+                     serializedPage += "<span class='builder_h2_widget'>";
+                     serializedPage += "<h2 class='builder_val'>" + element.select('.subheading_entry')[0].value + "</h2>";
+                     serializedPage += "</span>";
+                 }
+                 else if(element.id.indexOf('h3')==0)
+                 {
+                     serializedPage += "<span class='builder_h3_widget'>"
+                     serializedPage += "<h3 class='builder_val'>" + element.select('.sectionheading_entry')[0].value + "</h3>";
+                     serializedPage += "</span>";
+                 }
+                 else if(element.id.indexOf('paragraph')==0)
+                 {
+                     serializedPage += "<span class='builder_paragraph_widget'>"
+                     serializedPage += "<p class='builder_val'>" + element.select('.paragraph_entry')[0].value + "</p>";
+                     serializedPage += "</span>";
+                 }
+                 else if(element.id.indexOf('image')==0)
+                 {
+                     serializedPage += "<span class='builder_image_widget'>"
+                     serializedPage += "<img class='builder_val' src='" + element.select('.image_url_value')[0].value + "' />";
+                     serializedPage += "</span>";
+                 }
+                 else if(element.id.indexOf('embed')==0)
+                 {
+                     serializedPage += "<span class='builder_embed_widget'>"
+                     serializedPage += "<span class='builder_val_wrapper'>" + element.select('.embed_entry')[0].value + "</span>";
+                     serializedPage += "</span>";
+                 }
+             });
+        
+        serializedPage += "</div>";
+        
+        // Set form fields
+        $('page_html_body').value = serializedPage;
+        $('page_title').value = titleValue;
+        
+        // Do not include this final clear in the submission
+        serializedPage += "<div style='height:1px; clear: both;'>&nbsp;</div>";
+        
+        // Prepend title for preview
+        serializedPage = titlePreview + serializedPage;
+        
+        // Prepare the lightbox
+        $('previewTarget').innerHTML = serializedPage;
+        $('page_preview_container').show();
+        $('page_preview_container').style.height = document.body.scrollHeight + "px";
+     }
+     
+     function formFrameLoaded(el, iframe_name, full_object_path){
+         
+         var success = false;
+         try
+         {
+             if (el.contentDocument.location.href != "about:blank")
+             {
+                 success = true;
+             }
+         }
+         catch(e)
+         {
+             // Cross-site error, still OK.
+             success=true;
+         }
+         if (success)
+         {
+             // Update hidden form field
+             el.parentNode.parentNode.parentNode.select('.image_url_value')[0].value = full_object_path;
+             
+             $(iframe_name+'_form').hide();
+             $(iframe_name+'_spinner').hide();
+             $(iframe_name+'_filename').innerHTML = $(iframe_name+'_file').value;
+             $(iframe_name+'_success').show();
+         }
+     }
+</script>
+
+<div class="span-22 last">
+    
+    <h2 style="margin-bottom:20px;">Build Your Submission</h2>
+    
+    <div class="span-22 last" style="margin-bottom: 15px; border-top: 1px dotted #ccc; border-bottom: 1px dotted #ccc; padding: 10px 0;">
+        <div class="span-3">
+            <strong class="highlight">Instructions</strong>
+        </div>
+        <div class="span-6">
+            <strong>Step 1.</strong> Drag widgets into the canvas
+        </div>
+        <div class="span-1">
+            <span style="margin: 0 5px; color: #ccc;"> > </span>
+        </div>
+        <div class="span-5">
+            <strong>Step 2.</strong> Fill in any input fields
+        </div>
+        <div class="span-1">
+            <span style="margin: 0 5px; color: #ccc;"> > </span>
+        </div>
+        <div class="span-6 last">
+            <strong>Step 3.</strong> Preview, then submit!
+        </div>
+    </div>
+    
+    <hr class="space" />
+    
+    <div class="span-14 prepend-2">
+           
+        <div class="span-8" style="margin:0;">
+            <h3 style="margin-bottom:10px;">Canvas:</h3>
+        </div>
+        <div class="span-6 last" style="margin:0; text-align:right;font-size:1.2em; padding-top: 0;">
+            <a href="javascript:previewPage()" class="btn" style="position:relative;right:-10px;"><span><span><b>&nbsp;</b><u>Preview and Submit</u></span></span></a>
+        </div>
+        
+        <div style="clear:both;height:1px;">&nbsp;</div>
+        
+        <div id="canvasTitleContainer" style="xdisplay:none;">
+            <input type="text" class="title_entry" style="font-size: 2em; width: 535px;" placeholder="Page Title" />
+            <div style="xborder-bottom:1px dotted #ccc; height:1px;">&nbsp;</div>
+        </div>
+        
+        <div id="widgetTemplateContainer" style="display:none;">
+            <!-- Widget types -->
+            <div id="base_h1Widget" class="sortableWidget" style="display:none;">
+                <input type="text" placeholder="Enter a Heading" style="margin: 0; font-size:1.6em;" class="span-12 heading_entry" />
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+            
+            <div id="base_h2Widget" class="sortableWidget" style="display:none;">
+                <input type="text" placeholder="Enter a Sub-heading" style="margin: 0; font-size:1.2em;" class="span-12 subheading_entry" />
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+            
+            <div id="base_h3Widget" class="sortableWidget" style="display:none;">
+                <input type="text" placeholder="Enter a Section Heading" style="margin: 0; font-size: 1em; font-weight:bold;" class="span-12 sectionheading_entry" />
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+            
+            <div id="base_paragraphWidget" class="sortableWidget" style="display:none;">
+                <textarea style="margin: 0; font-size: 1em;" class="span-12 paragraph_entry">Edit this text.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhoncus sapien, pulvinar aliquet lectus rhoncus non. Donec sit amet lectus mauris. Etiam sed tellus in risus scelerisque euismod. Quisque luctus ullamcorper dictum. Fusce congue magna ac augue convallis et varius mauris sagittis. Nulla magna justo, lacinia eget auctor congue, congue et quam. Sed facilisis sem vitae diam consectetur blandit in vel lorem. Pellentesque ut nunc quis augue mattis bibendum. Donec non ipsum orci. Praesent quis egestas massa. Curabitur ac feugiat erat. Praesent ut mauris et est vulputate bibendum quis vel turpis.</textarea>
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+            
+            <div id="base_imageWidget" class="sortableWidget" style="display:none;">
+                <div class="span-12" style="margin: 0;">
+                    <input type="hidden" class="image_url_value" />
+                    <div style="padding: 5px;">
+                        <div class="urlSuccess" style="display:none;">
+                            <%= image_tag 'builder/photo-small.png', :style=>"float:left;" %> <div style="float: left; padding-top: 2px; padding-left: 5px;"><span class="filename_container" style="font-weight:bold;font-size: 1.2em;"></span> <span style="color:#777;">(image url)</span></div>
+                        </div>
+                        <div class="span-12 last urlForm" style="padding-top:5px; display:none;">
+                            <strong>Image URL:</strong>
+                            <input type="text" placeholder="Image URL" class="fileUrlInput fileurl_entry" style="width: 320px; margin:-8px 0 0 10px;" />
+                            <a href="javascript:void(0);false" onclick="this.parentNode.parentNode.parentNode.select('.image_url_value')[0].value=this.parentNode.select('.fileurl_entry')[0].value; this.parentNode.parentNode.select('.urlSuccess')[0].show();this.parentNode.parentNode.select('.filename_container')[0].innerHTML=this.parentNode.parentNode.select('.fileUrlInput')[0].value;this.parentNode.hide();false" class="btn" style="position:relative;top:-1px;font-size:1.2em;left:1px;"><span><span><b>&nbsp;</b><u>Add</u></span></span></a>
+                        </div>
+                        <div class="span-12 last" style="padding-top:5px;">
+                            <strong>Image options: </strong> <a href="javascript:void(0);false" onclick="console.log(this.parentNode.parentNode);this.parentNode.parentNode.select('.urlForm')[0].show();this.parentNode.hide();false" class="btn" style="margin: 0 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Add an Image URL</u></span></span></a>
+                            or <%= link_to_remote "<span><span><b>&nbsp;</b><u>Upload an Image</u></span></span>", :url=>page_builder_image_upload_path+"?cachebuster=$replace_with_rand", :update =>{:success=>"image_upload_form_$replace_with_rand"}, :html=>{:style=>"margin-left: 5px; font-size: 1em;", :class=>"btn", :onclick=>"this.parentNode.hide()"} %>
+                        </div>
+                        <div id="image_upload_form_$replace_with_rand" class="span-12 last"></div>
+                    </div>
+                </div>
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+            
+            <div id="base_embedWidget" class="sortableWidget" style="display:none;">
+                <textarea type="text" style="margin: 0; font-size: 1em;" class="span-12 embed_entry">Paste an embed code into this box.</textarea>
+                <div class="span-1 last" style="text-align: right;">
+                    <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                </div>
+                <div style="height:1px; clear:both;">&nbsp;</div>
+            </div>
+        </div>
+        
+        <div style="" id="pageCanvas">
+            
+            <div id="canvasIntro" style="margin: 50px; margin-bottom: 800px; text-align: center;">
+                <h3 style="">Drag widgets into this container</h3>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    <div class="span-4 prepend-1 last" style="">
+           
+                <h3 style="margin-bottom:23px;">Widgets:</h3>
+                
+                <div id="h1Widget" class="span-3 widget" style="height: 100px; text-align: center; padding:10px;">
+                    <div style="margin-top:20px;">
+                        <%= image_tag "builder/h1a.png", :style=>"margin-bottom:10px;" %><br/>
+                        Heading
+                    </div>
+                </div>
+            
+                <div id="h2Widget" class="span-3 widget" style="height: 100px; margin-top: 10px; text-align: center; padding:10px;">
+                    <div style="margin-top:20px;">
+                        <%= image_tag "builder/h2a.png", :style=>"margin-bottom:10px;" %><br/>
+                        Sub-heading
+                    </div>
+                </div>
+            
+                <div id="h3Widget" class="span-3 widget" style="height:100px; margin-top: 10px; height: 100px; text-align: center; padding:10px;">
+                    <div style="margin-top:20px;">
+                        <%= image_tag "builder/h3a.png", :style=>"margin-bottom:10px;" %><br/>
+                        Section Heading
+                    </div>
+                </div>
+            
+                <div id="paragraphWidget" class="span-3 widget" style="height:100px; margin-top: 10px; height: 100px; text-align: center; padding:10px;">
+                    <div style="margin-top:5px;">
+                        <%= image_tag "builder/text.png", :style=>"margin-bottom:5px;" %><br/>
+                        Paragraph
+                    </div>
+                </div>
+            
+                <div id="imageWidget" class="span-3 widget" style="height:100px; margin-top: 10px; text-align: center; padding:10px;">
+                    <div style="margin-top:10px;">
+                        <%= image_tag "builder/photo.png", :style=>"margin-bottom:10px;" %><br/>
+                        Image
+                    </div>
+                </div>
+            
+                <div id="embedWidget" class="span-3 widget" style="height:100px; margin-top: 10px; text-align: center; padding:10px;">
+                    <div style="margin-top:5px;">
+                        <%= image_tag "builder/embed.png", :style=>"margin-bottom:10px;" %><br/>
+                        Embed Code<br/>
+                        <span style="font-size:0.8em">(Youtube, Embeddable Game, Etc.)</span>
+                    </div>
+                </div>
+            
+                <div style="height:1px; clear:both;"></div>
+    </div>
+    
+    <div>
+    
+    <% if false %>
+    <div class="span-8 last" style="margin-top: 25px;">
+        <h3>Trash</h3>            
+        <div id="widgetTrash" style="padding: 15px; padding-bottom: 30px;">
+            <div style="margin: 50px 0; color: #aaa; text-align: center;">
+                <%= image_tag "builder/trash-full.png", :style=>"margin-bottom: 10px;" %><br/>
+                Drag Widgets Here To Distroy
+            </div>
+        </div>
+    </div>
+    <% end %>
+    
+    </div>
+    
+    <script type="text/javascript" charset="utf-8">
+    
+        var canvas = Sortable.create('pageCanvas');
+        
+        new Draggable('h1Widget', {ghosting:true, scroll: window, revert: true});
+        new Draggable('h2Widget', {ghosting:true, scroll: window, revert: true});
+        new Draggable('h3Widget', {ghosting:true, scroll: window, revert: true});
+        new Draggable('paragraphWidget', {ghosting:true, scroll: window, revert: true});
+        new Draggable('imageWidget', {ghosting:true, scroll: window, revert: true});
+        new Draggable('embedWidget', {ghosting:true, scroll: window, revert: true});
+        
+        Droppables.add('pageCanvas', {
+            hoverclass: "widgetOver",
+            accept: 'widget',
+            onDrop: function(dragName, dropName)
+            {
+                if( $('canvasIntro') ){
+                    $('canvasIntro').remove( true );
+                }
+                
+                $('canvasTitleContainer').show();
+                
+                var newId = $(dragName).id + Math.floor(Math.random()*10000).toString();
+                
+                // Clone the base element
+                var baseCopy = $("base_" + $(dragName).id).cloneNode(true);
+                baseCopy.id = newId;
+                // special update for image widget
+                console.log(dragName);
+                if (dragName.id=="imageWidget")
+                {
+                    // Populate $replace_with_* vars in template
+                    baseCopy.innerHTML = baseCopy.innerHTML.replace(/\$replace_with_rand/g, Math.floor(Math.random()*9e8).toString());
+                }
+                baseCopy.show();
+                
+                $('pageCanvas').insert(baseCopy);
+                
+                Sortable.destroy("pageCanvas");
+                Sortable.create("pageCanvas", {tag:"div", only: "sortableWidget", handle:"handle", scroll: window});
+            }
+        });
+        <% if false %>
+        Droppables.add('widgetTrash', {
+            hoverclass: "widgetOver",
+            accept: "sortableWidget",
+            onDrop: function(dragName, dropName)
+            {
+                console.log(dragName + " dropped");
+                $(dragName).remove();
+            }
+        });
+        <% end %>
+    </script>
+</div>

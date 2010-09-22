@@ -2,12 +2,16 @@
 
 (function(){
     <% if @page_id && @increment_counter %>
-        $$('.likeCounterLabel<%= @page_id %>').each(function(el){
-            el.innerHTML = parseInt(el.innerHTML)+1;
+        $$('.likeCounterLabel<%=h @page_id %>').each(function(el){
+            el.innerHTML = (parseInt(el.innerHTML)||0)+1;
         });
-        if (typeof showCustomizeDialog_<%= @page_id %> != "undefined")
+        if (typeof showCustomizeDialog != "undefined")
         {
-            showCustomizeDialog_<%= @page_id %>();
+            showCustomizeDialog(<%=h @page_id %>);
         }
+    <% elsif @page_id && !@increment_counter %>
+        // Don't increment. Already voted.
+    <% else %>
+        // No page id.
     <% end %>
 })();

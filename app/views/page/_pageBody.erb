@@ -1,0 +1,24 @@
+<div style="margin-bottom: 10px; border-bottom: 1px dotted #ccc;" id="page_preview_container">
+    <%= h @page.introduction %>
+	<%= @page.html_body.untaint %>
+	<div style="height:1px; clear: both;">&nbsp;</div>
+</div>
+
+<br/>
+
+<% if @page.show_link and !@page.source_url.blank? %>
+    <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 30px;">
+        <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>Via - <%= link_to h(@page.source_url), h(@page.source_url) %></h3>
+    </div>
+<% end %>
+
+<% if @page.created_with_builder %>
+    This page was created with <%= link_to "Page Builder", page_builder_path %>.
+<% end %>
+
+<script type="text/javascript" charset="utf-8">
+    window.showCustomizeDialogForCurrentArticle = function()
+    {
+        showCustomizeDialog(<%= @page.id %>, true);
+    }
+</script>

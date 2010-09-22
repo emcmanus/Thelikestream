@@ -17,7 +17,7 @@
     <div class="span-22 last">
         <h2 style="padding:0; margin:0;">Popular</h2>
     </div>
-        
+    
     
     <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
     
@@ -25,6 +25,14 @@
     <% for page in @pages %>
         <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
     <% end %>
+    <% if @pages.length == 0 %>
+        No pages found.
+    <% end %>
+    
+    <div class="span-5 prepend-3">
+        <%= will_paginate @pages %>
+    </div>
+    
     </div>
     
     

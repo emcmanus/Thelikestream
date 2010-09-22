@@ -12,15 +12,15 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= link_to user.facebook_id, user %></td>
-    <td><%= fb_name user.facebook_id %></td>
+    <td><%= link_to h(user.facebook_id), user %></td>
+    <td><%= fb_name h(user.facebook_id) %></td>
     <td><%= check_box_tag nil, nil, user.is_god %></td>
     <td><%= check_box_tag nil, nil, user.can_admin %></td>
     <td><%= check_box_tag nil, nil, user.can_edit_raw_html %></td>
     <td><%= check_box_tag nil, nil, user.is_puppet %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, :confirm => "DOUBLE CHECK! Are you sure you want to delete FB user #{user.facebook_id}?\n\nTHIS IS NOT A SOFT DELETE.", :method => :delete %></td>
+    <td><%= link_to 'Destroy', user, :confirm => "DOUBLE CHECK! Are you sure you want to delete FB user #{h user.facebook_id}?\n\nTHIS IS NOT A SOFT DELETE.", :method => :delete %></td>
   </tr>
 <% end %>
 </table>

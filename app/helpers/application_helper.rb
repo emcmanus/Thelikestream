@@ -1,4 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
+
+require 'uri/http'
+
 module ApplicationHelper
   def host_with_port
     value = "#{request.host}"
@@ -18,6 +21,13 @@ module ApplicationHelper
     return nil unless current_user
     return @unpublished_pages if @unpublished_pages
     @unpublished_pages = Page.all :conditions=>["user_id = ? AND like_count = 0", current_user.id]
+  end
+  
+  def get_host(full_url)
+    u = URI.parse(full_url)
+    u.host
+  rescue
+    ""
   end
   
 end

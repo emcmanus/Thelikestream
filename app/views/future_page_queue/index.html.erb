@@ -13,9 +13,9 @@
     
     <% @pages.each do |page| %>
         <tr style="background-color:<%= cycle("#fff", "#eaeaea") -%>">
-            <td><%= truncate(page.title, :length=>60) %></td>
-            <td><%= fb_name page.user.facebook_id, :linked=>false %></td>
-            <td><%= distance_of_time_in_words (page.launch_threshold||Time.now), Time.now %></td>
+            <td><%= truncate(h(page.title), :length=>60) %></td>
+            <td><%= fb_name h(page.user.facebook_id), :linked=>false %></td>
+            <td><%=h distance_of_time_in_words((page.launch_threshold||Time.now), Time.now) %></td>
             <td><%= link_to "view", page.source_url %></td>
             <td><%= link_to "edit", edit_future_page_queue_path(page) %></td>
             <td><%= link_to 'destroy', destroy_future_page_queue_path(page), :confirm => "Are you sure?" %></td>

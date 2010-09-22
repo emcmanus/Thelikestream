@@ -42,7 +42,7 @@ class Page < ActiveRecord::Base
   
   has_many :page_votes
   
-  validates_format_of_url   :source_url
+  validates_format_of_url   :source_url,    :unless => Proc.new { |page| page.source_url.blank? }
   validates_presence_of     :title
   validates_associated      :user
   
@@ -52,15 +52,27 @@ class Page < ActiveRecord::Base
   validates_numericality_of :thumbnail_full_width, :greater_than_or_equal_to=>1, :allow_nil=>true,    :unless => Proc.new { |page| page.thumbnail_full.blank? }
   validates_numericality_of :thumbnail_full_height, :greater_than_or_equal_to=>1, :allow_nil=>true,   :unless => Proc.new { |page| page.thumbnail_full.blank? }
   
+  # Will_paginate
+  cattr_reader :per_page
+  @@per_page = 30 # this is the default anyway
+  
   # We'll check the state of the object to make sure these aren't run on updates
-  before_save :scrape_source_url
+  # before_save :scrape_source_url
   # before_save :process_images # we'll do this in a background process
   before_save :set_slug
+  
+  # before_save :queue_image_processing
+  # def queue_image_processing
+  #   unless self.image_processing_started or self.image_processing_finished
+  #     # Add processing request to queue
+  #     
+  #   end
+  # end
   
   def set_slug
     if self.slug.blank?
       # Some non-word characters were being included in the slug. This was screwing up voting later on.
-      self.slug = self.title.to_url.scan(/\w+/).join("-")
+      self.slug = self.title.to_url.scan(/\w+/).join("-") unless self.title.blank?
     end
   end
   
@@ -84,22 +96,20 @@ class Page < ActiveRecord::Base
     # Otherwise, mark as started
     self.image_processing_started = true
     
+    add_thumbnail_for_youtube_embeds
+    
     # Setup S3
     AWS::S3::Base.establish_connection!(
-      :access_key_id     => '13WQ80HKRY1EJA7SH9R2',
-      :secret_access_key => '67IJS5Tc8VQLrrougD2AJQBFyw3B2YER6dAHXvwj'
+      :access_key_id     => S3Keys::S3Config.access_key_id,
+      :secret_access_key => S3Keys::S3Config.secret_access_key
     )
-    if RAILS_ENV == "production"
-      s3_bucket = 'likestream'
-    else
-      s3_bucket = 'likestream-development'
-    end
+    s3_bucket = S3Keys::S3Config.bucket
     
     # For every image
     parsed_source = Nokogiri::HTML(self.html_body)
     parsed_source.css('img').each do |img|
       # Don't re-convert images in our bucket
-      unless img["src"].blank? or img["src"] =~ Regexp.new("^http\\:\\/\\/#{s3_bucket}\\.s3\\.amazonaws\\.com\\/", true)
+      unless img["src"].blank? or img["src"] =~ Regexp.new("^http\\:\\/\\/#{s3_bucket}\\.s3\\.amazonaws\\.com\\/(page_images|page_thumbs)", true)
         
         # Setup tmp files
         tmp_full = Tempfile.new "tmp_thumb"   # Original
@@ -160,6 +170,12 @@ class Page < ActiveRecord::Base
   end
   
   
+  def sanitize_user_html(unsafe_html)
+    self.html_body = sanitize(unsafe_html)
+    self.remote_url_scraped = true
+  end
+  
+  
   def scrape_source_url
     # Try to extract some useful content from the remote URL
     
@@ -171,46 +187,40 @@ class Page < ActiveRecord::Base
     # Only run when there are empty fields
     return unless self.html_body.blank? or self.title.blank? or self.thumbnail_full.blank?
     
-    # 
-    # SPECIAL SUBMISSION TYPES
-    # 
-    
-    # Youtube
-    if self.source_url =~ /http:\/\/(www\.)?(youtube)\.com\/watch?/i
-      # Get video info
-      video_id = CGI.parse(URI.parse(self.source_url).query)["v"].first
-      video_metadata = Nokogiri::XML open("http://gdata.youtube.com/feeds/api/videos/#{video_id}").read
+    # Special URL's
+    unless self.source_url.blank?
+      # Youtube
+      if self.source_url =~ /http:\/\/(www\.)?(youtube)\.com\/watch?/i
+        # Get video info
+        video_id = CGI.parse(URI.parse(self.source_url).query)["v"].first
+        video_metadata = Nokogiri::XML open("http://gdata.youtube.com/feeds/api/videos/#{video_id}").read
       
-      # Update model fields
-      self.introduction = video_metadata.xpath("//media:description").first.content
-      self.html_body = <<-eos
-        <object width="550" height="413">
-          <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
-          <param name="allowFullScreen" value="true"></param>
-          <param name="allowscriptaccess" value="always"></param>
-          <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
-            allowscriptaccess="always" allowfullscreen="true" width="550" height="413"></embed>
-        </object><br/>
-        <img src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
-      eos
-      return
+        # Update model fields
+        self.introduction = video_metadata.xpath("//media:description").first.content
+        self.html_body = <<-eos
+          <object width="550" height="413">
+            <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
+            <param name="allowFullScreen" value="true"></param>
+            <param name="allowscriptaccess" value="always"></param>
+            <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
+              allowscriptaccess="always" allowfullscreen="true" width="550" height="413"></embed>
+          </object><br/>
+          <img src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
+        eos
+        return
+      end
+      # Img
+      if self.source_url.index /\.(gif|tiff|png|jpeg|jpg|bmp)$/i
+        self.html_body = "<p><a href='#{self.source_url}'><img src='#{self.source_url}'/></a></p>"
+        # Skip the rest, there's nothing else we can do
+        return true
+      end
+      # Other
+      if self.source_url.index /\.(pdf|ps)$/i
+        self.html_body = "" # We'll link back to this object automatically
+        return true
+      end
     end
-    
-    # IMG
-    if self.source_url.index /\.(gif|tiff|png|jpeg|jpg|bmp)$/i
-      self.html_body = "<p><a href='#{self.source_url}'><img src='#{self.source_url}'/></a></p>"
-      # Skip the rest, there's nothing else we can do
-      return true
-    end
-    
-    # DO NOTHING:
-    if self.source_url.index /\.(pdf|ps)$/i
-      self.html_body = "" # We'll link back to this object automatically
-      return true
-    end
-    
-    # END SPECIAL TYPES
-    
     
     # Get HTML source
     begin
@@ -265,6 +275,45 @@ class Page < ActiveRecord::Base
       return
     end
   end
+  
+  
+  def add_thumbnail_for_youtube_embeds
+    
+    return if self.html_body.blank?
+    
+    # Assumes the page source is available in html_body
+    parsed_doc = Nokogiri::HTML self.html_body
+    
+    # If the post contains a youtube video and no other images, append one
+    if parsed_doc and parsed_doc.css("embed,object").length>0 and parsed_doc.css("img").length == 0
+      
+      # Check for youtube
+      embeds = parsed_doc.css("embed,object").each do |el|
+        if el["src"] and el["src"] =~ /http:\/\/(www\.)?(youtube)\.com\//i
+          # Get video ID, append image
+          # After appending our first thumbnail, break
+          video_id = el["src"].split("?").first.split("/").last
+          
+          # If it's a builder page, add an image widget
+          if self.created_with_builder
+            # Handle Builder V1
+            root_divs = parsed_doc.xpath("/html/body/div")
+            if root_divs.length == 1 and root_divs.first["class"]=="builder_container_v1"
+              img_widget = Nokogiri::XML::DocumentFragment.parse("<span class='builder_image_widget'><img class='builder_val' src='http://img.youtube.com/vi/#{video_id}/0.jpg' /></span>")
+              root_divs.first.children.first.add_next_sibling img_widget
+              self.html_body = root_divs.first.to_html
+            end
+          else
+            self.html_body += "<img src='http://img.youtube.com/vi/#{video_id}/0.jpg' />"
+          end
+          break
+        end
+      end
+    end
+  rescue
+    logger.warn "In rescue in add_thumbnail_for_youtube_embeds"
+  end
+  
   
   def calculate_weighted_score!
     # Ranking algorithm as described in RAILS_SETUP_NOTES
@@ -394,4 +443,88 @@ class Page < ActiveRecord::Base
       logger.error "in make_thumbnail: #{$!}"
     end
     
+    # Return "safe" HTML - only permitted builder tags
+    def sanitize(unsafe_html)
+      unsafe = Nokogiri::HTML unsafe_html
+      root_divs = unsafe.xpath("/html/body/div")
+      return "" unless root_divs.length == 1
+      
+      if (root_divs.first["class"]=="builder_container_v1")
+        
+        # Specify this page is created with Builder
+        self.created_with_builder = true
+        
+        # Embed Transformer
+        embed_transformer = lambda do |env|
+          node      = env[:node]
+          node_name = env[:node_name]
+          parent    = node.parent
+
+          return nil unless (node_name == 'param' || node_name == 'embed') &&
+              parent.name.to_s.downcase == 'object'
+
+          # Set allowscriptaccess to never
+          script_param_node = parent.search('param[@name="allowscriptaccess"]')
+          unless script_param_node.nil?
+            script_param_node.each do |el|
+              el["value"] = "never"
+            end
+          end
+
+          # Cap width to 550
+          parent["width"] = [parent["width"].to_i, 550].min.to_s
+          embed = parent.search('embed').first if parent.search('embed')
+          embed["width"] = [embed["width"].to_i, 550].min.to_s
+
+          Sanitize.clean_node!(parent, {
+            :elements   => ['embed', 'object', 'param'],
+            :attributes => {
+              'embed'  => ['allowfullscreen', 'height', 'src', 'type', 'width'],
+              'object' => ['height', 'width'],
+              'param'  => ['name', 'value']
+            }
+          })
+
+          {:whitelist_nodes => [node, parent]}
+        end
+        
+        # Sanitize config
+        allowed_classnames = %w[builder_container_v1 builder_space_widget builder_h1_widget builder_h2_widget builder_h3_widget builder_paragraph_widget builder_image_widget builder_embed_widget builder_val_wrapper builder_val]
+        allowed_elements = %w[span div h1 h2 h3 p img embed object param]
+        allowed_attributes = {
+          :all      => %w[class],
+          "img"     => %w[src width height],
+          "param"   => %w[name value]
+        }
+        allowed_protocols = {
+          'a'   => {'href' => ['http', 'https']},
+          'img' => {'src'  => ['http', 'https']}
+        }
+        add_attributes = {
+          "a"       => {"rel"=>"nofollow"},
+          "embed"   => {"allowscriptaccess"=>"never"}
+        }
+        scrubbed = Sanitize.clean unsafe_html, :elements => allowed_elements, :protocols => allowed_protocols, :attributes => allowed_attributes,
+                      :add_attributes => add_attributes, :transformers => [embed_transformer]
+        
+        # Filter classnames
+        safe = Nokogiri::HTML scrubbed
+        safe.css("*").each do |el|
+          unless el["class"].blank?
+            clean_class = ""
+            el["class"].split(' ').each do |classname|
+              if allowed_classnames.include? classname
+                clean_class += " #{classname}"
+              end
+            end
+            el["class"] = clean_class
+          end
+        end
+        
+        # Add thumbnail for youtube
+        
+        return safe.css("body").first.inner_html
+      end
+      return ""
+    end
 end

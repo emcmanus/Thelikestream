@@ -20,6 +20,8 @@
         <%= stylesheet_link_tag 'blueprint/ie', :media => "screen, projection" %>
     <![endif]-->
     <%= stylesheet_link_tag 'application' %>
+    
+    <%= javascript_include_tag 'placeholder.js' %>
 
     <!-- OpenGraph Meta Tags -->
     <%= render :partial => '/layouts/ogTags' %>
@@ -46,32 +48,108 @@
 
 <body>
     
-<% unless @empty_layout %>
 	<script type="text/javascript" charset="utf-8">
-	    if (!window.queuedFacebookCalls) window.queuedFacebookCalls = [];
-	   function facebookApiReady()
-	   {
-	       if (window.queuedFacebookCalls.length)
-	       {
-	           var proc;
-	           while ( proc = window.queuedFacebookCalls.pop() )
-	           {
-	               proc();
-               }
-	       }
-	   }
-	   function fbSafe(func){
-	       window.queuedFacebookCalls.push(func);
-	   }
-	   function writeLikeButton(targetId, encodedLink)
-       {
-           $(targetId).innerHTML = '<fb:like layout="button_count" show_faces="no" href="'+encodedLink+'"></fb:like>';
-           if (typeof FB != "undefined")
-           {
-               FB.XFBML.parse($(targetId));
-           }
-       }
+        if (!window.queuedFacebookCalls) window.queuedFacebookCalls = [];
+        function facebookApiReady()
+        {
+            if (window.queuedFacebookCalls.length)
+            {
+                var proc;
+                while ( proc = window.queuedFacebookCalls.pop() )
+                {
+                    proc();
+                }
+            }
+        }
+        
+        function fbSafe(func)
+        {
+            window.queuedFacebookCalls.push(func);
+        }
+
+        // 
+        // Write like button lib
+        
+        function resolveLikeContainer(pageId)
+        {
+            return window.likeContainerRegistry[pageId];
+        }
+        
+        function registerLikeContainer(pageId,likeContainer)
+        {
+            if (!window.likeContainerRegistry) window.likeContainerRegistry = {};
+            window.likeContainerRegistry[pageId] = likeContainer;
+        }
+        
+        function writeLikeButton(pageId, encodedLink)
+        {
+            var targetId = resolveLikeContainer(pageId);
+            $(targetId).innerHTML = '<fb:like layout="button_count" show_faces="no" href="'+encodedLink+'"></fb:like>';
+            if (typeof FB != "undefined")
+            {
+                FB.XFBML.parse($(targetId));
+            }
+        }
+        
+        function showCustomizeDialog(pageId, promptUserToClick)
+        {
+            var diagWidth;
+            var diagHeight;
+            var likeTargetId = resolveLikeContainer(pageId);
+
+            if(!likeTargetId)
+            {
+                return;
+            }
+            
+            if (promptUserToClick)
+            {
+                diagWidth = 675;
+                diagHeight = 120;
+                $('outter'+likeTargetId).select('.top_heading')[0].innerHTML = 'Click "like" below';
+                $('outter'+likeTargetId).select('.bottom_heading')[0].innerHTML = "";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].innerHTML = "click this button";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].style.marginTop="-22px";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].style.paddingLeft="70px";
+                $('outter'+likeTargetId).select('.close_container')[0].style.marginTop="-75px";
+                $('outter'+likeTargetId).select('.close_btn')[0].style.bottom="20px";
+                $('below'+likeTargetId).style.marginTop = "0px";
+            }
+            else
+            {
+                diagWidth = 675;
+                diagHeight = 210;
+                $('outter'+likeTargetId).select('.top_heading')[0].innerHTML = "Now's your chance";
+                $('outter'+likeTargetId).select('.bottom_heading')[0].innerHTML = "add a facebook comment";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].innerHTML = "roll over this button";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].style.marginTop="-58px";
+                $('outter'+likeTargetId).select('.quiet_guide')[0].style.paddingLeft="95px";
+                $('outter'+likeTargetId).select('.close_container')[0].style.marginTop="-135px";
+                $('outter'+likeTargetId).select('.close_btn')[0].style.bottom="1px";
+                $('below'+likeTargetId).style.marginTop = "35px";
+            }
+            var winWidth = document.viewport.getDimensions()["width"];
+            var winHeight = document.viewport.getDimensions()["height"];
+            $('outteroutter'+likeTargetId).setAttribute("style", "position: fixed; z-index:9999; width: 100%; height: 100%; background-color:rgba(0,0,0,0.65); overflow:display; top: 0; left: 0;");
+            $('outter'+likeTargetId).setAttribute("style", "background-color: rgba(0,0,0,0.9); border-radius: 15px; width:"+diagWidth.toString()+"px; height:"+diagHeight.toString()+"px; margin-left:" + Math.floor((winWidth-diagWidth)/2).toString() + "px; margin-top:" + Math.floor((winHeight-diagHeight-100)/2).toString() + "px;");
+            $('content'+likeTargetId).setAttribute("style", "padding: 20px;");
+            $(likeTargetId).style.overflow = "visible";
+            $('below'+likeTargetId).show();
+            $('above'+likeTargetId).show();
+        }
+        
+        function closeCustomizeDialog(pageId)
+        {
+            var likeTargetId = resolveLikeContainer(pageId);
+            $('outteroutter'+likeTargetId).setAttribute("style", "");
+            $('outter'+likeTargetId).setAttribute("style", "");
+            $('content'+likeTargetId).setAttribute("style", "");
+            $(likeTargetId).style.overflow = "hidden";
+            $('below'+likeTargetId).hide();
+            $('above'+likeTargetId).hide();
+        }
 	</script>
+	
     <% if @page and @page.is_cloaked %>
         <% fb_connect_async_js :app_id=>"157023087646197" do -%>
 			facebookApiReady();
@@ -84,30 +162,30 @@
     
     <style type="text/css" media="screen">
         .nav_link.current {
-                background-color: #000;
-                color: white;
+                color: #777;
                 padding: 0 3px;
                 margin: 0 2px;
-                font-weight: bold; letter-spacing: -1px; font-size:1.3em;
+                font-weight: bold;
+                letter-spacing: -1px; font-size:1.3em;
         }
         .nav_link {
-            background-color: #ffff00;
+            background-color: #000;
             padding: 0 3px;
             margin: 0 2px;
             font-weight: bold; letter-spacing: -1px; font-size:1.3em;
             cursor: pointer;
         }
         a.nav_link { 
-            color: black;
+            color: white;
             text-decoration: none;
         }
         .nav_link:hover {
-            background-color: #000;
-            color: white;
+            background-color: #0cf;
+            color: black;
         }
         a.mainlink {
             text-decoration: none;
-            color: #333;
+            color: #00a2de;
         }
         a.mainlink:hover {
             text-decoration: none;
@@ -115,12 +193,44 @@
         }
     </style>
 
-<% if get_unpublished_pages and get_unpublished_pages.length > 0 %>
+<% if @show_install_bookmarklet_banner %>
+    <%= render :partial=>'/layouts/installBookmarkletBanner' %>
+<% elsif get_unpublished_pages and get_unpublished_pages.length > 0 %>
     <%= render :partial=>'/layouts/unpublishedBanner' %>
 <% end %>
 
 
+<div style="width:100%; height: 40px; margin:0; margin-top: 10px; padding:0; background-color: #000;">
     
+    <div class="span-24" style="float: none; margin: 0 auto;">
+        
+         <div class="span-6">
+             <div style='margin: 10px;margin-left:0;'>
+                 <%= link_to image_tag('logo-8.png'), home_path %>
+             </div>
+        </div>
+        
+        <div class="span-12" style="padding-top: 10px;">
+            <%= link_to "POPULAR", home_path, :class=>"nav_link #{'current' if !@nav_page or @nav_page.downcase=='popular'}" %>
+                <% if current_user %>
+                   <%= link_to "PROFILE", profile_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='profile'}" %>
+                <% end %>
+                <%= link_to "SUBMIT", submit_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='submit'}" %>
+                <% if current_user %>
+                   <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
+                <% else %>
+           		<%= link_to "LOGIN", login_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='login'}" %>
+           		<%= link_to "REGISTER", register_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='register'}" %>
+           	 <% end %>
+        </div>
+        
+    </div>
+    
+    <div style="clear:both; height:1px;">&nbsp;</div>
+    
+</div>
+
+
 <div class="container" style="margin-top: 10px;">
     
     <% unless current_user.blank? %>
@@ -128,7 +238,7 @@
         <% if current_user.is_content_editor %>
             <div class="prepend-1 span-22 append-1 last" style="background-color: white; border: 1px solid #ccc; padding-top: 10px; padding-bottom: 10px;" id="admin_panel">
                 <div style="float: left;">
-                    <strong>Admin Panel:</strong> Logged in as <%= fb_name current_user.facebook_id, :linked=>false %>, #<%= current_user.facebook_id %>.
+                    <strong>Admin Panel:</strong> Logged in as <%= fb_name h(current_user.facebook_id), :linked=>false %>, #<%= h(current_user.facebook_id) %>.
                 </div>
                 <div style="float:left;width:5px;text-align:center;">&nbsp;</div>
                 <div style="float:left;width:20px;text-align:center;">|</div>
@@ -166,28 +276,7 @@
         
     <% end %>
     
-  
-  <div class="span-6">
-      <div style='margin: 10px;margin-left:0;'>
-          <%= link_to image_tag('logo-6.png'), home_path %>
-      </div>
- </div>
- <div class="span-12" style="padding-top: 24px;">
-     <%= link_to "POPULAR", home_path, :class=>"nav_link current" %>
-     <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
-     <% if false %>
-         <% if current_user %>
-            <%= link_to "YOUR PAGES", profile_path, :class=>"nav_link" %>
-         <% end %>
-         <%= link_to "SUBMIT", submit_path, :class=>"nav_link" %>
-         <% if current_user %>
-            <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
-         <% else %>
-    		<%= link_to "LOGIN", login_path, :class=>"nav_link" %>
-    		<%= link_to "REGISTER", register_path, :class=>"nav_link" %>
-    	 <% end %>
-	 <% end %>
- </div>
+ 
  
  
 <!-- Get Started Banner -->
@@ -195,12 +284,12 @@
     <%= render :partial=>'/layouts/introBanner/introBanner' %>
 <% end %>
 
-  <div class="prepend-1 append-1 span-22 last" style="border-radius: 10px; background-color: #fff;">
+  <div class="span-24" style="border-radius: 10px; background-color: #fff;">
       
-    <div class="span-20 prepend-1 append-1 last">
+    <div class="span-24">
       <% unless flash[:notice].blank? %>
         <div id="flash_message_container">
-          <h3><span class="highlight"><%= flash[:notice] %></span></h3>
+          <h3><span class="highlight"><%= h flash[:notice] %></span></h3>
         </div>
       <% else %>
         &nbsp;
@@ -221,27 +310,34 @@
 <script type="text/javascript" charset="utf-8">
     fbSafe(function(){
         FB.Event.subscribe('edge.create', function(href, widget) {
-            // It doesn't matter what was clicked at this point, just notify the server
-            pingSrc = "<%= vote_cast_url %>?vote=" + encodeURIComponent(href);
+            // Vote
+            pingSrc = "<%=h vote_cast_url %>?vote=" + encodeURIComponent(href);
             var s = document.createElement("script");
             s.setAttribute("src", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
             document.body.appendChild(s);
+            console.log("in edge create, loading ", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000));
         });
+        <% unless current_user %>
+        FB.Event.subscribe('auth.sessionChange', function(response) {
+            if (response.session) {
+                // A user has logged in, and a new cookie has been saved
+                window.location.href = "<%= create_session_path %>";
+            } else {
+                // The user has logged out, and the cookie has been cleared
+                window.location.href = "<%= logout_path %>";
+            }
+        });
+        <% end %>
     });
     <% if current_user and current_user.is_content_editor %>
         function boostScore(href){
-            pingSrc = "<%= vote_cast_url %>?vote=" + encodeURIComponent(href);
+            pingSrc = "<%= h vote_cast_url %>?vote=" + encodeURIComponent(href);
             var s = document.createElement("script");
             s.setAttribute("src", pingSrc + "&boost=true&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
             document.body.appendChild(s);
         }
     <% end %>
 </script>
-
-<% else %>
-	<!-- Empty Layout -->
-	<%= yield %>
-<% end %>
 
 
 <script type="text/javascript">

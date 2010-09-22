@@ -17,7 +17,7 @@
 	<td><%= link_to "view", page.source_url %>
     <td><%=h page.like_count %></td>
 	<td><%=h page.weighted_score %></td>
-	<td><%= distance_of_time_in_words page.created_at, Time.now %></td>
+	<td><%=h distance_of_time_in_words page.created_at, Time.now %></td>
     <td><%= link_to 'Edit', edit_page_path(page) %></td>
     <td><%= link_to 'Destroy', "/page/#{page.id}", :confirm => 'Are you sure?', :method =>:delete %></td>
   </tr>

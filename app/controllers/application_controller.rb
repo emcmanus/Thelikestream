@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
     
     def top_pages
-      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(20))
+      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(Page.count-10))
     end
     
     
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
     
     def require_user
       unless current_user
-        flash[:notice] = "You must be logged in to access this page"
+        flash[:notice] = "Please log in first"
         session[:return_to] = request.request_uri
         redirect_to login_path
         return false

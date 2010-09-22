@@ -6,62 +6,62 @@
 <h2>Edit Page</h2>
 
 <% form_for(@page, :url=>"/page/#{@page.id}") do |f| %>
-  <%= f.error_messages %>
+  <%=h f.error_messages %>
   <p>
-      <%= f.label :title %><br/>
-      <%= f.text_field :title %>
+      <%=h f.label :title %><br/>
+      <%=h f.text_field :title %>
   </p>
   <p>
-      <%= f.label :like_title %><br/>
-      <%= f.text_field :like_title %>
+      <%=h f.label :like_title %><br/>
+      <%=h f.text_field :like_title %>
   </p>
   <p>
-      <%= f.label :introduction %><br/>
-      <%= f.text_area :introduction %>
+      <%=h f.label :introduction %><br/>
+      <%=h f.text_area :introduction %>
   </p>
   <p>
-      <%= f.label :html_body %><br/>
-      <%= f.text_area :html_body %>
+      <%=h f.label :html_body %><br/>
+      <%=h f.text_area :html_body %>
   </p>
   <p>
-      <%= f.label :media_category %><br/>
-      <%= f.text_field :media_category %>
+      <%=h f.label :media_category %><br/>
+      <%=h f.text_field :media_category %>
   </p>
   <p>
-      <%= f.label :source_url %><br/>
-      <%= f.text_field :source_url %>
+      <%=h f.label :source_url %><br/>
+      <%=h f.text_field :source_url %>
   </p>
   <p>
-      <%= f.label :shortened_url %><br/>
-      <%= f.text_field :shortened_url %>
+      <%=h f.label :shortened_url %><br/>
+      <%=h f.text_field :shortened_url %>
   </p>
   <p>
-      <%= f.label :show_link %><br/>
-      <%= f.check_box :show_link %>
+      <%=h f.label :show_link %><br/>
+      <%=h f.check_box :show_link %>
   </p>
   <p>
-      <%= f.label :is_cloaked %><br/>
-      <%= f.check_box :is_cloaked %>
+      <%=h f.label :is_cloaked %><br/>
+      <%=h f.check_box :is_cloaked %>
   </p>
   <p>
-      <%= f.label :like_count %><br/>
-      <%= f.text_field :like_count %>
+      <%=h f.label :like_count %><br/>
+      <%=h f.text_field :like_count %>
   </p>
   <p>
-      <%= f.label :weighted_score %><br/>
-      <%= f.text_field :weighted_score %>
+      <%=h f.label :weighted_score %><br/>
+      <%=h f.text_field :weighted_score %>
   </p>
   <p>
-	  <b>User ID:</b> <%= @page.user_id %><br/>
-      <b>Created at:</b> <%= @page.created_at %><br/>
-	  <b>Updated at:</b> <%= @page.updated_at %><br/>
-		<b>Slug:</b> <%= @page.slug %><br/>
-      	<b>Thumbnail_small:</b> <%= @page.thumbnail_small %><br/>
-		<b>Thumbnail_small_width:</b> <%= @page.thumbnail_small_width %><br/>
-		<b>Thumbnail_small_height:</b> <%= @page.thumbnail_small_height %><br/>
-		<b>Thumbnail_full:</b> <%= @page.thumbnail_full %><br/>
-		<b>Thumbnail_full_width:</b> <%= @page.thumbnail_full_width %><br/>
-		<b>Thumbnail_full_height:</b> <%= @page.thumbnail_full_height %>
+	  <b>User ID:</b> <%=h @page.user_id %><br/>
+      <b>Created at:</b> <%=h @page.created_at %><br/>
+	  <b>Updated at:</b> <%=h @page.updated_at %><br/>
+		<b>Slug:</b> <%=h @page.slug %><br/>
+      	<b>Thumbnail_small:</b> <%=h @page.thumbnail_small %><br/>
+		<b>Thumbnail_small_width:</b> <%=h @page.thumbnail_small_width %><br/>
+		<b>Thumbnail_small_height:</b> <%=h @page.thumbnail_small_height %><br/>
+		<b>Thumbnail_full:</b> <%=h @page.thumbnail_full %><br/>
+		<b>Thumbnail_full_width:</b> <%=h @page.thumbnail_full_width %><br/>
+		<b>Thumbnail_full_height:</b> <%=h @page.thumbnail_full_height %>
   </p>
 
 

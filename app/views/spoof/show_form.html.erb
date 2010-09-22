@@ -13,7 +13,7 @@
 
 <ul>
     <% for puppet in @puppets %>
-        <li><a href="javascript:setId(<%= puppet.id %>)"><%= puppet.facebook_id %> - <%= fb_name(puppet, :linked=>"false") %></a></li>
+        <li><a href="javascript:setId(<%=h puppet.id %>)"><%=h puppet.facebook_id %> - <%= fb_name(puppet, :linked=>"false") %></a></li>
     <% end %>
 </ul>
 
@@ -47,7 +47,7 @@
     }
     function makeNewPuppet()
     {
-        var createRequestPath = "<%= spoof_create_url %>";
+        var createRequestPath = "<%=h spoof_create_url %>";
         var s = document.createElement('script');
         s.setAttribute('src', createRequestPath + "?c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
         document.body.appendChild(s);

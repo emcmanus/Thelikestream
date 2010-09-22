@@ -9,6 +9,7 @@ class UsersController < ApplicationController
   
   def profile
     @user = current_user
+    @nav_page = 'profile'
     render :action => "show"
   end
   
@@ -18,6 +19,7 @@ class UsersController < ApplicationController
     else
       @user = User.find(params[:id])
     end
+    @nav_page = 'profile'
     if @user.blank?
       flash[:notice] = "Could not find user."
       redirect_to root_path
