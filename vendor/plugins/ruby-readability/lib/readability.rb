@@ -4,6 +4,7 @@ require 'uri/http'
 require 'mapel'
 require 'tempfile'
 require 'open-uri'
+require 'sanitize'
 
 module Readability
   class Document
@@ -12,7 +13,8 @@ module Readability
     
     # Multimedia Scoring
     PIXELS_PER_CHARACTER = 120  # For every PIXELS_PER_CHARACTER pixels in an image, add 1 character to the content score
-
+    IMAGE_SCORE_THRESHOLD = 500
+    
     attr_accessor :options, :html
 
     def initialize(input, options = {})
@@ -141,7 +143,8 @@ module Readability
           end
           
           if image[:width] and image[:height]
-            image_contribution += (image[:width].to_i * image[:height].to_i) / PIXELS_PER_CHARACTER
+            local_contribution = (image[:width].to_i * image[:height].to_i) / PIXELS_PER_CHARACTER
+            image_contribution += local_contribution if local_contribution > IMAGE_SCORE_THRESHOLD  # Don't count small images
           end
         end
         
@@ -403,28 +406,88 @@ module Readability
       end
 
       # We'll sanitize all elements using a whitelist
-      base_whitelist = @options[:tags]
+      # base_whitelist = @options[:tags]
 
       # Use a hash for speed (don't want to make a million calls to include?)
-      whitelist = Hash.new
-      base_whitelist.each {|tag| whitelist[tag] = true }
-      ([node] + node.css("*")).each do |el|
+      # whitelist = Hash.new
+      # base_whitelist.each {|tag| whitelist[tag] = true }
+      # ([node] + node.css("*")).each do |el|
+      #   # If element is in whitelist, delete all its attributes
+      #   if whitelist[el.node_name]
+      #     el.attributes.each { |a, x| el.delete(a) unless (@options[:attributes] && @options[:attributes].include?(a.to_s)) || 
+      #                                                       (options[:attributes_by_tag][el.node_name] && options[:attributes_by_tag][el.node_name].include?(a.to_s)) }
+      #   # Otherwise, replace the element with its contents
+      #   else
+      #     el.swap(el.text)
+      #   end
+      # end
+      
+      # Image transformer
+      image_transformer = lambda do |env|
+        node = env[:node]
+        node_name = env[:node_name]
+        
+        return if node_name != "img" or node["width"].nil? or node["height"].nil?
+        
+        # Get score
+        image_score = (node["width"].to_i * node["height"].to_i) / PIXELS_PER_CHARACTER
+        
+        if image_score < IMAGE_SCORE_THRESHOLD
+          Sanitize.clean_node!(node, Sanitize::Config::RESTRICTED)
+          nil
+        end
+      end
+      
+      # Embed Transformer
+      embed_transformer = lambda do |env|
+        node      = env[:node]
+        node_name = env[:node_name]
+        parent    = node.parent
 
-        # If element is in whitelist, delete all its attributes
-        if whitelist[el.node_name]
-          el.attributes.each { |a, x| el.delete(a) unless (@options[:attributes] && @options[:attributes].include?(a.to_s)) || 
-                                                            (options[:attributes_by_tag][el.node_name] && options[:attributes_by_tag][el.node_name].include?(a.to_s)) }
+        return nil unless (node_name == 'param' || node_name == 'embed') &&
+            parent.name.to_s.downcase == 'object'
 
-          # Otherwise, replace the element with its contents
-        else
-          el.swap(el.text)
+        # Set allowscriptaccess to never
+        script_param_node = parent.search('param[@name="allowscriptaccess"]')
+        unless script_param_node.nil?
+          script_param_node.each do |el|
+            el["value"] = "never"
+          end
         end
 
+        # Cap width to 550
+        parent["width"] = [parent["width"].to_i, 550].min.to_s
+        embed = parent.search('embed').first if parent.search('embed')
+        embed["width"] = [embed["width"].to_i, 550].min.to_s
+
+        Sanitize.clean_node!(parent, {
+          :elements   => ['embed', 'object', 'param'],
+          :attributes => {
+            'embed'  => ['allowfullscreen', 'height', 'src', 'type', 'width'],
+            'object' => ['height', 'width'],
+            'param'  => ['name', 'value']
+          }
+        })
+
+        {:whitelist_nodes => [node, parent]}
       end
-
+      
+      allowed_elements = @options[:tags]
+      allowed_attributes = @options[:attributes_by_tag]
+      allowed_protocols = {
+        'a'   => {'href' => ['http', 'https']},
+        'img' => {'src'  => ['http', 'https']}
+      }
+      add_attributes = {
+        "a"       => {"rel"=>"nofollow"},
+        "embed"   => {"allowscriptaccess"=>"never"}
+      }
+      return (Sanitize.clean node.to_html, :elements => allowed_elements, :protocols => allowed_protocols, :attributes => allowed_attributes, 
+                  :add_attributes => add_attributes, :transformers => [embed_transformer, image_transformer]).gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ")
+      
       # Get rid of duplicate whitespace
-      node.to_html.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ")
+      # node.to_html.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ")
     end
-
+    
   end
 end

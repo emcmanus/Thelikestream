@@ -118,7 +118,16 @@ class Page < ActiveRecord::Base
         tmp_page = Tempfile.new "tmp_thumb"   # 550x
         
         # Grab remote
-        tmp_full.syswrite open(img["src"]).read
+        begin
+          tmp_full.syswrite open(img["src"]).read
+        rescue
+          puts "Could not find url: #{img["src"]}"
+          # logger.error puts "Could not find url: #{img["src"]}"
+          # debug
+          
+          # Don't attempt to process an invalid image
+          next
+        end
         
         # Get size
         source_info = Mapel.info tmp_full.path
@@ -166,11 +175,12 @@ class Page < ActiveRecord::Base
         img["height"] = new_height.to_s
       end
     end
+    
     self.html_body = parsed_source.css("body").first.inner_html
     # Done!
     self.image_processing_finished = true
   rescue Exception => e
-    puts "in process_images #{$!}, #{e.backtrace.first.inspect}"
+    puts "in process_images #{$!}, #{e.backtrace.inspect}"
     # logger.warn "in process_images #{$!}, #{e.backtrace.first.inspect}"
     # debug
   end
@@ -211,7 +221,7 @@ class Page < ActiveRecord::Base
             <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
               allowscriptaccess="never" allowfullscreen="true" width="550" height="413"></embed>
           </object><br/>
-          <img src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
+          <img style="display:none;" src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
         eos
         return
       end
@@ -240,13 +250,14 @@ class Page < ActiveRecord::Base
     begin
       
       attributes_by_tag = {
+        :all => %w[src href],
         "img" => %w[width height],
         "embed" => %w[src type allowfullscreen width height],
         "object" => %w[width height],
         "param" => %w[name value]
       }
       readability_doc = Readability::Document.new raw_html, :score_multimedia=>true, :source_url=>self.source_url, :debug => true,
-                              :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul ol li a br object embed param], :attributes=>%w[src href], :attributes_by_tag=>attributes_by_tag
+                              :tags=>%w[img div p strong b em i u h1 h2 h3 h4 h5 h6 ul ol li a br object embed param], :attributes_by_tag=>attributes_by_tag
       
       # Special cleaning
       parsed_doc = Nokogiri::HTML readability_doc.content
@@ -267,7 +278,7 @@ class Page < ActiveRecord::Base
       # Update html_body
       self.html_body ||= parsed_doc.css("body").first.inner_html
     rescue Exception => e
-      logger.warn "in scrape_source_url #{$!}, #{e.backtrace.first.inspect}"
+      logger.warn "in scrape_source_url #{$!}, #{e.backtrace.inspect}"
       return
     end
     
@@ -298,15 +309,15 @@ class Page < ActiveRecord::Base
         if el["src"] and el["src"] =~ /http:\/\/(www\.)?(youtube)\.com\//i
           # Get video ID, append image
           # After appending our first thumbnail, break
-          video_id = el["src"].split("?").first.split("/").last
+          video_id = el["src"].split("?").first.split("/").last.split("&").first
           
           # If it's a builder page, add an image widget
           if self.created_with_builder
             # Handle Builder V1
             root_divs = parsed_doc.xpath("/html/body/div")
-            if root_divs.length == 1 and root_divs.first["class"]=="builder_container_v1"
+            if root_divs.length == 1 and root_divs.first["class"].strip.downcase=="builder_container_v1"
               img_widget = Nokogiri::XML::DocumentFragment.parse("<span class='builder_image_widget'><img class='builder_val' src='http://img.youtube.com/vi/#{video_id}/0.jpg' /></span>")
-              root_divs.first.children.first.add_next_sibling img_widget
+              root_divs.first.children.last.add_next_sibling img_widget
               self.html_body = root_divs.first.to_html
             end
           else
@@ -532,8 +543,6 @@ class Page < ActiveRecord::Base
             el["class"] = clean_class
           end
         end
-        
-        # Add thumbnail for youtube
         
         return safe.css("body").first.inner_html
       end

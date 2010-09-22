@@ -52,7 +52,6 @@ end
 while true
   page = Page.find(:all, :limit=>1, :conditions=>["image_processing_started = false"]).first
   if page.nil?
-    puts "."
     sleep 1
   else
     puts "Processing page: #{page.id}"

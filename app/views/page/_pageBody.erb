@@ -1,12 +1,17 @@
-<div style="margin-bottom: 10px; border-bottom: 1px dotted #ccc;" id="page_preview_container">
-    <%= h @page.introduction %>
+<div style="margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom:15px;" id="page_preview_container">
+    <% unless @page.introduction.blank? %>
+        <div style="padding: 15px; border: 1px solid #ccc;">
+            <%= image_tag "quotation-mark.png" %>
+            <%= h @page.introduction %>
+        </div>
+    <% end %>
 	<%= @page.html_body.untaint %>
 	<div style="height:1px; clear: both;">&nbsp;</div>
 </div>
 
-<br/>
 
 <% if @page.show_link and !@page.source_url.blank? %>
+    <br/>
     <div style="padding: 15px; border: 1px solid #0cf; margin-bottom: 30px;">
         <h3 style="margin-bottom: 10px;"><%= image_tag 'link.png' %>Via - <%= link_to h(@page.source_url), h(@page.source_url) %></h3>
     </div>
@@ -15,6 +20,8 @@
 <% if @page.created_with_builder %>
     This page was created with <%= link_to "Page Builder", page_builder_path %>.
 <% end %>
+
+<hr class="space" />
 
 <script type="text/javascript" charset="utf-8">
     window.showCustomizeDialogForCurrentArticle = function()

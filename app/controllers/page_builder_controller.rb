@@ -14,6 +14,7 @@ class PageBuilderController < ApplicationController
     page.title = params[:title]
     page.sanitize_user_html params[:html_body]
     page.save!
+    flash[:notice] = "Submitted!"
     redirect_to page_path(page) and return      
   rescue ActiveRecord::RecordInvalid => e
     @page = e.record

@@ -33,17 +33,29 @@ class PageController < ApplicationController
   
   def create
     # Given only the URL
-    @page = Page.new params[:page]
+    @page = Page.new({"source_url"=>params[:page]["source_url"], "title"=>params[:page]["title"]})
+    @page.user = current_user
     @page.scrape_source_url
-    redirect_to page_path(@page) and return
+    @page.save
+    redirect_to edit_page_path(@page) and return
   end
   
   def edit
     @page = Page.find(params[:id])
+    
+    unless current_user.is_content_editor or current_user == @page.user
+      flash[:notice] = "You can't edit that page."
+      redirect_to @page and return
+    end
   end
   
   def update
     @page = Page.find(params[:id])
+    
+    unless current_user.is_content_editor or current_user == @page.user
+      flash[:notice] = "You can't edit that page."
+      redirect_to @page and return
+    end
     
     # Default perms
     accept_fields = []
@@ -79,7 +91,7 @@ class PageController < ApplicationController
       @page.destroy
       flash[:notice] = "Page removed."
     end
-    redirect_to :back
+    redirect_to root_path
   end
   
 end

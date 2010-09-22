@@ -16,7 +16,7 @@
 		<span style="color:#666; font-size:0.75em;">
 			<% if page.introduction.blank? %>
 			    <% unless strip_tags(page.html_body).blank? %>
-				    <%=h truncate(strip_tags(page.html_body), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
+				    <%=h truncate(strip_tags(page.html_body).sub("&nbsp;",""), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
 				<% end %>
 			<% else %>
 				<%=h truncate(strip_tags(page.introduction), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
