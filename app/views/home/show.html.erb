@@ -12,16 +12,16 @@
 </style>
 
 
-<div class="span-22 last" style="">
+<div class="span-24" style="">
     
-    <div class="span-22 last">
+    <div class="span-24">
         <h2 style="padding:0; margin:0;">Popular</h2>
     </div>
     
     
     <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
     
-    <div class="span-14">
+    <div class="span-14 append-1">
     <% for page in @pages %>
         <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
     <% end %>

@@ -1,12 +1,12 @@
-<div class="span-8 last">
+<div class="span-9 last">
     
-    <fb:facepile max-rows="3" class="span-8 last" style="margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 20px;"></fb:facepile>
+    <fb:facepile max-rows="3" class="span-9 last" style="margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 20px;"></fb:facepile>
     
     <div style="height:1px; clear: both;">&nbsp;</div>
     
     <% if false %>
         <% unless current_user %>
-        <div class="span-8 last" style="margin-top: 10px;">
+        <div class="span-9 last" style="margin-top: 10px;">
             <h2 style="font-weight: 400; color:#00ccff; border-bottom: 1px dotted #ccc; padding-bottom:7px; margin-bottom: 7px; line-height: 1em;">TheLikeStream</h2>
             <h2 style="color: #333; padding-bottom:0; margin-bottom: 7px; line-height: 1.2em;">Build <em>Like Pages</em> From Your Website</h2>
             <span style="color: #7f7f7f;">Use our bookmarklet to quickly create a Facebook Like Page using your site's content. TheLikeStream is the fastest way to share your content on Facebook.</span>
@@ -29,7 +29,7 @@
                 <%= link_to truncate(h(page.title), :length=>100), page, :style=>"font-size:1.4em; color: #333;" %>
                 <span style="color:#7f7f7f;"><%= h page.like_count %> like<%= 's' if page.like_count > 1 %></span>
             </div>
-            <div style="clear:both;"><%= link_to(image_tag(page.thumbnail_page, :width=>310), page) unless page.thumbnail_square.blank? %>&nbsp;</div>
+            <div style="clear:both;"><%= link_to(image_tag(page.thumbnail_page, :width=>350), page) unless page.thumbnail_square.blank? %>&nbsp;</div>
         <% end %>
     <% end %>
     
