@@ -20,6 +20,6 @@
 	
     	<label>Pick a File:</label> <input type="file" id="<%=iframe_name%>_file" name="file" style="width: 300px;" />
     	
-    	<a href="#" onclick="$('<%=iframe_name%>_form_tag').submit();$('<%=iframe_name%>_form').hide();$('<%=iframe_name%>_spinner').show();false" class="btn" style="margin-left: 5px;"><span><span><b>&nbsp;</b><u>Upload</u></span></span></a>
+    	<a href="javascript:if(!$('<%=iframe_name%>_file').value||!$('<%=iframe_name%>_file').value.strip()){alert('Please select a file.');return;};$('<%=iframe_name%>_form_tag').submit();$('<%=iframe_name%>_form').hide();$('<%=iframe_name%>_spinner').show();false" class="btn" style="margin-left: 5px;"><span><span><b>&nbsp;</b><u>Upload</u></span></span></a>
 	</div>
 </form>

@@ -209,7 +209,10 @@
         }
         
         preparePageForSubmission();
-
+        
+        // Attach widths to the preview images for the browser to resize
+        $('previewTarget').innerHTML = $('previewTarget').innerHTML.replace("<img ", "<img width='550' style='max-width:550px' ");
+        
         $('page_preview_container').show();
         $('page_preview_container').style.height = document.body.scrollHeight + "px";
      }
@@ -481,7 +484,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
                 // Populate $replace_with_* vars in template
                 baseCopy.innerHTML = baseCopy.innerHTML.replace(/\$replace_with_rand/g, Math.floor(Math.random()*9e8).toString());
             }
-            if (widgetValue)
+            if (widgetValue && widgetValue.strip())
             {
                 if (dragName.id=="imageWidget")
                 {
