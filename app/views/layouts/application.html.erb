@@ -67,6 +67,7 @@
             window.queuedFacebookCalls.push(func);
         }
 
+
         // 
         // Write like button lib
         
@@ -79,6 +80,47 @@
         {
             if (!window.likeContainerRegistry) window.likeContainerRegistry = {};
             window.likeContainerRegistry[pageId] = likeContainer;
+        }
+        
+        // Rendering every like button at once is *slow*
+        // Instead, render the first 5 buttons immediately, and the rest in 150ms increments
+        
+        window.likeButtonsWritten = 0;
+        window.likeButtonWriteQueue = [];
+        
+        function startWriteTimer()
+        {
+            window.writeLikeButtonTimer = setInterval(popLikeButtonQueue, 150);
+        }
+        
+        function popLikeButtonQueue()
+        {
+            if (window.likeButtonWriteQueue.length > 0)
+            {
+                var nextButton = window.likeButtonWriteQueue.shift();
+                writeLikeButton(nextButton["pageId"], nextButton["encodedLink"]);
+            }
+            else
+            {
+                clearInterval(window.writeLikeButtonTimer);
+            }
+        }
+        
+        function queueLikeButtonWrite(pageId, encodedLink)
+        {
+            if (window.likeButtonsWritten < 4)
+            {
+                window.likeButtonsWritten++;
+                writeLikeButton(pageId, encodedLink);
+            }
+            else
+            {
+                window.likeButtonWriteQueue.push({pageId:pageId, encodedLink: encodedLink});
+                if (typeof window.writeLikeButtonTimer == "undefined")
+                {
+                    setTimeout(startWriteTimer, 1500);
+                }
+            }
         }
         
         function writeLikeButton(pageId, encodedLink)
@@ -297,7 +339,7 @@
       <% end %>
     </div>
     
-    <%= yield  %>
+    <%= yield %>
     
     <hr class="space" style="height: 15px;"/>
     

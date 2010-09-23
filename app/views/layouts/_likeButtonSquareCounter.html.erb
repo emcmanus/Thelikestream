@@ -46,7 +46,8 @@
 <script type="text/javascript" charset="utf-8">
     // Register like button container, then trigger write
     window.registerLikeContainer(<%= page.id %>, '<%= like_target_id %>');
-    window.writeLikeButton(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
+    // window.writeLikeButton(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
+    window.queueLikeButtonWrite(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
 </script>
 
 </div>
