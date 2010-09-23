@@ -514,11 +514,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
             {
                 var valueNode = widget.select(".builder_val")[0] || widget.select(".builder_val_wrapper")[0];
                 if (!valueNode) {
-                    console.log("no value node, widget: ", widget);
                     return;
                 }
                 var widgetValue = (valueNode.value || valueNode.src || valueNode.innerHTML).strip();
-                console.log("Widget value = ", widgetValue, "for node", widget)
                 switch(widget.getAttribute("class").strip())
                 {
                     case "builder_h1_widget":
