@@ -31,7 +31,7 @@ class BookmarkletController < ApplicationController
       # User params
       page.user = key.user
       page.title = unsafe_title
-      page.source_url = unsafe_url
+      page.source_url = unsafe_url.sub " ", "" # strip spaces, won't matter for malformed slugs
       page.scrape_source_url
       page.ready_to_process_images = true
       

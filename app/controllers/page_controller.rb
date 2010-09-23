@@ -33,7 +33,7 @@ class PageController < ApplicationController
   
   def create
     # Given only the URL
-    @page = Page.new({"source_url"=>params[:page]["source_url"], "title"=>params[:page]["title"]})
+    @page = Page.new({"source_url"=>params[:page]["source_url"].sub(" ", ""), "title"=>params[:page]["title"]})
     @page.user = current_user
     @page.scrape_source_url
     @page.ready_to_process_images = true
