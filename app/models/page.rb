@@ -512,7 +512,7 @@ class Page < ActiveRecord::Base
         end
         
         # Sanitize config
-        allowed_classnames = %w[builder_container_v1 builder_space_widget builder_h1_widget builder_h2_widget builder_h3_widget builder_paragraph_widget builder_image_widget builder_embed_widget builder_val_wrapper builder_val]
+        allowed_classnames = %w[builder_container_v1 builder_h1_widget builder_h2_widget builder_h3_widget builder_paragraph_widget builder_image_widget builder_embed_widget builder_val_wrapper builder_val]
         allowed_elements = %w[span div h1 h2 h3 p img embed object param]
         allowed_attributes = {
           :all      => %w[class],
@@ -534,13 +534,13 @@ class Page < ActiveRecord::Base
         safe = Nokogiri::HTML scrubbed
         safe.css("*").each do |el|
           unless el["class"].blank?
-            clean_class = ""
+            clean_class = []
             el["class"].split(' ').each do |classname|
               if allowed_classnames.include? classname
-                clean_class += " #{classname}"
+                clean_class.push classname
               end
             end
-            el["class"] = clean_class
+            el["class"] = clean_class.join " "
           end
         end
         

@@ -33,6 +33,7 @@ class BookmarkletController < ApplicationController
       page.title = unsafe_title
       page.source_url = unsafe_url
       page.scrape_source_url
+      page.ready_to_process_images = true
       
       unless page.valid?
         @response[:completed] = false

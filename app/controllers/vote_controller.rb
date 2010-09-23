@@ -37,6 +37,8 @@ class VoteController < ApplicationController
           # user has not already voted for this page
           vote = PageVote.new :user=>current_user, :page=>@record_receiving_vote
           if vote.save
+            # The user may hit this action when giving a page its first like - so we must effectively publish the page
+            @record_receiving_vote.ready_to_process_images = true
             @record_receiving_vote.increment! :like_count
             @record_receiving_vote.calculate_weighted_score!
           end

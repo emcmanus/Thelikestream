@@ -3,7 +3,7 @@
     <div class="span-24">
         <div style="xborder: 1px solid #ccc; border-top: 0; border-bottom-right-radius: 10px; border-bottom-left-radius: 10px; padding: 15px;">
             <h2 style="margin-bottom: 0;">You Have Unpublished Stories</h2>
-            <span style="font-size:14px; color:#7f7f7f;">Click "Like" to publish</span>
+            <span style="font-size:14px; color:#7f7f7f;">Stories must be "Liked" to show up in the stream</span>
             
             <table style="margin-top:10px;">
                 <% for page in get_unpublished_pages %>
@@ -14,7 +14,7 @@
                         </td>
                         <td style="margin: 0; padding: 0;">
                             <span style="font-size:18px;"><%= link_to h(page.title), page, :class=>"mainlink" %></span>
-                            <%= link_to("<span><span><b>&nbsp;</b><u>Edit</u></span></span>", edit_page_path(page), :class=>"btn") %>
+                            <%= link_to("<span><span><b>&nbsp;</b><u>Edit</u></span></span>", edit_page_path(page), :class=>"btn", :style=>"margin-left:5px;") %>
                             <%= link_to("<span><span><b>&nbsp;</b><u>Delete</u></span></span>", "/page/#{page.id}", :confirm => 'Are you sure?', :method =>:delete, :class=>"btn") %>
                         </td>
                     </tr>

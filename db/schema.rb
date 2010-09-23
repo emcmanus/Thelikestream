@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100921235613) do
+ActiveRecord::Schema.define(:version => 20100923053012) do
 
   create_table "bookmarklet_keys", :force => true do |t|
     t.string   "value",      :null => false
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20100921235613) do
     t.boolean  "image_processing_finished", :default => false
     t.boolean  "remote_url_scraped",        :default => false
     t.boolean  "created_with_builder",      :default => false
+    t.boolean  "ready_to_process_images",   :default => false
   end
 
   create_table "users", :force => true do |t|

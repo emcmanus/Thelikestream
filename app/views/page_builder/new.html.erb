@@ -74,8 +74,10 @@
 <!-- Preview target -->
 <div id="page_preview_container" style="position: absolute; top:0; left: 0; z-index:9999; width: 100%; background-color: rgba(0,0,0,0.75); display:none;">
     <div class="span-7 prepend-8" style="float: none; margin: 100px auto; margin-bottom:10px; color: #fff;">
-        <div class="span-3" style="text-align: right;"><a href="javascript:submitPage();false" class="btn" style="position:relative;right:-25px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></a></div>
-        <div class="span-4 last" style="text-align: right;"><a href="javascript:$('page_preview_container').hide();false" class="btn" style="position:relative;right:-15px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>(X) - Close Preview</u></span></span></a></div>
+        <div class="span-7 last" style="text-align: right;">
+            <a href="javascript:submitPage();false" class="btn" style="position:relative;right:-5px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></a>
+            <a href="javascript:$('page_preview_container').hide();false" class="btn" style="position:relative;right:-15px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Close</u></span></span></a>
+        </div>
         <div style="height:1px; clear: both;">&nbsp;</div>
     </div>
     <div class="span-15" style="float: none; margin: 0 auto; margin-bottom:100px; background-color: #000; padding: 15px;">
@@ -85,6 +87,8 @@
 </div>
 
 <% form_tag(page_builder_submit_path, :name=>"page_form_tag", :id=>"page_form_tag") do %>
+    <input type="hidden" id="page_draft_only" name="is_draft" value="0" />
+    <input type="hidden" id="page_id" name="page_id" value="<%= (@page.id if @page) || "" %>">
     <input type="hidden" id="page_html_body" name="html_body" value="" />
     <input type="hidden" id="page_title" name="title" value="" />
 <% end %>
@@ -96,89 +100,116 @@
          $('page_form_tag').submit();
      }
      
-     function previewPage()
+     function saveDraft()
      {
-         // Check that the canvas is valid
          if ($('pageCanvas').select('#canvasIntro').length > 0)
          {
-            alert("Before you can preview this page, drag a widget into the container below.");
-            return;
+             alert("Before you can save this page, drag a widget into the container below.");
+             return;
+         }
+         else if (!$('canvasTitleContainer').select('.title_entry')[0].value || $('canvasTitleContainer').select('.title_entry')[0].value.strip()=="")
+         {
+             alert("Please enter a title before saving.");
+             return;
          }
          
-         // Define some utility objects
-         var verticalSpacer = "<span class='builder_space_widget'><div style='height:5px; clear:both;'>&nbsp;</div></span>";
+         preparePageForSubmission();
          
-         // Serialize the canvas
-         var serializedPage = "";
-         
-         // Mark this as a builder submission
-         serializedPage += "<div class='builder_container_v1'>";
-         
-         // Title
-         var titleValue = $('canvasTitleContainer').select('.title_entry')[0].value;
-         var titlePreview = "<h2 style='padding:0;margin:0;margin-bottom: 15px;line-height:1.1em;font-size: 2.4em;'>";
-         titlePreview += titleValue;
-         titlePreview += "</h2>";
-         
-         $A($('pageCanvas').childNodes).each(
-             function(element)
-             {    
-                 if (!element.id)
-                    return;
-                    
-                 if(element.id.indexOf('h1')==0)
-                 {
-                     serializedPage += verticalSpacer;
-                     serializedPage += "<span class='builder_h1_widget'>";
-                     serializedPage += "<h1 class='builder_val'>" + element.select('.heading_entry')[0].value + "</h1>";
-                     serializedPage += "</span>";
-                 }
-                 else if(element.id.indexOf('h2')==0)
-                 {
-                     serializedPage += "<span class='builder_h2_widget'>";
-                     serializedPage += "<h2 class='builder_val'>" + element.select('.subheading_entry')[0].value + "</h2>";
-                     serializedPage += "</span>";
-                 }
-                 else if(element.id.indexOf('h3')==0)
-                 {
-                     serializedPage += "<span class='builder_h3_widget'>"
-                     serializedPage += "<h3 class='builder_val'>" + element.select('.sectionheading_entry')[0].value + "</h3>";
-                     serializedPage += "</span>";
-                 }
-                 else if(element.id.indexOf('paragraph')==0)
-                 {
-                     serializedPage += "<span class='builder_paragraph_widget'>"
-                     serializedPage += "<p class='builder_val'>" + element.select('.paragraph_entry')[0].value + "</p>";
-                     serializedPage += "</span>";
-                 }
-                 else if(element.id.indexOf('image')==0)
-                 {
-                     serializedPage += "<span class='builder_image_widget'>"
-                     serializedPage += "<img class='builder_val' src='" + element.select('.image_url_value')[0].value + "' />";
-                     serializedPage += "</span>";
-                 }
-                 else if(element.id.indexOf('embed')==0)
-                 {
-                     serializedPage += "<span class='builder_embed_widget'>"
-                     serializedPage += "<span class='builder_val_wrapper'>" + element.select('.embed_entry')[0].value + "</span>";
-                     serializedPage += "</span>";
-                 }
-             });
-        
+         $('page_draft_only').value = 1;
+         $('page_form_tag').submit();
+     }
+     
+     function preparePageForSubmission()
+     {
+        // Serialize the canvas
+        var serializedPage = "";
+
+        // Mark this as a builder submission
+        serializedPage += "<div class='builder_container_v1'>";
+
+        // Title
+        var titleValue = $('canvasTitleContainer').select('.title_entry')[0].value;
+        var titlePreview = "<h2 style='padding:0;margin:0;margin-bottom: 15px;line-height:1.1em;font-size: 2.4em;'>";
+        titlePreview += titleValue;
+        titlePreview += "</h2>";
+
+        $A($('pageCanvas').childNodes).each(
+            function(element)
+            {    
+                if (!element.id)
+                return;
+
+                if(element.id.indexOf('h1')==0)
+                {
+                    serializedPage += "<span class='builder_h1_widget'>";
+                    serializedPage += "<h1 class='builder_val'>" + element.select('.heading_entry')[0].value + "</h1>";
+                    serializedPage += "</span>";
+                }
+                else if(element.id.indexOf('h2')==0)
+                {
+                    serializedPage += "<span class='builder_h2_widget'>";
+                    serializedPage += "<h2 class='builder_val'>" + element.select('.subheading_entry')[0].value + "</h2>";
+                    serializedPage += "</span>";
+                }
+                else if(element.id.indexOf('h3')==0)
+                {
+                    serializedPage += "<span class='builder_h3_widget'>";
+                    serializedPage += "<h3 class='builder_val'>" + element.select('.sectionheading_entry')[0].value + "</h3>";
+                    serializedPage += "</span>";
+                }
+                else if(element.id.indexOf('paragraph')==0)
+                {
+                    serializedPage += "<span class='builder_paragraph_widget'>";
+                    serializedPage += "<p class='builder_val'>" + element.select('.paragraph_entry')[0].value + "</p>";
+                    serializedPage += "</span>";
+                }
+                else if(element.id.indexOf('image')==0)
+                {
+                    serializedPage += "<span class='builder_image_widget'>";
+                    serializedPage += "<img class='builder_val' src='" + element.select('.image_url_value')[0].value + "' />";
+                    serializedPage += "</span>";
+                }
+                else if(element.id.indexOf('embed')==0)
+                {
+                    serializedPage += "<span class='builder_embed_widget'>";
+                    serializedPage += "<span class='builder_val_wrapper'>" + element.select('.embed_entry')[0].value + "</span>";
+                    serializedPage += "</span>";
+                }
+            }
+        );
+
         serializedPage += "</div>";
-        
+
         // Set form fields
         $('page_html_body').value = serializedPage;
         $('page_title').value = titleValue;
-        
+
         // Do not include this final clear in the submission
         serializedPage += "<div style='height:1px; clear: both;'>&nbsp;</div>";
-        
+
         // Prepend title for preview
         serializedPage = titlePreview + serializedPage;
-        
+
         // Prepare the lightbox
         $('previewTarget').innerHTML = serializedPage;
+     }
+     
+     function previewPage()
+     {        
+        // Check that the canvas is valid
+        if ($('pageCanvas').select('#canvasIntro').length > 0)
+        {
+            alert("Before you can preview this page, drag a widget into the container below.");
+            return;
+        }
+        else if (!$('canvasTitleContainer').select('.title_entry')[0].value || $('canvasTitleContainer').select('.title_entry')[0].value.strip()=="")
+        {
+            alert("Please enter a title before previewing.");
+            return;
+        }
+        
+        preparePageForSubmission();
+
         $('page_preview_container').show();
         $('page_preview_container').style.height = document.body.scrollHeight + "px";
      }
@@ -244,59 +275,60 @@
             <h3 style="margin-bottom:10px;">Canvas:</h3>
         </div>
         <div class="span-6 last" style="margin:0; text-align:right;font-size:1.2em; padding-top: 0;">
+            <a href="javascript:saveDraft()" class="btn" style="position:relative;right:-10px;"><span><span><b>&nbsp;</b><u>Save Draft</u></span></span></a>
             <a href="javascript:previewPage()" class="btn" style="position:relative;right:-10px;"><span><span><b>&nbsp;</b><u>Preview and Submit</u></span></span></a>
         </div>
         
         <div style="clear:both;height:1px;">&nbsp;</div>
         
         <div id="canvasTitleContainer" style="xdisplay:none;">
-            <input type="text" class="title_entry" style="font-size: 2em; width: 535px;" placeholder="Page Title" />
+            <input type="text" class="title_entry" style="font-size: 2em; width: 535px;" placeholder="Page Title" value="<%=h @page.title if @page %>" />
             <div style="xborder-bottom:1px dotted #ccc; height:1px;">&nbsp;</div>
         </div>
         
         <div id="widgetTemplateContainer" style="display:none;">
             <!-- Widget types -->
             <div id="base_h1Widget" class="sortableWidget" style="display:none;">
-                <input type="text" placeholder="Enter a Heading" style="margin: 0; font-size:1.6em;" class="span-12 heading_entry" />
+                <input type="text" placeholder="Enter a Heading" style="margin: 0; font-size:1.6em;" class="span-12 heading_entry val_element" />
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
             
             <div id="base_h2Widget" class="sortableWidget" style="display:none;">
-                <input type="text" placeholder="Enter a Sub-heading" style="margin: 0; font-size:1.2em;" class="span-12 subheading_entry" />
+                <input type="text" placeholder="Enter a Sub-heading" style="margin: 0; font-size:1.2em;" class="span-12 subheading_entry val_element" />
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
             
             <div id="base_h3Widget" class="sortableWidget" style="display:none;">
-                <input type="text" placeholder="Enter a Section Heading" style="margin: 0; font-size: 1em; font-weight:bold;" class="span-12 sectionheading_entry" />
+                <input type="text" placeholder="Enter a Section Heading" style="margin: 0; font-size: 1em; font-weight:bold;" class="span-12 sectionheading_entry val_element" />
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
             
             <div id="base_paragraphWidget" class="sortableWidget" style="display:none;">
-                <textarea style="margin: 0; font-size: 1em;" class="span-12 paragraph_entry">Edit this text.
+                <textarea style="margin: 0; font-size: 1em;" class="span-12 paragraph_entry val_element">Edit this text.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhoncus sapien, pulvinar aliquet lectus rhoncus non. Donec sit amet lectus mauris. Etiam sed tellus in risus scelerisque euismod. Quisque luctus ullamcorper dictum. Fusce congue magna ac augue convallis et varius mauris sagittis. Nulla magna justo, lacinia eget auctor congue, congue et quam. Sed facilisis sem vitae diam consectetur blandit in vel lorem. Pellentesque ut nunc quis augue mattis bibendum. Donec non ipsum orci. Praesent quis egestas massa. Curabitur ac feugiat erat. Praesent ut mauris et est vulputate bibendum quis vel turpis.</textarea>
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
             
             <div id="base_imageWidget" class="sortableWidget" style="display:none;">
                 <div class="span-12" style="margin: 0;">
-                    <input type="hidden" class="image_url_value" />
+                    <input type="hidden" class="image_url_value val_element" />
                     <div style="padding: 5px;">
                         <div class="urlSuccess" style="display:none;">
                             <%= image_tag 'builder/photo-small.png', :style=>"float:left;" %> <div style="float: left; padding-top: 2px; padding-left: 5px;"><span class="filename_container" style="font-weight:bold;font-size: 1.2em;"></span> <span style="color:#777;">(image url)</span></div>
@@ -306,8 +338,8 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
                             <input type="text" placeholder="Image URL" class="fileUrlInput fileurl_entry" style="width: 320px; margin:-8px 0 0 10px;" />
                             <a href="javascript:void(0);false" onclick="this.parentNode.parentNode.parentNode.select('.image_url_value')[0].value=this.parentNode.select('.fileurl_entry')[0].value; this.parentNode.parentNode.select('.urlSuccess')[0].show();this.parentNode.parentNode.select('.filename_container')[0].innerHTML=this.parentNode.parentNode.select('.fileUrlInput')[0].value;this.parentNode.hide();false" class="btn" style="position:relative;top:-1px;font-size:1.2em;left:1px;"><span><span><b>&nbsp;</b><u>Add</u></span></span></a>
                         </div>
-                        <div class="span-12 last" style="padding-top:5px;">
-                            <strong>Image options: </strong> <a href="javascript:void(0);false" onclick="console.log(this.parentNode.parentNode);this.parentNode.parentNode.select('.urlForm')[0].show();this.parentNode.hide();false" class="btn" style="margin: 0 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Add an Image URL</u></span></span></a>
+                        <div class="span-12 last imageOptions" style="padding-top:5px;">
+                            <strong>Image options: </strong> <a href="javascript:void(0);false" onclick="this.parentNode.parentNode.select('.urlForm')[0].show();this.parentNode.hide();false" class="btn" style="margin: 0 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Add an Image URL</u></span></span></a>
                             or <%= link_to_remote "<span><span><b>&nbsp;</b><u>Upload an Image</u></span></span>", :url=>page_builder_image_upload_path+"?cachebuster=$replace_with_rand", :update =>{:success=>"image_upload_form_$replace_with_rand"}, :html=>{:style=>"margin-left: 5px; font-size: 1em;", :class=>"btn", :onclick=>"this.parentNode.hide()"} %>
                         </div>
                         <div id="image_upload_form_$replace_with_rand" class="span-12 last"></div>
@@ -315,16 +347,16 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
                 </div>
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
             
             <div id="base_embedWidget" class="sortableWidget" style="display:none;">
-                <textarea type="text" style="margin: 0; font-size: 1em;" class="span-12 embed_entry">Paste an embed code into this box.</textarea>
+                <textarea type="text" style="margin: 0; font-size: 1em;" class="span-12 embed_entry val_element">Paste an embed code into this box.</textarea>
                 <div class="span-1 last" style="text-align: right;">
                     <%= image_tag 'builder/move.png', :class=>"handle" %><br/>
-                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){console.log(this);this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
+                    <%= image_tag 'builder/trash-small.png', :style=>"margin:0; margin-top: 5px; padding:0;", :class=>"trash", :onclick=>"if(confirm('Delete?')){this.parentNode.parentNode.remove(true);}", :alt=>"Delete widget." %>
                 </div>
                 <div style="height:1px; clear:both;">&nbsp;</div>
             </div>
@@ -428,36 +460,103 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
                 
                 $('canvasTitleContainer').show();
                 
-                var newId = $(dragName).id + Math.floor(Math.random()*10000).toString();
-                
-                // Clone the base element
-                var baseCopy = $("base_" + $(dragName).id).cloneNode(true);
-                baseCopy.id = newId;
-                // special update for image widget
-                console.log(dragName);
-                if (dragName.id=="imageWidget")
-                {
-                    // Populate $replace_with_* vars in template
-                    baseCopy.innerHTML = baseCopy.innerHTML.replace(/\$replace_with_rand/g, Math.floor(Math.random()*9e8).toString());
-                }
-                baseCopy.show();
-                
-                $('pageCanvas').insert(baseCopy);
+                spawnWidget(dragName);
                 
                 Sortable.destroy("pageCanvas");
                 Sortable.create("pageCanvas", {tag:"div", only: "sortableWidget", handle:"handle", scroll: window});
             }
         });
-        <% if false %>
-        Droppables.add('widgetTrash', {
-            hoverclass: "widgetOver",
-            accept: "sortableWidget",
-            onDrop: function(dragName, dropName)
+        
+        var spawnWidget = function(dragName, widgetValue)
+        {
+            dragName = $(dragName);
+            var newId = $(dragName).id + Math.floor(Math.random()*10000).toString();
+            
+            // Clone the base element
+            var baseCopy = $("base_" + $(dragName).id).cloneNode(true);
+            baseCopy.id = newId;
+            // special update for image widget
+            if (dragName.id=="imageWidget")
             {
-                console.log(dragName + " dropped");
-                $(dragName).remove();
+                // Populate $replace_with_* vars in template
+                baseCopy.innerHTML = baseCopy.innerHTML.replace(/\$replace_with_rand/g, Math.floor(Math.random()*9e8).toString());
             }
-        });
-        <% end %>
+            if (widgetValue)
+            {
+                if (dragName.id=="imageWidget")
+                {
+                    baseCopy.select('.urlForm')[0].hide();
+                    baseCopy.select('.imageOptions')[0].hide();
+                    baseCopy.select('.urlSuccess')[0].show();
+                    baseCopy.select('.val_element')[0].value = widgetValue;
+                    baseCopy.select('.filename_container')[0].innerHTML=widgetValue;
+                }
+                else
+                {
+                    baseCopy.select(".val_element")[0].value = widgetValue;
+                }
+            }
+            baseCopy.show();
+            
+            $('pageCanvas').insert(baseCopy);
+        }
+        
+        // Read a saved draft from a hidden DIV element embedded on the page
+        // Use the classnames to re-generate the builder form
+        var parseDraft = function(wrapperName)
+        {
+            if( $('canvasIntro') ){
+                $('canvasIntro').remove( true );
+            }
+            $('canvasTitleContainer').show();
+            var container = $(wrapperName).children[0];
+            $A(container.children).each(function(widget)
+            {
+                var valueNode = widget.select(".builder_val")[0] || widget.select(".builder_val_wrapper")[0];
+                if (!valueNode) {
+                    console.log("no value node, widget: ", widget);
+                    return;
+                }
+                var widgetValue = (valueNode.value || valueNode.src || valueNode.innerHTML).strip();
+                console.log("Widget value = ", widgetValue, "for node", widget)
+                switch(widget.getAttribute("class").strip())
+                {
+                    case "builder_h1_widget":
+                                            spawnWidget("h1Widget", widgetValue);
+                                            break;
+                    case "builder_h2_widget":
+                                            spawnWidget("h2Widget", widgetValue);
+                                            break;
+                    case "builder_h3_widget":
+                                            spawnWidget("h3Widget", widgetValue);
+                                            break;
+                    case "builder_paragraph_widget":
+                                            spawnWidget("paragraphWidget", widgetValue);
+                                            break;
+                    case "builder_image_widget":
+                                            spawnWidget("imageWidget", widgetValue);
+                                            break;
+                    case "builder_embed_widget":
+                                            spawnWidget("embedWidget", widgetValue);
+                                            break;
+                    default:                alert("Invalid page builder document.");
+                                            return;
+                                            break;
+                }
+            });
+            Sortable.destroy("pageCanvas");
+            Sortable.create("pageCanvas", {tag:"div", only: "sortableWidget", handle:"handle", scroll: window});
+        }
     </script>
 </div>
+
+
+<% if @page %>
+    <div id="draft_container" style="display:none;">
+        <%= @page.html_body.untaint %>
+    </div>
+
+    <script type="text/javascript" charset="utf-8">
+        parseDraft("draft_container");
+    </script>
+<% end %>

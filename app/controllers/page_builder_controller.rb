@@ -9,17 +9,45 @@ class PageBuilderController < ApplicationController
   def create
     redirect_to root_path and return unless current_user
     
-    page = Page.new
+    if params[:is_draft].to_i == 1 or !params[:page_id].blank?
+      if params[:page_id].blank?
+        # If the user hits save draft before submitting
+        page = Page.new
+      else
+        page = Page.find params[:page_id]
+        unless page and (page.user == current_user or current_user.is_admin)
+          flash[:notice] = "You don't have permission to update this page."
+          redirect_to root_path and return
+        end
+      end
+    else
+      page = Page.new
+    end
+    
     page.user = current_user
     page.title = params[:title]
     page.sanitize_user_html params[:html_body]
-    page.save!
-    flash[:notice] = "Submitted!"
-    redirect_to page_path(page) and return      
+    
+    if params[:is_draft].to_i == 1
+      page.ready_to_process_images = false
+      page.save!
+      flash[:notice] = "Draft saved"
+      redirect_to page_builder_edit_path(page) and return
+    else
+      page.ready_to_process_images = true
+      page.save!
+      flash[:notice] = "Submitted!"
+      redirect_to page_path(page) and return
+    end
+    
   rescue ActiveRecord::RecordInvalid => e
     @page = e.record
     flash[:error] = @page.errors.full_messages.to_sentence
     render :action=>:new
+  end
+  
+  def edit
+    @page = Page.find params[:id]
   end
   
   def image_upload_form

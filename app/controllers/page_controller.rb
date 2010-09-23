@@ -36,12 +36,17 @@ class PageController < ApplicationController
     @page = Page.new({"source_url"=>params[:page]["source_url"], "title"=>params[:page]["title"]})
     @page.user = current_user
     @page.scrape_source_url
+    @page.ready_to_process_images = true
     @page.save
     redirect_to edit_page_path(@page) and return
   end
   
   def edit
     @page = Page.find(params[:id])
+    
+    if @page.created_with_builder
+      redirect_to page_builder_edit_path(@page) and return
+    end
     
     unless current_user.is_content_editor or current_user == @page.user
       flash[:notice] = "You can't edit that page."

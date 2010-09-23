@@ -18,6 +18,7 @@ ActionController::Routing::Routes.draw do |map|
   map.page_builder              "/pagebuilder",         :controller => :page_builder, :action => :new
   map.page_builder_submit       "/pagebuilder/submit",  :controller => :page_builder, :action => :create
   map.page_builder_image_upload "/pagebuilder/image",   :controller => :page_builder, :action => :image_upload_form
+  map.page_builder_edit         "/pagebuilder/edit/:id",  :controller => :page_builder, :action => :edit
   
   # Bookmarklet
   map.bookmarklet_js      "/bookmarklet/show",    :controller => :bookmarklet,   :action => :show

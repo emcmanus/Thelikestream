@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     end
     
     def top_pages
-      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(Page.count-10))
+      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(Page.count-10), :conditions=>["like_count > 0 and thumbnail_full is not NULL"])
     end
     
     

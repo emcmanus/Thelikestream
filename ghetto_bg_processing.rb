@@ -50,7 +50,7 @@ end
 
 # Main loop
 while true
-  page = Page.find(:all, :limit=>1, :conditions=>["image_processing_started = false"]).first
+  page = Page.find(:first, :conditions=>["image_processing_started = false AND ready_to_process_images = true"])
   if page.nil?
     sleep 1
   else
