@@ -259,7 +259,7 @@
         </div>
         
         <div class="span-12" style="padding-top: 10px;">
-            <%= link_to "POPULAR", root_path, :class=>"nav_link #{'current' if !@nav_page or @nav_page.downcase=='popular'}" %>
+            <%= link_to "POPULAR", root_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='popular'}" %>
             <%= link_to "RECENT", recent_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='recent'}" %>
             <% if current_user %>
                <%= link_to "PROFILE", profile_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='profile'}" %>
