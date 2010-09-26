@@ -82,9 +82,9 @@ class Page < ActiveRecord::Base
   
   # Lookup of permissions -> editable attributes
   EDIT_PERMISSIONS = {
-    :god => %w[media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score user_id created_at updated_at slug],
-    :admin => %w[media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score slug],
-    :editor => %w[media_category introduction html_body title source_url show_link],
+    :god => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score user_id created_at updated_at slug],
+    :admin => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score slug],
+    :editor => %w[show_in_popular show_in_favorites media_category introduction html_body title source_url show_link],
     :owner => %w[introduction title]
   }
   
