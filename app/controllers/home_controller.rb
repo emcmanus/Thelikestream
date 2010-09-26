@@ -8,6 +8,7 @@ class HomeController < ApplicationController
     # @pages = Page.all(:order=>"weighted_score DESC", :limit=>num_pages, :offset=>@current_offset, :include=>[:user], :conditions=>["like_count > 0"])
     
     @pages = Page.paginate :page=>params[:page], :order => 'weighted_score DESC', :include=>[:user], :conditions=>["like_count > 0 and show_in_popular=true"]
+    @nav_page = "popular"
   end
 
   def recent
