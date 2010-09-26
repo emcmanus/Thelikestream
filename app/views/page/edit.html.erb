@@ -50,7 +50,11 @@
   
   <p>
       <%=h f.label :introduction %><br/>
-      <%=h f.text_area :introduction, :class=>"paragraph_entry", :value=>(@page.introduction unless @page.introduction.blank? || truncate(strip_tags(@page.html_body).strip.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ").sub("&nbsp;","")), :length=>500) %>
+      <% if @page.introduction.blank? %>
+      <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>truncate(strip_tags(@page.html_body).strip.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ").sub("&nbsp;",""), :length=>500)) %>
+    <% else %>
+      <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>@page.introduction) %>
+    <% end %>
   </p>
   
   <% if current_user.is_content_editor %>
