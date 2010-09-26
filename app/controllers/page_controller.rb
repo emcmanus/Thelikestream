@@ -16,6 +16,10 @@ class PageController < ApplicationController
   end
   
   def show
+    if params[:id].downcase == "home"
+      redirect_to root_path and return
+    end
+    
     @page = Page.find(params[:id])  # find automatically calls to_i
     # For ajax story loading
     @lower_five = Page.find :all, :select=>:id, :order=>"weighted_score DESC", :conditions=>["like_count > 0 AND weighted_score < ?", @page.weighted_score], :limit=>5
