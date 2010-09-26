@@ -4,7 +4,7 @@ class AddQualityFlagsToPage < ActiveRecord::Migration
     add_column :pages, :show_in_favorites, :boolean, :default => false
     # Display in Popular
     add_column :pages, :show_in_popular, :boolean, :default => false
-    Pages.update_all('show_in_popular=false, show_in_favorites=false')
+    Page.update_all('show_in_popular=false, show_in_favorites=false')
   end
 
   def self.down
