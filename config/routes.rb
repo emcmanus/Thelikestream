@@ -25,7 +25,7 @@ ActionController::Routing::Routes.draw do |map|
   map.bookmarklet_submit  "/bookmarklet/submit",  :controller => :bookmarklet,   :action => :page_create
   
   # Global Nav
-  map.home    "/home",    :controller => :home,   :action => :show
+  map.recent  "/recent",  :controller => :home,   :action => :recent
   map.profile "/profile", :controller => :users,  :action => :profile
   map.submit  "/submit",  :controller => :page,   :action => :new
   # map.tools   "/tools",   :controller => :tools,  :acion => :show
@@ -55,4 +55,5 @@ ActionController::Routing::Routes.draw do |map|
   
   # Page via slug
   map.page      "/:id",           :controller => :page, :action => :show
+
 end

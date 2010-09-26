@@ -204,12 +204,17 @@
     
     <style type="text/css" media="screen">
         .nav_link.current {
-                color: #777;
+                color: #000;
                 padding: 0 3px;
                 margin: 0 2px;
                 font-weight: bold;
                 letter-spacing: -1px; font-size:1.3em;
-        }
+                background-color: #ff0;
+                cursor: default;
+              }
+        .nav_link.current:hover {
+            background-color: #ff0;
+          }
         .nav_link {
             background-color: #000;
             padding: 0 3px;
@@ -249,20 +254,21 @@
         
          <div class="span-6">
              <div style='margin: 10px;margin-left:0;'>
-                 <%= link_to image_tag('logo-8.png'), home_path %>
+                 <%= link_to image_tag('logo-8.png'), root_path %>
              </div>
         </div>
         
         <div class="span-12" style="padding-top: 10px;">
-            <%= link_to "POPULAR", home_path, :class=>"nav_link #{'current' if !@nav_page or @nav_page.downcase=='popular'}" %>
-                <% if current_user %>
-                   <%= link_to "PROFILE", profile_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='profile'}" %>
-                <% end %>
-                <%= link_to "SUBMIT", submit_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='submit'}" %>
-                <% if current_user %>
-                   <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
-                <% else %>
-           		<%= link_to "LOGIN", login_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='login'}" %>
+            <%= link_to "POPULAR", root_path, :class=>"nav_link #{'current' if !@nav_page or @nav_page.downcase=='popular'}" %>
+            <%= link_to "RECENT", recent_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='recent'}" %>
+            <% if current_user %>
+               <%= link_to "PROFILE", profile_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='profile'}" %>
+            <% end %>
+            <%= link_to "SUBMIT", submit_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='submit'}" %>
+            <% if current_user %>
+               <%= fb_logout_link "LOGOUT", logout_path, :class=>"nav_link" %>
+            <% else %>
+       		    <%= link_to "LOGIN", login_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='login'}" %>
            		<%= link_to "REGISTER", register_path, :class=>"nav_link #{'current' if @nav_page and @nav_page.downcase=='register'}" %>
            	 <% end %>
         </div>
