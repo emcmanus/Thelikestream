@@ -30,7 +30,7 @@
     <h3>User Info</h3>
     <p>Facebook ID: <%= h @user.facebook_id %></p>
     
-    <% if current_user.is_admin %>
+    <% if current_user and current_user.is_admin %>
         <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>
         <p>Can Admin: <input type='checkbox' <% if @user.is_admin %> checked='' <% end %> /></p>
         <p>Can Edit Raw HTML: <input type='checkbox' <% if @user.is_content_editor %> checked='' <% end %> /></p>

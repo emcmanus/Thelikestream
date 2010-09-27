@@ -24,6 +24,20 @@ class PageBuilderController < ApplicationController
       page = Page.new
     end
     
+    # Check for admin fields
+    if current_user.is_content_editor
+      if params[:show_in_popular] == "on"
+        page.show_in_popular = true
+      else
+        page.show_in_popular = false
+      end
+      if params[:show_in_favorites] == "on"
+        page.show_in_favorites = true
+      else
+        page.show_in_favorites = false
+      end
+    end
+    
     page.user = current_user
     page.title = params[:title]
     page.sanitize_user_html params[:html_body]

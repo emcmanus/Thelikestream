@@ -4,17 +4,17 @@
     <meta property="og:title" content="<%= h @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= h @page.og_image || image_url("like-72-72.png") %>" />
     <meta property="og:url" content="<%= h @page.og_url || page_url(@page, :only_path => false) %>" />
-    <meta property="og:description" content="<%= h @page.og_description || "You'll love this. Find and Share Interesting Content. No Login Required!" %>" />
+    <meta property="og:description" content="<%= h @page.og_description || "You'll love this" %>" />
     <meta name="title" content="<%= h @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
-    <meta name="description" content="<%= h @page.og_description || "You'll love this. Find and Share Interesting Content. No Login Required!" %> " />
+    <meta name="description" content="<%= h @page.og_description || "You'll love this" %> " />
     <link rel="image_src" href="<%= h @page.og_image || image_url("like-72-72.png") %>" / >
 <% else %>
     <meta property="og:title" content="<%= @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= h image_url("like-72-72.png") %>" />
     <meta property="og:url" content="<%=h request.url %>" />
-    <meta property="og:description" content="You'll love this. Find and Share Interesting Content. No Login Required!" />
+    <meta property="og:description" content="You'll love this" />
     <meta name="title" content="<%= @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
-    <meta name="description" content="You'll love this. Find and Share Interesting Content. No Login Required!" />
+    <meta name="description" content="You'll love this" />
     <link rel="image_src" href="<%= h image_url("like-72-72.png") %>
 <% end %>
 <% if @page and @page.is_cloaked %>

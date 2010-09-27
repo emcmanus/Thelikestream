@@ -26,7 +26,8 @@ class ApplicationController < ActionController::Base
     
     def top_pages
       #TODO fix this to use the count of objects that meet this criteria
-      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand(Page.count-20), :conditions=>["like_count > 0 and thumbnail_full is not NULL and show_in_favorites=true"])
+      favorite_count = Page.count(:conditions=>["like_count > 0 and thumbnail_full is not NULL and show_in_favorites=true"])
+      Page.all(:order=>"weighted_score DESC", :limit=>10, :offset=>rand([0, favorite_count-10].max), :conditions=>["like_count > 0 and thumbnail_full is not NULL and show_in_favorites=true"])
     end
     
     

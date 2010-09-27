@@ -33,7 +33,9 @@
             <h1 style="color:#0cf; font-size: 28px; margin-bottom:0; font-weight: 200; letter-spacing:1;" class="top_heading"></h1>
             <h2 style="font-size: 22px; color: white; font-weight: 500;margin-bottom: 20px;" class="bottom_heading"></h2>
         </div>
-        <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 51px; overflow: hidden;"></div>
+        <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 51px; overflow: hidden;">
+          <fb:like layout="button_count" show_faces="no" href="<%= page_url(page, :only_path=>false) %>"></fb>
+        </div>
         <div id="below<%= like_target_id %>" style="display:none; color:white;">
             <div style="float: left; font-size: 12px; font-weight:200; color: #666;" class="quiet_guide"></div>
             <a href="javascript:closeCustomizeDialog(<%= page.id %>);false" class="btn close_btn" style="font-size:1.1em; position:relative; float: right;margin-right:10px;"><span><span><b>&nbsp;</b><u class='close_text'>Skip</u></span></span></a>
@@ -47,7 +49,7 @@
     // Register like button container, then trigger write
     window.registerLikeContainer(<%= page.id %>, '<%= like_target_id %>');
     // window.writeLikeButton(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
-    window.queueLikeButtonWrite(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
+    //window.queueLikeButtonWrite(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
 </script>
 
 </div>

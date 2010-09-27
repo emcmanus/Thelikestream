@@ -50,7 +50,7 @@
   
   <p>
       <%=h f.label :introduction %><br/>
-      <% if @page.introduction.blank? %>
+    <% if @page.introduction.blank? %>
       <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>truncate(strip_tags(@page.html_body).strip.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ").sub("&nbsp;",""), :length=>500)) %>
     <% else %>
       <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>@page.introduction) %>
@@ -62,14 +62,16 @@
           <%=h f.label :html_body %><br/>
           <%=h f.text_area :html_body %>
       </p>
+      <br/>
       <p>
         <%=h f.label :show_in_popular %><br/>
         <%=h f.check_box :show_in_popular %>
       </p>
       <p>
-      <%=h f.label :show_in_favorites %><br/>
+        <%=h f.label :show_in_favorites %><br/>
         <%=h f.check_box :show_in_favorites %>
-      </p>
+        </p>
+        <br/>
       <p>
           <%=h f.label :media_category %><br/>
           <%=h f.text_field :media_category %>

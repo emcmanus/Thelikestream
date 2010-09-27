@@ -25,11 +25,20 @@
     
     <% for page in top_pages %>
         <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
-            <div style="margin-top:15px; padding-top: 5px; border-top: 1px dotted #ccc;">
-                <%= link_to truncate(h(page.title), :length=>100), page, :style=>"font-size:1.4em; color: #333;" %>
-                <span style="color:#7f7f7f;"><%= h page.like_count %> like<%= 's' if page.like_count > 1 %></span>
+            <div style="clear:both; margin-bottom: -55px;">
+              <%= link_to(image_tag(page.thumbnail_page, :width=>350), page) unless page.thumbnail_square.blank? %>
+              <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
+                <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="thin_shadow">
+                  <div style="padding:10px 15px;">
+                    <div style="float:right;position:relative;top:-45px;right:-10px;margin-bottom:-75px;">
+                      <%= image_tag("favorites_badge.png", :style=>"" ) %>
+                      <div style="position:absolute; margin-top: -43px; margin-left: 5px; width: 40px; text-align: center;" class="like_count_badge_text"><%= h page.like_count %></div>
+                    </div>
+                    <%= h truncate(page.title, :length=>80) %>
+                  </div>
+                </div>
+              <% end %>
             </div>
-            <div style="clear:both;"><%= link_to(image_tag(page.thumbnail_page, :width=>350), page) unless page.thumbnail_square.blank? %>&nbsp;</div>
         <% end %>
     <% end %>
     

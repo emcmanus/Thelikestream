@@ -91,6 +91,15 @@
     <input type="hidden" id="page_id" name="page_id" value="<%= (@page.id if @page) || "" %>">
     <input type="hidden" id="page_html_body" name="html_body" value="" />
     <input type="hidden" id="page_title" name="title" value="" />
+    <% if current_user and current_user.is_content_editor %>
+      <div style="margin-top:20px; margin-bottom: 10px; padding:15px; border: 1px solid #ccc">
+        <h3>Admin</h3>
+        <label for="show_in_popular">Show in popular:</label>
+        <input type="checkbox" name="show_in_popular" <%= 'checked' if @page.show_in_popular %> /><br/>
+        <label for="show_in_favorites">Show in favorites:</label>
+        <input type="checkbox" name="show_in_favorites" <%= 'checked' if @page.show_in_favorites %> />
+      </div>
+    <% end %>
 <% end %>
 
 <script type="text/javascript" charset="utf-8">
