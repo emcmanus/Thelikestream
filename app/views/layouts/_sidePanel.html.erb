@@ -9,7 +9,7 @@
   <% for page in top_pages %>
     <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
       <div class="span-8 <%= cycle("","","last")%>" style="margin-bottom: -55px;">
-        <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()', :target=>'self') unless page.thumbnail_square.blank? %>
+        <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()') unless page.thumbnail_square.blank? %>
         <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
           <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="thin_shadow">
             <div style="padding:10px 15px;">

@@ -50,7 +50,7 @@ class PageController < ApplicationController
     @page = Page.find(params[:id])
     
     if @page.created_with_builder
-      redirect_to page_builder_edit_path(@page) and return
+      redirect_to page_builder_edit_path(@page) and return unless params[:edit_html]
     end
     
     unless current_user.is_content_editor or current_user == @page.user
