@@ -40,7 +40,9 @@
         &nbsp;
     </div>
     
+    <% if false %>
     Do You Like this Story? <fb:like layout="button_count" show_faces="yes" href="<%= page_url(@page, :only_path=>false) %>"></fb:like>
+  <% end %>
 
     <div id="contentBelowNav">
         <%= render :partial=>'pageBody' %>

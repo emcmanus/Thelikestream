@@ -9,7 +9,7 @@
   <% for page in top_pages %>
     <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
       <div class="span-8 <%= cycle("","","last")%>" style="margin-bottom: -55px;">
-        <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()', :target=>'_blank') unless page.thumbnail_square.blank? %>
+        <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()', :target=>'self') unless page.thumbnail_square.blank? %>
         <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
           <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="thin_shadow">
             <div style="padding:10px 15px;">
@@ -21,10 +21,12 @@
             </div>
           </div>
         <% end %>
-        <div class="span-8 last" style="margin-top: -75px; padding-top:3px; text-align: center; margin-bottom: 0;">
-          Like this? <fb:like layout="button_count" show_faces="yes" href="<%= page_url(page, :only_path=>false) %>"></fb:like>
-        </div>
-        <hr class="space"/>
+        <% if false %>
+          <div class="span-8 last" style="margin-top: -75px; padding-top:3px; text-align: center; margin-bottom: 0;">
+            Like this? <fb:like layout="button_count" show_faces="yes" href="<%= page_url(page, :only_path=>false) %>"></fb:like>
+          </div>
+          <hr class="space"/>
+        <% end %>
       </div>
     <% end %>
   <% end %>
@@ -33,6 +35,7 @@
 
 <script type="text/javascript">
   function enterFavoritesMode(){
+    return;
     if (!$('contentContainer')) return;
 
     $('contentContainer').hide();
@@ -41,6 +44,7 @@
   }
 
 function exitFavoritesMode(){
+  return;
   if (!$('contentContainer')) return;
 
   $('contentContainer').show();
