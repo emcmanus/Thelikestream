@@ -1,32 +1,15 @@
-<div class="span-9 last">
-    
-    <fb:facepile max-rows="3" class="span-9 last" style="margin-bottom: 10px; border-bottom: 2px solid #333; padding-bottom: 20px;"></fb:facepile>
+<div class="span-8 last">
     
     <div style="height:1px; clear: both;">&nbsp;</div>
     
-    <% if false %>
-        <% unless current_user %>
-        <div class="span-9 last" style="margin-top: 10px;">
-            <h2 style="font-weight: 400; color:#00ccff; border-bottom: 1px dotted #ccc; padding-bottom:7px; margin-bottom: 7px; line-height: 1em;">TheLikeStream</h2>
-            <h2 style="color: #333; padding-bottom:0; margin-bottom: 7px; line-height: 1.2em;">Build <em>Like Pages</em> From Your Website</h2>
-            <span style="color: #7f7f7f;">Use our bookmarklet to quickly create a Facebook Like Page using your site's content. TheLikeStream is the fastest way to share your content on Facebook.</span>
-            <div style="border-bottom: 1px dotted #ccc; margin-top:7px; height: 1px;">&nbsp;</div>
-            <div class="clearfix" style="height: 15px;">&nbsp;</div>
-        	<a href="<%= submit_path %>" class="btn" style="font-size:1.3em; position:relative; bottom: 1px;"><span><span><b>&nbsp;</b><u>Click to Get Started</u></span></span></a>
-        </div>
-        <div style="height:20px; clear: both;">&nbsp;</div>
+          
     
-        <div style="border-bottom: 2px solid #333; margin-bottom: 10px; height:1px;">&nbsp;</div>
-        <% end %>
-    <% end %>
-    
-    
-    <h2 style="font-weight: 400; color:#333; padding:0; margin: 0;margin-bottom: 10px;">Favorites</h2>
+    <h2 style="font-weight: 400; color:#333; padding:0; margin: 0;margin-bottom: 10px;">Favorite Submissions</h2>
     
     <% for page in top_pages %>
         <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
-            <div style="clear:both; margin-bottom: -55px;">
-              <%= link_to(image_tag(page.thumbnail_page, :width=>350), page) unless page.thumbnail_square.blank? %>
+            <div class="span-8" style="margin-bottom: -55px;">
+              <%= link_to(image_tag(page.thumbnail_page, :width=>310), page) unless page.thumbnail_square.blank? %>
               <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
                 <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="thin_shadow">
                   <div style="padding:10px 15px;">

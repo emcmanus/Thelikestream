@@ -30,6 +30,11 @@ to install this just use sudo rake gems:install, environment.rb takes care of th
 Sanitize:
 http://github.com/rgrove/sanitize/#readme
 
+Exception_notification:
+Plugin from http://github.com/rails/exception_notification/tree/2-3-stable
+Make sure to check out the 2-3-stable branch using:
+script/plugin install http://github.com/rails/exception_notification.git -r 2-3-stable
+
 
 	[ CAPISTRANO ]
 

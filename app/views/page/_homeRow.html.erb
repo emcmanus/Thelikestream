@@ -9,7 +9,7 @@
 		<% end %>
 	</div>
     <div class="span-2"><%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>page} %></div>
-    <div class="span-9 last">
+    <div class="span-10 last">
         <h4 style="padding:0; margin:0;">
             <%= link_to truncate(h(page.title), :length=>100), page_url(page), :class=>"mainlink" %>
         </h4>

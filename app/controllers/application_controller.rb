@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   
   include Facebooker2::Rails::Controller
   
+  include ExceptionNotification::Notifiable
+  ExceptionNotification::Notifier.exception_recipients = %w(emcmanus@gmail.com)
+  
   # Log filtering
   filter_parameter_logging :password, :password_confirmation, :fb_sig_friends
   protect_from_forgery

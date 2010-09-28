@@ -7,9 +7,9 @@
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 
     <% unless @html_title.blank? %>
-        <title><% if RAILS_ENV == "development" %> DEV - <% end %>TheLikeStream - <%= @html_title %></title>
+        <title><% if RAILS_ENV == "development" %> DEV - <% end %><%=h @html_title %> - TheLikeStream</title>
     <% else %>
-        <title><% if RAILS_ENV == "development" %> DEV - <% end %>TheLikeStream - <%= controller.controller_name.titleize %></title>
+        <title><% if RAILS_ENV == "development" %> DEV - <% end %><%= controller.controller_name.titleize %> - TheLikeStream</title>
     <% end %>
 
     <%= javascript_include_tag :defaults %>
