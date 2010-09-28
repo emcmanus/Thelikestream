@@ -2,7 +2,7 @@
 	<%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>@page} %>
 </div>
 
-<div class="span-12 last">
+<div class="span-13 last">
     <h2 style="padding:0;margin:0;line-height:1.1em;font-size: 2.4em;">
 		<%=h @page.title %>
 		<% if (current_user && current_user.is_content_editor) or (current_user && @page.user == current_user) %>
