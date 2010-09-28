@@ -13,27 +13,27 @@
 
 <div class="span-24" style="">
     
-    <div class="span-24">
+    <div id="contentContainer">
+      <div class="span-24">
         <h2 style="padding:0; margin:0;">Popular</h2>
-    </div>
-    
-    
-    <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
-    
-    <div class="span-15 append-1">
-    <% for page in @pages %>
-        <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
-    <% end %>
-    <% if @pages.length == 0 %>
-        No pages found.
-    <% end %>
-    
-    <div class="span-5 prepend-3">
-        <%= will_paginate @pages %>
-    </div>
-    
-    </div>
-    
+      </div>
+
+      <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
+
+      <div class="span-15 append-1">
+        <% for page in @pages %>
+          <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
+        <% end %>
+        <% if @pages.length == 0 %>
+          No pages found.
+        <% end %>
+
+        <div class="span-5 prepend-3">
+          <%= will_paginate @pages %>
+        </div>
+
+      </div>
+    </div> 
     
     <%= render :partial=>"/layouts/sidePanel" %>
     
