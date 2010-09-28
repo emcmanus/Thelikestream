@@ -4,7 +4,7 @@
     <h2 style="border-bottom: 1px dotted #ccc;">Most Recent Stories</h2>
   </div>
 
-  <div class="span-14 append-1">
+  <div class="span-15 append-1">
   <% for @page in @new_pages %>
     <%= render :partial=>'/page/homeRow', :locals=>{:page=>@page} %>
   <% end %>
