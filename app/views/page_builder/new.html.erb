@@ -75,8 +75,8 @@
 <div id="page_preview_container" style="position: absolute; top:0; left: 0; z-index:9999; width: 100%; background-color: rgba(0,0,0,0.75); display:none;">
     <div class="span-7 prepend-8" style="float: none; margin: 100px auto; margin-bottom:10px; color: #fff;">
         <div class="span-7 last" style="text-align: right;">
-            <a href="javascript:submitPage();false" class="btn" style="position:relative;right:-5px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></a>
-            <a href="javascript:$('page_preview_container').hide();false" class="btn" style="position:relative;right:-15px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Close</u></span></span></a>
+            <a href="javascript:submitPage();" class="btn" style="position:relative;right:-5px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Submit</u></span></span></a>
+            <a href="javascript:$('page_preview_container').hide();" class="btn" style="position:relative;right:-15px; font-size: 1.2em;"><span><span><b>&nbsp;</b><u>Close</u></span></span></a>
         </div>
         <div style="height:1px; clear: both;">&nbsp;</div>
     </div>
@@ -348,10 +348,10 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque facilisis rhonc
                         <div class="span-12 last urlForm" style="padding-top:5px; display:none;">
                             <strong>Image URL:</strong>
                             <input type="text" placeholder="Image URL" class="fileUrlInput fileurl_entry" style="width: 320px; margin:-8px 0 0 10px;" />
-                            <a href="javascript:void(0);false" onclick="this.parentNode.parentNode.parentNode.select('.image_url_value')[0].value=this.parentNode.select('.fileurl_entry')[0].value; this.parentNode.parentNode.select('.urlSuccess')[0].show();this.parentNode.parentNode.select('.filename_container')[0].innerHTML=this.parentNode.parentNode.select('.fileUrlInput')[0].value;this.parentNode.hide();false" class="btn" style="position:relative;top:-1px;font-size:1.2em;left:1px;"><span><span><b>&nbsp;</b><u>Add</u></span></span></a>
+                            <a href="javascript:void(0);" onclick="this.parentNode.parentNode.parentNode.select('.image_url_value')[0].value=this.parentNode.select('.fileurl_entry')[0].value; this.parentNode.parentNode.select('.urlSuccess')[0].show();this.parentNode.parentNode.select('.filename_container')[0].innerHTML=this.parentNode.parentNode.select('.fileUrlInput')[0].value;this.parentNode.hide();" class="btn" style="position:relative;top:-1px;font-size:1.2em;left:1px;"><span><span><b>&nbsp;</b><u>Add</u></span></span></a>
                         </div>
                         <div class="span-12 last imageOptions" style="padding-top:5px;">
-                            <strong>Image options: </strong> <a href="javascript:void(0);false" onclick="this.parentNode.parentNode.select('.urlForm')[0].show();this.parentNode.hide();false" class="btn" style="margin: 0 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Add an Image URL</u></span></span></a>
+                            <strong>Image options: </strong> <a href="javascript:void(0);" onclick="this.parentNode.parentNode.select('.urlForm')[0].show();this.parentNode.hide();" class="btn" style="margin: 0 5px; font-size: 1em;"><span><span><b>&nbsp;</b><u>Add an Image URL</u></span></span></a>
                             or <%= link_to_remote "<span><span><b>&nbsp;</b><u>Upload an Image</u></span></span>", :url=>page_builder_image_upload_path+"?cachebuster=$replace_with_rand", :update =>{:success=>"image_upload_form_$replace_with_rand"}, :html=>{:style=>"margin-left: 5px; font-size: 1em;", :class=>"btn", :onclick=>"this.parentNode.hide()"} %>
                         </div>
                         <div id="image_upload_form_$replace_with_rand" class="span-12 last"></div>
