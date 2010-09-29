@@ -487,22 +487,26 @@ class Page < ActiveRecord::Base
               parent.name.to_s.downcase == 'object'
 
           # Set allowscriptaccess to never
-          script_param_node = parent.search('param[@name="allowscriptaccess"]')
-          unless script_param_node.nil?
-            script_param_node.each do |el|
-              el["value"] = "never"
-            end
+          parent.search('param[@name="allowscriptaccess"]').each do |el|
+            el["value"] = "never"
+          end
+
+          # Update wmode values
+          parent.search('param[@name="wmode"]').each do |el|
+            el["value"] = "transparent"
           end
 
           # Cap width to 550
           parent["width"] = [parent["width"].to_i, 550].min.to_s
-          embed = parent.search('embed').first if parent.search('embed')
-          embed["width"] = [embed["width"].to_i, 550].min.to_s
+          parent.search('embed').each do |embed|
+            embed["width"] = [embed["width"].to_i, 550].min.to_s
+            embed["wmode"] = "transparent"
+          end
 
           Sanitize.clean_node!(parent, {
             :elements   => ['embed', 'object', 'param'],
             :attributes => {
-              'embed'  => ['allowfullscreen', 'height', 'src', 'type', 'width'],
+              'embed'  => ['allowfullscreen', 'height', 'src', 'type', 'width', 'wmode'],
               'object' => ['height', 'width'],
               'param'  => ['name', 'value']
             }

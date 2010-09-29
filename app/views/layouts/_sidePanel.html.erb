@@ -11,9 +11,9 @@
       <div class="span-8 <%= cycle("","","last")%>" style="margin-bottom: -55px;">
         <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()') unless page.thumbnail_square.blank? %>
         <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
-          <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="thin_shadow">
+          <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="ie_transparent_bg thin_shadow">
             <div style="padding:10px 15px;">
-              <div style="float:right;position:relative;top:-45px;right:-10px;margin-bottom:-75px;">
+              <div style="float:right; position:relative;top:-45px; right:-10px; margin-bottom:-75px;">
                 <%= image_tag("favorites_badge.png", :style=>"" ) %>
                 <div style="position:absolute; margin-top: -43px; margin-left: 5px; width: 40px; text-align: center;" class="like_count_badge_text"><%= h page.like_count %></div>
               </div>
