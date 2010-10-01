@@ -4,7 +4,7 @@
 
 <div class="span-13 last">
     <h2 style="padding:0; margin:0; margin-top: -4px; line-height:1.1em;font-size: 2.4em;">
-		<%=h @page.title %>
+      <%= link_to h(@page.title), page_path(@page, :only_path=>false), :style=>"color:#333;" %>
 		<% if (current_user && current_user.is_content_editor) or (current_user && @page.user == current_user) %>
 	        <%= link_to '(Edit)', edit_page_path(@page), :style=>"font-size:60%;" %>
 	    <% end %>
