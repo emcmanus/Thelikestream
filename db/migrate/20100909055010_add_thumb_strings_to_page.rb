@@ -1,4 +1,4 @@
-# tmp_page = Tempfile.new "thumb"     # 550' width, maintain ratio
+# tmp_page = Tempfile.new "thumb"     # 590 or 550' width, maintain ratio
 # tmp_small = Tempfile.new "thumb"    # 100' width, maintain ratio
 # tmp_thumb = Tempfile.new "thumb"    # 100' width, crop 70' height, gravity center
 # tmp_square = Tempfile.new "thumb"   # 75'x75' square, crop gravity center (For use with facebook likes)

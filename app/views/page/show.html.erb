@@ -1,170 +1,199 @@
 <% content_for :head do %>
-    <%= javascript_include_tag 'hotkeys.js' %>
+  <%= javascript_include_tag 'hotkeys.js' %>
 <% end %>
 
 <div id="contentContainer">
-<div class="span-15 append-1" style="overflow: hidden;">
-    
+  <div class="span-15 append-1" style="overflow: hidden;">
+
     <div class="content_spinner span-14" style="display:none; text-align: center; position: absolute; padding-top: 40px;">
-        <%= image_tag 'load-spinner.gif' %>
+      <%= image_tag 'load-spinner.gif' %>
     </div>
-    
+
     <div id="contentAboveNav">
-        <%= render :partial=>'pageTitle' %>
+      <%= render :partial=>'pageTitle' %>
     </div>
-    
+
     <div style="clear:both; height: 1px;">&nbsp;</div>
-    
-    <div style="width:570px; height: 49px; margin-left: -10px; position: absolute; z-index:999; background-image:url('<%= image_path "story-navigation-bg.png" %>'); background-repeat: no-repeat;">
+
+    <% if false %>
+      <!-- Removing navigation for now, think it just clutters up the page -->
+      <div style="width: 602px; height: 49px; margin-left: -6px; position: absolute; z-index:999; background-image:url('<%= image_path "story-navigation-bg.png" %>'); background-repeat: no-repeat;">
         <!-- Back -->
         <%= image_tag 'story-nav-last.png', :onclick=>'prevStory()', :style=>"float: left; position: relative; top: 5px; left:-13px; cursor: pointer; position: absolute; z-index:100;" %>
-        
+
         <!-- open like button lightbox -->
         <div style="width:100%; position: absolute; padding-top: 5px; float: left; text-align: center;">
-            <div style="width: 250px; height: 40px; margin: 0 auto; cursor: pointer;" onclick="showCustomizeDialogForCurrentArticle()">
-                <div style="padding-top: 9px; width: 100%; text-align: center;">
-                    <%= image_tag 'fb-dark-square.png' %> <span style="color:#9e9d9d; font-size: 11px;">Click to</span> <span style="color: #fff; font-size: 11px;">vote</span>
-                </div>
+          <div style="width: 250px; height: 40px; margin: 0 auto; cursor: pointer;"> 
+            <div style="padding-top: 9px; width: 100%; text-align: center;">
+              <fb:like layout="button_count" ref="story_nav_bar" width="490" show_faces="yes" href="<%= page_url(@page, :only_path=>false) %>"></fb:like>
             </div>
+          </div>
         </div>
-        
+
         <!-- Forward -->
         <%= image_tag 'story-nav-next.png', :onclick=>'nextStory()', :style=>"float: right; position: relative; top: 5px; left:13px; cursor: pointer;" %>
-    </div>
-    
-    <!-- Layout Placeholder -->
-    <div style="clear:both; height: 60px;">&nbsp;</div>
-    
-    
-    <div class="content_spinner" style="display:none; text-align: center; height: 200px">
+      </div>
+
+      <!-- Layout Placeholder -->
+      <div style="clear:both; height: 60px;">&nbsp;</div>
+
+
+      <div class="content_spinner" style="display:none; text-align: center; height: 200px">
         &nbsp;
-    </div>
-    
-    Do You Like this Story? <fb:like layout="button_count" show_faces="yes" href="<%= page_url(@page, :only_path=>false) %>"></fb:like>
+      </div>
+
+      Do You Like this Story? <fb:like layout="button_count" show_faces="yes" href="<%= page_url(@page, :only_path=>false) %>"></fb:like>
+    <% end %>
 
     <div id="contentBelowNav">
-        <%= render :partial=>'pageBody' %>
+      <%= render :partial=>'pageBody' %>
     </div>
-    
-    
+
+
     <div class="span-8 last" style="margin-bottom: 15px;">
-        <a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-        <script src="http://www.stumbleupon.com/hostedbadge.php?s=4"></script> 
+      <a href="http://twitter.com/share" class="twitter-share-button" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+      <script src="http://www.stumbleupon.com/hostedbadge.php?s=4"></script> 
     </div>
 
 
     <fb:comments></fb:comments>
 
 
-</div>
+  </div>
 
 </div>
 
 <script type="text/javascript" charset="utf-8">
 
-    var storyIds = [
-        <% for lower in @lower_five %>
-            <%= lower.id %>,                /* before */
-        <% end %>
-        <%= @page.id %>                     /* current */
-        <% for higher in @higher_five %>
-            , <%= higher.id %>              /* after */
-        <% end %>
-        ];
-    var storyPtr = <%= @lower_five.length || 0 %>;
-    var loadingStory = false;
-    
-    var fadeStory = function( fadeIn, toRight, chain )
-    {
-        if (!chain) chain = function(){}
-        new Effect.Parallel([
-            new Effect.Move('contentAboveNav', { sync: true, x: (toRight?400:-400), y: 0, mode: 'relative' }), 
-            new Effect.Move('contentBelowNav', { sync: true, x: (toRight?400:-400), y: 0, mode: 'relative' }), 
-            new Effect.Opacity('contentAboveNav', { sync: true, from: (fadeIn?0:1), to: (fadeIn?1:0) }),
-            new Effect.Opacity('contentBelowNav', { sync: true, from: (fadeIn?0:1), to: (fadeIn?1:0) })
-        ], {
-            duration: 0.5,
-            afterFinish: chain
-        });
-    }
-    
-    var prevStory = function()
-    {
-        if (loadingStory)
-            return;
-        
-        storyPtr -= 1;
-        storyPtr = Math.max(storyPtr, 0);
-        
-        if (storyPtr == 0)
-        {
-            document.location.href='/' + storyIds[storyPtr].toString();
+  function formatHTMLBody(){
+    $('page_preview_container').select('object,embed').each( function(el){
+        var old_width = parseInt(el.getAttribute("width")||"1");
+        var old_height = parseInt(el.getAttribute("height")||"1");
+        if (old_width > 300){
+          el.setAttribute("width", 590);
+          el.setAttribute("height", Math.floor(590/old_width*old_height));
         }
-        
-        var idToLoad = storyIds[storyPtr];
-        
-        loadingStory = true;
-        
-        // transition out
-        fadeStory( false, true, function(){
-            $$('.content_spinner').each(Element.show);
-            new Ajax.Updater('contentAboveNav', '/'+idToLoad.toString()+'/partial/title', {evalScripts:true});
-            new Ajax.Updater('contentBelowNav', '/'+idToLoad.toString()+'/partial/body',
-            {
-                evalScripts: true,
-                onSuccess: function()
-                {
-                    $$('.content_spinner').each(Element.hide);
-                    // so we can slide in the same direction as the fade out
-                    new Effect.Move('contentAboveNav', { x: -800, y: 0, mode: 'relative', duration: 0 });
-                    new Effect.Move('contentBelowNav', { x: -800, y: 0, mode: 'relative', duration: 0, afterFinish: function(){
-                        fadeStory( true, true, function(){ loadingStory = false; } );
-                    } });
-                }
-            });
-        });
-    }
-    
-    function nextStory()
-    {
-        if (loadingStory)
-            return;
-        
-        storyPtr += 1;
-        storyPtr = Math.min(storyPtr, storyIds.length-1);
-        
-        if (storyPtr == storyIds.length-1)
-        {
-            document.location.href='/' + storyIds[storyPtr].toString();
+    });
+    $('page_preview_container').select('img').each( function(el){
+        var old_width = parseInt(el.getAttribute("width")||"1");
+        var old_height = parseInt(el.getAttribute("height")||"1");
+        if (old_width >= 500){
+          // Snap to 590
+          el.setAttribute("width", 590);
+          el.setAttribute("height", Math.floor(590/old_width*old_height));
+        } else if(old_width > 300) {
+          el.setAttribute("width", 300);
+          el.setAttribute("height", Math.floor(300/old_width*old_height));
         }
-        
-        var idToLoad = storyIds[storyPtr];
-        
-        loadingStory = true;
-        
-        fadeStory( false, false, function(){
-            $$('.content_spinner').each(Element.show);
-            new Ajax.Updater('contentAboveNav', '/'+idToLoad.toString()+'/partial/title', {evalScripts:true});
-            new Ajax.Updater('contentBelowNav', '/'+idToLoad.toString()+'/partial/body',
-            {
-                evalScripts: true,
-                onSuccess: function()
-                {
-                    $$('.content_spinner').each(Element.hide);
-                    // so we can slide in the same direction as the fade out
-                    new Effect.Move('contentAboveNav', { x: 800, y: 0, mode: 'relative', duration: 0 });
-                    new Effect.Move('contentBelowNav', { x: 800, y: 0, mode: 'relative', duration: 0, afterFinish: function(){
-                        fadeStory( true, false, function(){ loadingStory = false; } );
-                    } });
-                }
-            });
-        });
-    }
-    
-    // Bind nav keys
-    Hotkeys.bind("alt+left", prevStory);
-    Hotkeys.bind("alt+right", nextStory);
-    
+    });
+    $('page_preview_container').selec
+  }
+
+  formatHTMLBody();
+
+  var storyIds = [
+  <% for lower in @lower_five %>
+    <%= lower.id %>,                /* before */
+  <% end %>
+  <%= @page.id %>                     /* current */
+  <% for higher in @higher_five %>
+    , <%= higher.id %>              /* after */
+  <% end %>
+  ];
+  var storyPtr = <%= @lower_five.length || 0 %>;
+  var loadingStory = false;
+
+var fadeStory = function( fadeIn, toRight, chain )
+{
+  if (!chain) chain = function(){}
+  new Effect.Parallel([
+      new Effect.Move('contentAboveNav', { sync: true, x: (toRight?400:-400), y: 0, mode: 'relative' }), 
+      new Effect.Move('contentBelowNav', { sync: true, x: (toRight?400:-400), y: 0, mode: 'relative' }), 
+      new Effect.Opacity('contentAboveNav', { sync: true, from: (fadeIn?0:1), to: (fadeIn?1:0) }),
+      new Effect.Opacity('contentBelowNav', { sync: true, from: (fadeIn?0:1), to: (fadeIn?1:0) })
+      ], {
+duration: 0.5,
+afterFinish: chain
+});
+}
+
+var prevStory = function()
+{
+  if (loadingStory)
+    return;
+
+  storyPtr -= 1;
+  storyPtr = Math.max(storyPtr, 0);
+
+  if (storyPtr == 0)
+  {
+    document.location.href='/' + storyIds[storyPtr].toString();
+  }
+
+  var idToLoad = storyIds[storyPtr];
+
+  loadingStory = true;
+
+  // transition out
+  fadeStory( false, true, function(){
+      $$('.content_spinner').each(Element.show);
+      new Ajax.Updater('contentAboveNav', '/'+idToLoad.toString()+'/partial/title', {evalScripts:true});
+      new Ajax.Updater('contentBelowNav', '/'+idToLoad.toString()+'/partial/body',
+        {
+evalScripts: true,
+onSuccess: function()
+{
+$$('.content_spinner').each(Element.hide);
+// so we can slide in the same direction as the fade out
+new Effect.Move('contentAboveNav', { x: -800, y: 0, mode: 'relative', duration: 0 });
+new Effect.Move('contentBelowNav', { x: -800, y: 0, mode: 'relative', duration: 0, afterFinish: function(){
+  fadeStory( true, true, function(){ loadingStory = false; } );
+  } });
+}
+});
+      });
+}
+
+function nextStory()
+{
+  if (loadingStory)
+    return;
+
+  storyPtr += 1;
+  storyPtr = Math.min(storyPtr, storyIds.length-1);
+
+  if (storyPtr == storyIds.length-1)
+  {
+    document.location.href='/' + storyIds[storyPtr].toString();
+  }
+
+  var idToLoad = storyIds[storyPtr];
+
+  loadingStory = true;
+
+  fadeStory( false, false, function(){
+      $$('.content_spinner').each(Element.show);
+      new Ajax.Updater('contentAboveNav', '/'+idToLoad.toString()+'/partial/title', {evalScripts:true});
+      new Ajax.Updater('contentBelowNav', '/'+idToLoad.toString()+'/partial/body',
+        {
+evalScripts: true,
+onSuccess: function()
+{
+$$('.content_spinner').each(Element.hide);
+// so we can slide in the same direction as the fade out
+new Effect.Move('contentAboveNav', { x: 800, y: 0, mode: 'relative', duration: 0 });
+new Effect.Move('contentBelowNav', { x: 800, y: 0, mode: 'relative', duration: 0, afterFinish: function(){
+  fadeStory( true, false, function(){ loadingStory = false; } );
+  } });
+}
+});
+      });
+}
+
+// Bind nav keys
+Hotkeys.bind("alt+left", prevStory);
+Hotkeys.bind("alt+right", nextStory);
+
 </script>
 
 <%= render :partial=>"/layouts/sidePanel" %>

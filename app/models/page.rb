@@ -60,6 +60,7 @@ class Page < ActiveRecord::Base
   # before_save :scrape_source_url
   # before_save :process_images # we'll do this in a background process
   before_save :set_slug
+  before_save :calculate_weighted_score
   
   # before_save :queue_image_processing
   # def queue_image_processing
@@ -82,8 +83,8 @@ class Page < ActiveRecord::Base
   
   # Lookup of permissions -> editable attributes
   EDIT_PERMISSIONS = {
-    :god => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score user_id created_at updated_at slug],
-    :admin => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count weighted_score slug],
+    :god => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score user_id created_at updated_at slug],
+    :admin => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score slug],
     :editor => %w[show_in_popular show_in_favorites media_category introduction html_body title source_url show_link],
     :owner => %w[introduction title]
   }
@@ -115,7 +116,7 @@ class Page < ActiveRecord::Base
         
         # Setup tmp files
         tmp_full = Tempfile.new "tmp_thumb"   # Original
-        tmp_page = Tempfile.new "tmp_thumb"   # 550x
+        tmp_page = Tempfile.new "tmp_thumb"   # 590x
         
         # Grab remote
         begin
@@ -147,8 +148,8 @@ class Page < ActiveRecord::Base
         #   use a fake website screenshot.. (later, a real website screenshot?)
         
         # Resize if necessary
-        if source_width > 550
-          Mapel.render(tmp_full.path).resize("550x").to(tmp_page.path).run
+        if source_width > 590
+          Mapel.render(tmp_full.path).resize("590x").to(tmp_page.path).run
         else
           FileUtils.cp tmp_full.path, tmp_page.path
         end
@@ -166,7 +167,7 @@ class Page < ActiveRecord::Base
         AWS::S3::S3Object.store img_name_page, tmp_page, s3_bucket, :access => :public_read
         AWS::S3::S3Object.store img_name_full, tmp_full, s3_bucket, :access => :public_read
         
-        new_width = [source_width, 550].min
+        new_width = [source_width, 590].min
         new_height = ((source_height / source_width.to_f) * new_width).to_i
         
         # Update tag
@@ -175,6 +176,7 @@ class Page < ActiveRecord::Base
         img["height"] = new_height.to_s
       end
     end
+    
     
     self.html_body = parsed_source.css("body").first.inner_html
     # Done!
@@ -214,12 +216,12 @@ class Page < ActiveRecord::Base
         # Update model fields
         self.introduction = video_metadata.xpath("//media:description").first.content
         self.html_body = <<-eos
-          <object width="550" height="413">
+          <object width="590" height="413">
             <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
             <param name="allowFullScreen" value="true"></param>
             <param name="allowscriptaccess" value="never"></param>
             <embed src="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US" type="application/x-shockwave-flash"
-              allowscriptaccess="never" allowfullscreen="true" width="550" height="413"></embed>
+              allowscriptaccess="never" allowfullscreen="true" width="590" height="413"></embed>
           </object><br/>
           <img style="display:none;" src="http://img.youtube.com/vi/#{video_id}/0.jpg" />
         eos
@@ -335,6 +337,11 @@ class Page < ActiveRecord::Base
   
   
   def calculate_weighted_score!
+    self.calculate_weighted_score
+    self.save
+  end
+    
+  def calculate_weighted_score
     # Ranking algorithm as described in RAILS_SETUP_NOTES
     
     # Ts => Time, in Seconds, since 12:00am Sept. 1st
@@ -342,11 +349,29 @@ class Page < ActiveRecord::Base
     t_s = self.created_at - epoch
     
     # log_b8( like_count )
-    weighted_votes = Math.log(self.like_count)/Math.log(8)
+    weighted_votes = Math.log(self.adjusted_like_count)/Math.log(8)
     
     # Ts + 45000 * log_b8( like_count )
     self.weighted_score = t_s + 45000 * weighted_votes
-    self.save
+  end
+  
+  # Get the fan_count for a story
+  def update_like_count_with_url(page_url)
+    fb_response = open("http://graph.facebook.com/#{page_url}").read
+    if fb_response == "false"
+      logger.error "Invalid like object: http://graph.facebook.com/#{page_url}"
+      return
+    end
+    fb_json = JSON.parse(fb_response)
+    fb_count = fb_json["fan_count"].to_i if fb_json
+    if fb_count and fb_count > 0
+      self.like_count = fb_count
+    end
+  end
+  
+  # Use this in views
+  def adjusted_like_count
+    (self.like_count||0) + (self.like_count_boost||0)
   end
   
   # 
@@ -383,7 +408,7 @@ class Page < ActiveRecord::Base
       logger.warn "In make_thumbnail, making #{url} the page's thumbnail. info object: #{source_info.inspect}"
       
       # Temp files
-      tmp_page = Tempfile.new "tmp_thumb"     # 550' width, maintain ratio
+      tmp_page = Tempfile.new "tmp_thumb"     # 590' width, maintain ratio
       tmp_small = Tempfile.new "tmp_thumb"    # 100' width, maintain ratio
       tmp_thumb = Tempfile.new "tmp_thumb"    # 100' width, crop 70' height, gravity center
       tmp_square = Tempfile.new "tmp_thumb"   # 75'x75' square, crop gravity center (For use with facebook likes)
@@ -399,8 +424,8 @@ class Page < ActiveRecord::Base
       return unless source_width && source_height && source_width >= 75 && source_height >= 75
       
       # Processing
-      if source_width > 550
-        Mapel.render(tmp_full.path).resize("550x").to(tmp_page.path).run
+      if source_width > 590
+        Mapel.render(tmp_full.path).resize("590x").to(tmp_page.path).run
       else
         FileUtils.cp tmp_full.path, tmp_page.path
       end
@@ -496,10 +521,10 @@ class Page < ActiveRecord::Base
             el["value"] = "transparent"
           end
 
-          # Cap width to 550
-          parent["width"] = [parent["width"].to_i, 550].min.to_s
+          # Cap width to 590
+          parent["width"] = [parent["width"].to_i, 590].min.to_s
           parent.search('embed').each do |embed|
-            embed["width"] = [embed["width"].to_i, 550].min.to_s
+            embed["width"] = [embed["width"].to_i, 590].min.to_s
             embed["wmode"] = "transparent"
           end
 

@@ -30,9 +30,6 @@ ActionController::Routing::Routes.draw do |map|
   map.submit  "/submit",  :controller => :page,   :action => :new
   # map.tools   "/tools",   :controller => :tools,  :acion => :show
   
-  # Voting
-  map.vote_cast "/vote_cast",   :controller => :vote,   :action => :vote_for_url
-  
   # Admin
   map.spoof   "/admin/spoof",    :controller => :spoof,   :action => :show_form
   map.spoof_submit  "/admin/spoof/submit", :controller => :spoof, :action => :submit
@@ -52,7 +49,12 @@ ActionController::Routing::Routes.draw do |map|
   # AJAX navigation
   map.page_title_partial  "/:id/partial/title", :controller => :page, :action => :title_partial
   map.page_body_partial   "/:id/partial/body",  :controller => :page, :action => :body_partial
-  
+
+  # Voting
+  map.vote_cast "/vote_cast",   :controller => :vote,   :action => :vote_for_url
+  map.get_votes "/:id/update_votes",    :controller => :vote,   :action => :vote_square_roll_out
+  map.boost_score "/:id/boost_score",   :controller => :vote,   :action => :boost_score
+
   # Page via slug
   map.page      "/:id",           :controller => :page, :action => :show
 

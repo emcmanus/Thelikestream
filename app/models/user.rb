@@ -59,4 +59,24 @@ class User < ActiveRecord::Base
     return true if self.is_god or self.can_admin or self.can_edit_raw_html
   end
   
+
+  # Convenience Methods
+
+  def recent_votes
+    @recent_votes = PageVote.find_by_user_id(self.id, :limit=>5, :order=>"created_at DESC") || []
+  end
+
+  def recent_submissions
+    @recent_submissions = Page.find(:all, :limit=>15, :order=>"created_at DESC", :conditions=>["user_id=?", self.id]) || []
+  end
+
+  def popular_badges
+    @popular_badges = Page.find(:all, :limit=>11, :order=>"created_at DESC", :conditions=>['show_in_popular = 1 and user_id=?', self.id]) || []
+  end
+
+  # Story's submitted by this user marked as favorite
+  def favorite_badges
+    @favorite_badges = Page.find(:all, :limit=>11, :order=>"created_at DESC", :conditions=>['show_in_favorites = 1 and user_id=?', self.id]) || []
+  end
+
 end

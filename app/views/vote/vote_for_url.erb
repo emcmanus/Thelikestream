@@ -1,17 +1,5 @@
 // Increment counter given ID
 
 (function(){
-    <% if @page_id && @increment_counter %>
-        $$('.likeCounterLabel<%=h @page_id %>').each(function(el){
-            el.innerHTML = (parseInt(el.innerHTML)||0)+1;
-        });
-        if (typeof showCustomizeDialog != "undefined")
-        {
-            showCustomizeDialog(<%=h @page_id %>);
-        }
-    <% elsif @page_id && !@increment_counter %>
-        // Don't increment. Already voted.
-    <% else %>
-        // No page id.
-    <% end %>
-})();
+
+ })();

@@ -10,22 +10,22 @@
 	</div>
     <div class="span-2"><%= render :partial=>'/layouts/likeButtonSquareCounter', :locals=>{:page=>page} %></div>
     <div class="span-10 last">
-        <h4 style="padding:0; margin:0;">
+        <h4 style="padding:0; margin:0; margin-top: -3px;">
             <%= link_to truncate(h(page.title), :length=>100), page_url(page), :class=>"mainlink" %>
         </h4>
 		<span style="color:#666; font-size:0.75em;">
 			<% if page.introduction.blank? %>
 			    <% unless strip_tags(page.html_body).blank? %>
-				    <%=h truncate(strip_tags(page.html_body).sub("&nbsp;",""), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
+                  <%=h truncate(strip_tags(page.html_body).sub("&nbsp;",""), :length=>140) %> <br/>
 				<% end %>
 			<% else %>
-				<%=h truncate(strip_tags(page.introduction), :length=>140) %> <%= link_to image_tag('view-page.png'), page %><br/>
+              <%=h truncate(strip_tags(page.introduction), :length=>140) %> <br/>
 			<% end %>
 		</span>
 		<span style="font-size: 0.75em; color: #0cf;">
 	        SHARED BY <%= link_to fb_name(page.user, :linked=>"false"), page.user, :style=>"color:#0cf;" %> <%= h(distance_of_time_in_words page.created_at, Time.now).upcase %> AGO. 
 	        <% unless page.source_url.blank? %>
-	            <br/><%= image_tag 'tiny-link.png' %> <%= link_to h(get_host(page.source_url)), page.source_url, :style=>"color:#7f7f7f;" %>
+	            <%= link_to h(get_host(page.source_url)), page.source_url, :style=>"color:#7f7f7f;" %>
 	        <% end %>
 	        <% if current_user && current_user.is_content_editor %>
 	            | <%= link_to 'Edit', edit_page_path(page), :style=>"color:#7f7f7f;" %>

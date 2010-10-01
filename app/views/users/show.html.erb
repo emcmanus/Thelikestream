@@ -1,38 +1,127 @@
 
 <div class="prepend-1 append-1 span-22 last">
-    <h2><%= fb_name @user.facebook_id, :capitalize=>'true', :linked=>'false' %></h2>
-    <h3>Pages</h3>
-    <ul>
+
+  <div class="span-3" style="height: 100%;">
+    <% link_to @user do %>
+      <fb:profile-pic uid="<%=h @user.facebook_id %>" size="small" linked="false" />
+    <% end %>
+  </div>
+  <div class="span-19 last">
+    <div class="span-19 last">
+
+      <h2 style="margin-bottom: 0;">
+        <% link_to @user, :style=>"color:#333;" do %>
+          <%= fb_name @user.facebook_id, :capitalize=>'true', :linked=>'false' %>
+        <% end %>
+      </h2>
+
+      <div class="span-4">
+        <span style="color: #777;">
+          Joined <%= h(distance_of_time_in_words @user.created_at, Time.now) %> ago
+        </span>
+      </div>
+
+      <div class="span-12 last" style="height:200px">
+        <h3 style="margin-bottom: 5px; border-bottom: 1px #ccc">Awards</h3>
+        <%= image_tag('award-bookshelf.jpg', :style=>"position:absolute;", :class=>"lightbox_shadow") %>
+
+        <div style="position:absolute; margin-top: 40px; margin-left: 20px;">
+          <% for favorite in @user.favorite_badges %>
+            <div class="span-1"><%= link_to( image_tag('gold-trophy.png', :alt=>h(favorite.title)), favorite) %> </div>
+          <% end %>
+        </div>
+
+        <div style="position: absolute; margin-top: 105px; margin-left: 20px;">
+          <% for popular in @user.popular_badges %>
+            <div class="span-1"><%= link_to( image_tag('silver-trophy.png', :alt=>h(popular.title)), popular) %></div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="span-16 last" style="margin-top: 10px;">
+        <h3 class="" style="margin-top: 10px; margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 5px;">Recent Submissions</h3>
+        <% for page in @user.recent_submissions %>
+          <div class="span-16 last">
+            <div class="span-2 last">
+              <%= image_tag("star-like-count-badge.png", :style=>"" ) %>
+              <div style="color: white; font-size: 1.6em; position:absolute; margin-top: -50px; margin-left: 5px; width: 40px; text-align: center;" class="like_count_badge_text thin_shadow"><%= h page.like_count %></div>
+            </div>
+
+            <div class="span-14" style="margin-bottom: 15px; font-size: 1.2em; padding-top: 5px;">
+              <%= link_to h(page.title), page, :style=>"color:#333" %><br/>
+              <span style="color: #0cf; font-size: 0.7em;">
+                SUBMITTED <%= h distance_of_time_in_words(page.created_at, Time.now).upcase %> AGO
+              </span>
+            </div>
+          </div>
+        <% end %>
+        <% if @user.recent_submissions.empty? %>
+          <span style="color: #aaa;">User has not submitted any pages.</span>
+        <% end %>
+      </div>
+
+      <div class="span-16 last">
+        <h3 style="margin-bottom: 15px; padding-bottom: 5px; border-bottom: 1px dotted #ccc; margin-top: 20px;">Recent Votes</h3>
+        <% for vote in @user.recent_votes %>
+          <% if vote.page %>
+            <div class="span-16 last" style="margin-bottom: 15px;"><%= link_to h(page.title), page %></div>
+          <% end %>
+        <% end %>
+        <% if @user.recent_votes.empty? %>
+          <span style="color: #aaa;">Nothing to show!</span>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<% if false %>
+  <div class="">
+  </div>
+
+  <div class="span-10">
+    <h2 style="margin-bottom: 0;"></h2>
+    <span style="color: #777;">
+      Joined <%= h(distance_of_time_in_words @user.created_at, Time.now) %> ago
+    </span>
+
+    <h3 class="" style="margin-top: 10px;">Recent Submissions</h3>
     <% for page in @user.pages %>
-        <li><%= link_to h(page.title), page %></li>
+      <div class="span-3" style="border-bottom: 1px dotted #ccc; margin-bottom: 15px; padding-bottom: 10px;"><%= link_to h(page.title), page %></div>
     <% end %>
     <% if @user.pages.empty? %>
-        <span style="color: #aaa;">User has not submitted any pages.</span>
+      <span style="color: #aaa;">User has not submitted any pages.</span>
     <% end %>
-    </ul>
-    
+
     <hr class="space" />
-    
-    <h3>Votes</h3>
+
+    <h3>Recent Votes</h3>
     <ul>
-    <% for vote in @user.page_votes %>
+      <% for vote in @user.page_votes %>
         <% if vote.page %>
-            <li><%= link_to h(vote.page.title), vote.page %></li>
+          <li><%= link_to h(vote.page.title), vote.page %></li>
         <% end %>
-    <% end %>
+      <% end %>
     </ul>
     <% if @user.page_votes.empty? %>
-        <span style="color: #aaa;">User has no votes.</span>
+      <span style="color: #aaa;">User has no votes.</span>
     <% end %>
-    
+
     <hr class="space" />
-    
-    <h3>User Info</h3>
-    <p>Facebook ID: <%= h @user.facebook_id %></p>
-    
+
     <% if current_user and current_user.is_admin %>
-        <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>
-        <p>Can Admin: <input type='checkbox' <% if @user.is_admin %> checked='' <% end %> /></p>
-        <p>Can Edit Raw HTML: <input type='checkbox' <% if @user.is_content_editor %> checked='' <% end %> /></p>
+      <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>
+      <p>Can Admin: <input type='checkbox' <% if @user.is_admin %> checked='' <% end %> /></p>
+      <p>Can Edit Raw HTML: <input type='checkbox' <% if @user.is_content_editor %> checked='' <% end %> /></p>
     <% end %>
+  </div>
+
+  <div class="span-12 last" style="">
+  </div>
+
+
 </div>
+<% end %>

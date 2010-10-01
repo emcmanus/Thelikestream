@@ -21,8 +21,6 @@
     <![endif]-->
     <%= stylesheet_link_tag 'application' %>
 
-    <%= javascript_include_tag 'placeholder.js' %>
-
     <!-- OpenGraph Meta Tags -->
     <%= render :partial => '/layouts/ogTags' %>
 
@@ -44,7 +42,7 @@
       }
     </style>
 
-        <%= yield :head %>
+    <%= yield :head %>
 
     <script type="text/javascript">
 
@@ -61,12 +59,12 @@
 
 </script>
 
-</head>
+   </head>
 
-<body>
+   <body>
 
-  <script type="text/javascript" charset="utf-8">
-    if (!window.queuedFacebookCalls) window.queuedFacebookCalls = [];
+     <script type="text/javascript" charset="utf-8">
+       if (!window.queuedFacebookCalls) window.queuedFacebookCalls = [];
 function facebookApiReady()
 {
   if (window.queuedFacebookCalls.length)
@@ -150,11 +148,10 @@ function writeLikeButton(pageId, encodedLink)
   }
 }
 
-function showCustomizeDialog(pageId, promptUserToClick)
+function showCustomizeDialog(likeTargetId, promptUserToClick)
 {
   var diagWidth;
   var diagHeight;
-  var likeTargetId = resolveLikeContainer(pageId);
 
   if(!likeTargetId)
   {
@@ -211,6 +208,94 @@ function closeCustomizeDialog(pageId)
   $('below'+likeTargetId).hide();
   $('above'+likeTargetId).hide();
 }
+
+// this won't be going on my resume...
+var mouseIsOverLookup = {};
+var animatingFadeLookup = {};
+
+function show_arrow(container, skipMouseState)
+{
+  if (!skipMouseState) mouseIsOverLookup[container.id] = true;
+  if (animatingFadeLookup[container.id]) return;
+  animatingFadeLookup[container.id] = true;
+  var arrow = $(container).select('.like_button_arrow')[0]; 
+  var textWrapper = $(container).select('.text_wrapper')[0];
+  var arrowWrapper = $(container).select('.arrow_wrapper')[0];
+  $(arrow).setOpacity(0);
+  $(arrow).show();
+  $(textWrapper).hide();
+  $(arrowWrapper).show();
+  new Effect.Parallel([
+      new Effect.Move(arrow, {sync:true, x:0, y:10, mode: 'relative'}),
+      new Effect.Opacity(arrow, {sync:true, from: 0, to: 1})
+      ], {
+duration: 0.2,
+afterFinish: function(){
+animatingFadeLookup[container.id] = false;
+if (!mouseIsOverLookup[container.id]) hide_arrow(container, false);
+}
+});
+}
+
+function hide_arrow(container, skipMouseState)
+{
+  if (!skipMouseState) mouseIsOverLookup[container.id] = false;
+  if (animatingFadeLookup[container.id]) return;
+  animatingFadeLookup[container.id] = true;
+  var arrow = $(container).select('.like_button_arrow')[0]; 
+  var textWrapper = $(container).select('.text_wrapper')[0];
+  var arrowWrapper = $(container).select('.arrow_wrapper')[0];
+  new Effect.Parallel([
+      new Effect.Move(arrow, {sync:true, x:0, y:-10, mode: 'relative'}),
+      new Effect.Opacity(arrow, {sync:true, from: 1, to: 0})
+      ], {
+duration: 0.2,
+afterFinish: function(){
+animatingFadeLookup[container.id] = false;
+textWrapper.show();
+arrowWrapper.hide();
+if (mouseIsOverLookup[container.id]) show_arrow(container, false);
+}
+});
+}
+
+var isRequestingLookup = {}
+
+// When the user rolls off the like button, refresh the like count
+function update_like_count(container, pageId)
+{
+  // Check whether we're already in a request state
+  if (isRequestingLookup[container.id]) return;
+  isRequestingLookup[container.id]=true;
+  // Hide text
+  $(container).select('.inner_text_wrapper')[0].hide();
+  // Show spinner
+  $(container).select('.spinner_wrapper')[0].show();
+  // Start request, with callback
+  var url = '<%= root_path(:only_path=>false) %>' + pageId.toString() + "/update_votes";
+  new Ajax.Request(url, {
+    method: 'get',
+    onSuccess: function(transport){
+      update_like_count_finished(container, transport.responseText);
+    }
+  });
+}
+function update_like_count_finished(container, responseText)
+{
+  // Update request state variable
+  isRequestingLookup[container.id]=false;
+  // update text
+  if (responseText == "0") {
+    $(container).select('.inner_text_wrapper')[0].select('.likeCounterLabel')[0].innerHTML = "publish";
+  } else {
+    $(container).select('.inner_text_wrapper')[0].select('.likeCounterLabel')[0].innerHTML = responseText;
+  }
+  // hide spinner
+  $(container).select('.spinner_wrapper')[0].hide();
+  // show text
+  $(container).select('.inner_text_wrapper')[0].show();
+}
+
 </script>
 
 <% if @page and @page.is_cloaked %>
@@ -342,81 +427,84 @@ function closeCustomizeDialog(pageId)
           $('admin_panel').hide();
         }
 </script>
-        <% end %>
+    <% end %>
 
-      <% end %>
-
-
+  <% end %>
 
 
-      <!-- Get Started Banner -->
-      <% unless current_user or @hide_banner %>
-        <%= render :partial=>'/layouts/introBanner/introBanner' %>
-      <% end %>
 
-      <div class="span-24" style="border-radius: 10px; background-color: #fff;">
 
-        <div class="span-24">
-          <% unless flash[:notice].blank? %>
-            <div id="flash_message_container">
-              <h3><span class="highlight"><%= h flash[:notice] %></span></h3>
-            </div>
-          <% else %>
-            &nbsp;
-          <% end %>
+  <!-- Get Started Banner -->
+  <% unless current_user or @hide_banner %>
+    <%= render :partial=>'/layouts/introBanner/introBanner' %>
+  <% end %>
+
+  <div class="span-24" style="border-radius: 10px; background-color: #fff;">
+
+    <div class="span-24">
+      <% unless flash[:notice].blank? %>
+        <div id="flash_message_container">
+          <h3><span class="highlight"><%= h flash[:notice] %></span></h3>
         </div>
-
-        <%= yield %>
-
-        <hr class="space" style="height: 15px;"/>
-
-        <div style="border-top: 1px dotted #ccc; clear:both;">&nbsp;</div>
-
-        <div class="span-24" style="color:#7f7f7f; text-align: center;">Contact us: <a href="mailto:thelikestream@gmail.com">thelikestream@gmail.com</a></div>
-
-        <hr class="space" style="height: 30px;"/>
-
-
-      </div>
-
-      <hr class="space" />
-
+      <% else %>
+        &nbsp;
+      <% end %>
     </div>
 
-    <script type="text/javascript" charset="utf-8">
-      fbSafe(function(){
-          FB.Event.subscribe('edge.create', function(href, widget) {
-            // Vote
-            pingSrc = "<%=h vote_cast_url %>?vote=" + encodeURIComponent(href);
-            var s = document.createElement("script");
-            s.setAttribute("src", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
-            document.body.appendChild(s);
-            });
-          <% unless current_user %>
-            FB.Event.subscribe('auth.sessionChange', function(response) {
-              if (response.session) {
-              // A user has logged in, and a new cookie has been saved
-              window.location.href = "<%= create_session_path %>";
-              } else {
-              // The user has logged out, and the cookie has been cleared
-              window.location.href = "<%= logout_path %>";
-              }
-              });
-          <% end %>
+    <%= yield %>
+
+    <hr class="space" style="height: 15px;"/>
+
+    <div style="border-top: 1px dotted #ccc; clear:both;">&nbsp;</div>
+
+    <div class="span-24" style="color:#7f7f7f; text-align: center;">Contact us: <a href="mailto:thelikestream@gmail.com">thelikestream@gmail.com</a></div>
+
+    <hr class="space" style="height: 30px;"/>
+
+
+  </div>
+
+  <hr class="space" />
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  fbSafe(function(){
+      FB.Event.subscribe('edge.create', function(href, widget) {
+        // Show "add comment" box
+        showCustomizeDialog(widget.dom.parentNode.id, false);
+
+        // Vote
+        pingSrc = "<%=h vote_cast_url %>?vote=" + encodeURIComponent(href);
+        var s = document.createElement("script");
+        s.setAttribute("src", pingSrc + "&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
+        document.body.appendChild(s); // Shouldn't actually return anything unles its a 500 error
+        });
+      <% unless current_user %>
+        FB.Event.subscribe('auth.sessionChange', function(response) {
+          if (response.session) {
+          // A user has logged in, and a new cookie has been saved
+          window.location.href = "<%= create_session_path %>";
+          } else {
+          // The user has logged out, and the cookie has been cleared
+          window.location.href = "<%= logout_path %>";
+          }
           });
+      <% end %>
+      });
 <% if current_user and current_user.is_content_editor %>
-  function boostScore(href){
-    pingSrc = "<%= h vote_cast_url %>?vote=" + encodeURIComponent(href);
+  function boostScore(boostUrl, likeButtonContainer, pageId){
     var s = document.createElement("script");
-    s.setAttribute("src", pingSrc + "&boost=true&c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
+    s.setAttribute("src", boostUrl + "?c_buster=" + Math.floor(Math.random()*10000)); // Don't cache
     document.body.appendChild(s);
+    update_like_count(likeButtonContainer, pageId);
   }
     <% end %>
-  </script>
+    </script>
 
 
-  <script type="text/javascript">
-    var _sf_async_config={uid:11122,domain:"l.thelikestream.com"};
+    <script type="text/javascript">
+      var _sf_async_config={uid:11122,domain:"l.thelikestream.com"};
 (function(){
  function loadChartbeat() {
  window._sf_endpt=(new Date()).getTime();
@@ -435,5 +523,6 @@ function closeCustomizeDialog(pageId)
 
 </script>
 
+<%= javascript_include_tag 'placeholder.js' %>
 </body>
 </html>

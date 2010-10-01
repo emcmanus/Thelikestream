@@ -1,16 +1,26 @@
 require 'uri/http'
 
 class VoteController < ApplicationController
+
+  before_filter :require_content_editor, :only=>[:boost_page]
   
+  def boost_score
+    page = Page.find(params[:id])
+    unless page.increment! :like_count_boost
+      logger.error "Unable to increment page id: #{params[:id]}"
+    end
+    render :text => "void(0)"
+  end
+  
+  def vote_square_roll_out
+    page = Page.find params[:id]
+    page.update_like_count_with_url page_path(page, :only_path=>false)
+    page.save
+    render :text => (page.adjusted_like_count.to_s || "0")
+  end
+
   def vote_for_url
-    # Check for user
-    # Check for existing vote
-    # If user, and no existing vote, create and persist Like object
-    
-    # Whether to increment the HTML "like counter"
-    @increment_counter = false
-    
-    # Attempt to parse URL and recognize the path
+    # Attempt to parse URL and recognize the page object
     begin
       vote_uri = URI.parse params[:vote]
       path_to_parse = vote_uri.path
@@ -21,41 +31,20 @@ class VoteController < ApplicationController
     rescue
       logger.error $!
     end
-    
+
     if recognized_path && recognized_path[:controller] == "page"
       @record_receiving_vote = Page.find recognized_path[:id]
-      
-      if current_user && current_user.is_content_editor && params[:boost]
-        # BOOST Score
-        @record_receiving_vote.increment! :like_count
-        @record_receiving_vote.calculate_weighted_score!
-        @increment_counter = true
-      elsif current_user && @record_receiving_vote
-        # Check to see if this user has already voted
-        vote = PageVote.find_by_user_id_and_page_id(current_user.id, @record_receiving_vote.id)
-        if vote.nil?
-          # user has not already voted for this page
-          vote = PageVote.new :user=>current_user, :page=>@record_receiving_vote
-          if vote.save
-            # The user may hit this action when giving a page its first like - so we must effectively publish the page
-            @record_receiving_vote.ready_to_process_images = true
-            @record_receiving_vote.increment! :like_count
-            @record_receiving_vote.calculate_weighted_score!
-          end
-          @increment_counter = true
-        end
-      elsif current_user.nil? && @record_receiving_vote
-        # Still increment for anonymous users
-        @increment_counter = true
+
+      if current_user && @record_receiving_vote
+        # Log vote
+        vote = PageVote.find_or_create_by_user_id_and_page_id(current_user.id, @record_receiving_vote.id)
       end
+
+      # Don't worry about updating the like count, we'll do that on roll-out
     end
-    
-    if @record_receiving_vote
-      @page_id = recognized_path[:id].to_i
-    end
-    
+
     # Render result JSON
     render :content_type => "text/javascript", :layout => false
   end
-  
+
 end

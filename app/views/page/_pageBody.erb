@@ -1,7 +1,6 @@
-<div style="margin-bottom: 10px; overflow:hidden; border-bottom: 1px dotted #ccc; padding-bottom:15px;" id="page_preview_container">
+<div style="margin-bottom: 8px; overflow:hidden; border-bottom: 1px dotted #ccc; padding-bottom:15px;" id="page_preview_container">
     <% unless @page.introduction.blank? %>
-        <div style="padding: 15px; border: 1px solid #ccc;">
-            <%= image_tag "quotation-mark.png" %>
+        <div style="padding: 5px; margin-bottom: 8px; border: 1px solid #ededed;">
             <%= h @page.introduction %>
         </div>
     <% end %>

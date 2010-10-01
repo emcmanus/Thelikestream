@@ -457,10 +457,10 @@ module Readability
                     el["value"] = "transparent"
                 end
 
-                # Cap width to 550
-                parent["width"] = [parent["width"].to_i, 550].min.to_s
+                # Cap width to 590
+                parent["width"] = [parent["width"].to_i, 590].min.to_s
                 parent.search('embed').each do |embed|
-                    embed["width"] = [embed["width"].to_i, 550].min.to_s
+                    embed["width"] = [embed["width"].to_i, 590].min.to_s
                     embed["wmode"] = "transparent"
                 end
 

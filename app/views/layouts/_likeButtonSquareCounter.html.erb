@@ -1,55 +1,66 @@
 <% like_target_id = "likeTarget#{(rand * 999999).floor}" %>
 
 <% if current_user && current_user.is_content_editor %>
-    <div style="position: absolute; margin-left: -160px; margin-top: 20px;">
-        <a href="javascript:boostScore('<%= page_url(page, :only_path => false) %>')" alt="Boost Score">&#8593;</a>
-    </div>
+  <div style="position: absolute; margin-left: -13px; margin-top: 7px;">
+    <a href="javascript:boostScore('<%= boost_score_path(page, :only_path => false) %>', $('button_container_<%= like_target_id %>'), <%= page.id %>)" alt="Boost Score">&#8593;</a>
+  </div>
 <% end %>
 
-<div style="width:68px; height:73px; background-image: url('<%= image_path "like-counter-bg.png" %>'); background-repeat: no-repeat;">
+<!-- Use over to show the arrow, out to switch to spinner or updated count -->
+<div class="page_<%= page.id %>_wrapper" id="button_container_<%= like_target_id %>" onmouseover="show_arrow(this);" onmouseout="hide_arrow(this)" style="display:none; width:68px; height:72px; background-image: url('<%= image_path "like-counter-bg.png" %>'); background-repeat: no-repeat;">
 
-	<div style="text-align: center; padding-top: 8px; color: #fff;">
-	    <% if page.like_count == 0 %>
-	        <div style="font-size:12px; margin: 0; margin-top: 8px; font-weight: bold;" class="thin_shadow likeCounterLabel<%= page.id %>">Publish:</div>
-		<% elsif page.like_count < 1000 %>
-			<div style="font-size:27px; font-weight: bold; line-height: 0.85em" class="thin_shadow likeCounterLabel<%= page.id %>"><%= page.like_count %></div>
-		<% elsif page.like_count < 10000 %>
-			<div style="font-size:25px; font-weight: bold; line-height: 0.85em" class="thin_shadow likeCounterLabel<%= page.id %>"><%= page.like_count %></div>
-		<% else %>
-			<div style="font-size:25px; font-weight: bold; line-height: 0.85em"class="thin_shadow likeCounterLabel<%= page.id %>"><%= page.like_count/1000 %>k</div>
-		<% end %>
-		<% if page.like_count > 1 %>
-		    <span style="font-size:9px;" class="thin_shadow">LIKES</span>
-	    <% elsif page.like_count == 1 %>
-	        <span style="font-size:9px;" class="thin_shadow">LIKE</span>
-	    <% end %>
-	    <div style="clear:both; height:3px;">&nbsp;</div>
-	</div>
-	
-<div id="outteroutter<%= like_target_id %>">
-<div id="outter<%= like_target_id %>">
-    <div id="content<%= like_target_id %>">
+  <div class="arrow_wrapper" style="display:none; text-align:center; width:68px; height:46px;">
+    <div style="">
+      <%= image_tag 'like-button-arrow.png', :style=>'display:none;', :class=>"like_button_arrow" %>
+    </div>
+  </div>
+  <div class="text_wrapper" style="text-align: center; padding-top: 8px; color: #fff;">
+    <div class="spinner_wrapper" style="display: none; height:28px; margin-top:10px;">
+      <%= image_tag 'load-spinner-blue.gif' %>
+    </div>
+    <div class="inner_text_wrapper" style="">
+      <% if page.adjusted_like_count == 0 %>
+        <div style="font-size:12px; margin: 0; margin-top: 8px; font-weight: bold;" class="thin_shadow likeCounterLabel">Publish:</div>
+      <% elsif page.adjusted_like_count < 1000 %>
+        <div style="font-size:27px; font-weight: bold; line-height: 0.85em" class="thin_shadow likeCounterLabel"><%= page.adjusted_like_count %></div>
+      <% elsif page.adjusted_like_count < 10000 %>
+        <div style="font-size:25px; font-weight: bold; line-height: 0.85em" class="thin_shadow likeCounterLabel"><%= page.adjusted_like_count %></div>
+      <% else %>
+        <div style="font-size:25px; font-weight: bold; line-height: 0.85em"class="thin_shadow likeCounterLabel"><%= page.adjusted_like_count/1000 %>k</div>
+      <% end %>
+      <% if page.adjusted_like_count > 1 %>
+        <span style="font-size:9px;" class="thin_shadow">LIKES</span>
+      <% elsif page.adjusted_like_count == 1 %>
+        <span style="font-size:9px;" class="thin_shadow">LIKE</span>
+      <% end %>
+      <div style="clear:both; height:3px;">&nbsp;</div>
+    </div>
+  </div>
+
+  <div id="outteroutter<%= like_target_id %>">
+    <div id="outter<%= like_target_id %>">
+      <div id="content<%= like_target_id %>">
         <div id="above<%= like_target_id %>" style="padding-left:6px; display:none;">
-            <h1 style="color:#0cf; font-size: 28px; margin-bottom:0; font-weight: 200; letter-spacing:1;" class="top_heading"></h1>
-            <h2 style="font-size: 22px; color: white; font-weight: 500;margin-bottom: 20px;" class="bottom_heading"></h2>
+          <h1 style="color:#0cf; font-size: 28px; margin-bottom:0; font-weight: 200; letter-spacing:1;" class="top_heading"></h1>
+          <h2 style="font-size: 22px; color: white; font-weight: 500;margin-bottom: 20px;" class="bottom_heading"></h2>
         </div>
-        <div id="<%= like_target_id %>" style="padding-left: 8px; padding-bottom: 4px; width: 51px; overflow: hidden;">
-          <fb:like layout="button_count" show_faces="no" href="<%= page_url(page, :only_path=>false) %>"></fb:like>
+        <!-- Use mouse out to update hit count -->
+        <div id="<%= like_target_id %>" onmouseout="update_like_count($('button_container_<%= like_target_id %>'), <%= page.id %>)" style="padding-left: 8px; padding-bottom: 4px; width: 51px; overflow: hidden;">
+          <fb:like layout="button_count" rel="container_id_<%=like_target_id%>" show_faces="no" href="<%= page_url(page, :only_path=>false) %>"></fb:like>
         </div>
         <div id="below<%= like_target_id %>" style="display:none; color:white;">
-            <div style="float: left; font-size: 12px; font-weight:200; color: #666;" class="quiet_guide"></div>
-            <a href="javascript:closeCustomizeDialog(<%= page.id %>);" class="btn close_btn" style="font-size:1.1em; position:relative; float: right;margin-right:10px;"><span><span><b>&nbsp;</b><u class='close_text'>Skip</u></span></span></a>
-            <div style="float:right; margin-right: -35px;" class="close_container"><a href="javascript:closeCustomizeDialog(<%= page.id %>);" style="color:white;">X</a></div>
+          <div style="float: left; font-size: 12px; font-weight:200; color: #666;" class="quiet_guide"></div>
+          <a href="javascript:closeCustomizeDialog(<%= page.id %>);" class="btn close_btn" style="font-size:1.1em; position:relative; float: right;margin-right:10px;"><span><span><b>&nbsp;</b><u class='close_text'>Skip</u></span></span></a>
+          <div style="float:right; margin-right: -35px;" class="close_container"><a href="javascript:closeCustomizeDialog(<%= page.id %>);" style="color:white;">X</a></div>
         </div>
+      </div>
     </div>
-</div>
-</div>
+  </div>
 
-<script type="text/javascript" charset="utf-8">
+  <script type="text/javascript" charset="utf-8">
     // Register like button container, then trigger write
-    window.registerLikeContainer(<%= page.id %>, '<%= like_target_id %>');
-    // window.writeLikeButton(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
-    //window.queueLikeButtonWrite(<%= page.id %>, '<%= page_url(page, :only_path => false) %>');
+  window.registerLikeContainer(<%= page.id %>, '<%= like_target_id %>');
+  window.setTimeout( function(){ $("button_container_<%= like_target_id %>").appear({duration: 0.3})}, 700);
 </script>
 
 </div>
