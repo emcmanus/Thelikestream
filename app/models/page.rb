@@ -367,7 +367,13 @@ class Page < ActiveRecord::Base
       return
     end
     fb_json = JSON.parse(fb_response)
-    fb_count = fb_json["fan_count"].to_i if fb_json
+    if fb_json
+      if fb_json["fan_count"]
+        fb_count = fb_json["fan_count"].to_i
+      elsif fb_json["shares"]
+        fb_count = fb_json["shares"].to_i
+      end
+    end
     if fb_count and fb_count > 0
       self.like_count = fb_count
     end
