@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100929230029) do
+ActiveRecord::Schema.define(:version => 20100930194049) do
 
   create_table "bookmarklet_keys", :force => true do |t|
     t.string   "value",      :null => false
@@ -99,6 +99,8 @@ ActiveRecord::Schema.define(:version => 20100929230029) do
     t.boolean  "show_in_category_funny",         :default => false
     t.boolean  "show_in_category_other",         :default => false
     t.integer  "like_count_boost",               :default => 0
+    t.boolean  "show_in_category_community"
+    t.boolean  "show_in_category_music"
   end
 
   create_table "users", :force => true do |t|

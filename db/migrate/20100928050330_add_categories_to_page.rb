@@ -1,11 +1,11 @@
 class AddCategoriesToPage < ActiveRecord::Migration
   def self.up
     # Categories:
-    # Breaking Tech - TMZ type content
+    # Breaking Tech - TC
     # Gossip - TMZ type stuff
-    # Gaming
-    # Smart
-    # Funny
+    # Gaming - Kotaku or Giz or Engadget (geek culture)
+    # Smart - Technical or intellecually stimulating
+    # Funny - Buzzfeed, break, icanhaz, etc.
     # Other
     add_column :pages, :show_in_category_breaking_tech, :boolean, :default=>false
     add_column :pages, :show_in_category_gossip,        :boolean, :default=>false
