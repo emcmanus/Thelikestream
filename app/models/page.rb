@@ -344,6 +344,10 @@ class Page < ActiveRecord::Base
   def calculate_weighted_score
     # Ranking algorithm as described in RAILS_SETUP_NOTES
     
+    if self.adjusted_like_count == 0 or !self.created_at
+      return
+    end
+
     # Ts => Time, in Seconds, since 12:00am Sept. 1st
     epoch = Time.local 2010, "sep", 1, 0, 0, 0
     t_s = self.created_at - epoch
