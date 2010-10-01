@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   # Convenience Methods
 
   def recent_votes
-    @recent_votes = PageVote.find_by_user_id(self.id, :limit=>5, :order=>"created_at DESC") || []
+    @recent_votes = PageVote.find(:all, :limit=>5, :order=>"created_at DESC", :conditions=>["user_id=?", self.id]) || []
   end
 
   def recent_submissions

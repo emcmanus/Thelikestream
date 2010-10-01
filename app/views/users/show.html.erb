@@ -64,7 +64,9 @@
         <h3 style="margin-bottom: 15px; padding-bottom: 5px; border-bottom: 1px dotted #ccc; margin-top: 20px;">Recent Votes</h3>
         <% for vote in @user.recent_votes %>
           <% if vote.page %>
-            <div class="span-16 last" style="margin-bottom: 15px;"><%= link_to h(page.title), page %></div>
+            <div class="span-16 last" style="margin-bottom: 15px;">
+              <%= link_to h(page.title), page, :style=>"font-size:1.2em; color: #333" %>
+            </div>
           <% end %>
         <% end %>
         <% if @user.recent_votes.empty? %>
@@ -77,51 +79,3 @@
 </div>
 
 
-
-<% if false %>
-  <div class="">
-  </div>
-
-  <div class="span-10">
-    <h2 style="margin-bottom: 0;"></h2>
-    <span style="color: #777;">
-      Joined <%= h(distance_of_time_in_words @user.created_at, Time.now) %> ago
-    </span>
-
-    <h3 class="" style="margin-top: 10px;">Recent Submissions</h3>
-    <% for page in @user.pages %>
-      <div class="span-3" style="border-bottom: 1px dotted #ccc; margin-bottom: 15px; padding-bottom: 10px;"><%= link_to h(page.title), page %></div>
-    <% end %>
-    <% if @user.pages.empty? %>
-      <span style="color: #aaa;">User has not submitted any pages.</span>
-    <% end %>
-
-    <hr class="space" />
-
-    <h3>Recent Votes</h3>
-    <ul>
-      <% for vote in @user.page_votes %>
-        <% if vote.page %>
-          <li><%= link_to h(vote.page.title), vote.page %></li>
-        <% end %>
-      <% end %>
-    </ul>
-    <% if @user.page_votes.empty? %>
-      <span style="color: #aaa;">User has no votes.</span>
-    <% end %>
-
-    <hr class="space" />
-
-    <% if current_user and current_user.is_admin %>
-      <p>Is God: <input type='checkbox' <% if @user.is_god %> checked='' <% end %> /></p>
-      <p>Can Admin: <input type='checkbox' <% if @user.is_admin %> checked='' <% end %> /></p>
-      <p>Can Edit Raw HTML: <input type='checkbox' <% if @user.is_content_editor %> checked='' <% end %> /></p>
-    <% end %>
-  </div>
-
-  <div class="span-12 last" style="">
-  </div>
-
-
-</div>
-<% end %>
