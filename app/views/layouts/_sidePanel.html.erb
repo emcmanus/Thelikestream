@@ -12,7 +12,7 @@
         <div style="float:right;">
           <div style="position:absolute; margin-left: -55px; margin-top: 5px; font-size: 1.5em; color: white;" class="thin_shadow">
             <%= image_tag("star-like-count-badge.png", :style=>"" ) %>
-            <div style="position:absolute; margin-top: -43px; margin-left: 5px; width: 40px; text-align: center;" class="like_count_badge_text"><%= h page.like_count %></div>
+            <div style="position:absolute; margin-top: -43px; margin-left: 5px; width: 40px; text-align: center;" class="like_count_badge_text"><%= h page.adjusted_like_count %></div>
           </div>
         </div>
         <%= link_to(image_tag(page.thumbnail_page, :width=>310), page, :onclick=>'enterFavoritesMode()') unless page.thumbnail_square.blank? %>

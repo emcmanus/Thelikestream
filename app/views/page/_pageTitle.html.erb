@@ -11,6 +11,6 @@
 	</h2>
 
     <div style="color: #aaa; font-size: 0.9em; margin-bottom:15px;">
-        Shared by <%= link_to fb_name(@page.user, :linked=>"false"), @page.user %> <%= h distance_of_time_in_words @page.created_at, Time.now %> ago. This has been liked <span style=""><%=h @page.like_count %></span> times.
+        Shared by <%= link_to fb_name(@page.user, :linked=>"false"), @page.user %> <%= h distance_of_time_in_words @page.created_at, Time.now %> ago. This has been liked <span style=""><%=h @page.adjusted_like_count %></span> times.
     </div>
 </div>

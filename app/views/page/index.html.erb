@@ -15,7 +15,7 @@
     <td><%= link_to h(page.title), page %></td>
 	<td><%= link_to fb_name(page.user, :linked=>"false"), page.user %></td>
 	<td><%= link_to "view", page.source_url %>
-    <td><%=h page.like_count %></td>
+    <td><%=h page.adjusted_like_count %></td>
 	<td><%=h page.weighted_score %></td>
 	<td><%=h distance_of_time_in_words page.created_at, Time.now %></td>
     <td><%= link_to 'Edit', edit_page_path(page) %></td>
