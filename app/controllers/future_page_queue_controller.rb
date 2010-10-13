@@ -31,9 +31,24 @@ class FuturePageQueueController < ApplicationController
 
 
   def tick
-    # on average submit once every three ticks, makes submissions look a little
-    # more human
-    lotto = (rand(3) == 0)
+
+    # Rate-limit submissions, use rand to appear less automated
+    n = Time.now
+
+    if n.hour >= 23
+      # 11pm+
+      lotto = (rand(12)==0)
+    elsif n.hour >= 19
+      # 7pm+
+      lotto = (rand(8)==0)
+    elsif n.hour >= 8
+      # 8am+
+      lotto = (rand(3)==0)
+    else
+      # midnight-8am
+      lotto = (rand(12)==0)
+    end
+
     if lotto
       @page = Page.find(:first, :conditions=>["queue_for_later_submission=1"], :order=>["updated_at"])
       if @page.nil?
