@@ -33,20 +33,21 @@ class FuturePageQueueController < ApplicationController
   def tick
 
     # Rate-limit submissions, use rand to appear less automated
-    n = Time.now
+    n = Time.now.utc
 
-    if n.hour >= 23
-      # 11pm+
-      lotto = (rand(12)==0)
-    elsif n.hour >= 19
-      # 7pm+
-      lotto = (rand(8)==0)
-    elsif n.hour >= 8
-      # 8am+
+    # All hours in UTC time (paren in PST)
+    if n.hour < 2
+      # midnight - 2am (5-7pm)
       lotto = (rand(3)==0)
-    else
-      # midnight-8am
+    elsif n.hour < 6
+      # 2am - 6am (7-11pm)
+      lotto = (rand(8)==0)
+    elsif n.hour < 14
+      # 6am - 1pm (11pm-7am)
       lotto = (rand(12)==0)
+    else
+      # 1pm - midnight (7am-5pm)
+      lotto = (rand(3)==0)
     end
 
     if lotto
