@@ -65,7 +65,7 @@
         <% for vote in @user.recent_votes %>
           <% if vote.page %>
             <div class="span-16 last" style="margin-bottom: 15px;">
-              <%= link_to h(page.title), page, :style=>"font-size:1.2em; color: #333" %>
+              <%= link_to h(vote.page.title), vote.page, :style=>"font-size:1.2em; color: #333" %>
             </div>
           <% end %>
         <% end %>

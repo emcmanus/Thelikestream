@@ -83,9 +83,9 @@ class Page < ActiveRecord::Base
   
   # Lookup of permissions -> editable attributes
   EDIT_PERMISSIONS = {
-    :god => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score user_id created_at updated_at slug],
-    :admin => %w[show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score slug],
-    :editor => %w[show_in_popular show_in_favorites media_category introduction html_body title source_url show_link],
+    :god => %w[queue_for_later_submission show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score user_id created_at updated_at slug],
+    :admin => %w[queue_for_later_submission show_in_popular show_in_favorites media_category thumbnail_small thumbnail_small_width thumbnail_small_height thumbnail_full thumbnail_full_width thumbnail_full_height introduction html_body title like_title source_url shortened_url show_link is_cloaked like_count like_count_boost weighted_score slug],
+    :editor => %w[queue_for_later_submission show_in_popular show_in_favorites media_category introduction html_body title source_url show_link],
     :owner => %w[introduction title]
   }
   
@@ -215,6 +215,7 @@ class Page < ActiveRecord::Base
       
         # Update model fields
         self.introduction = video_metadata.xpath("//media:description").first.content
+        self.title = video_metadata.xpath("//media:title").first.content
         self.html_body = <<-eos
           <object width="590" height="413">
             <param name="movie" value="http://www.youtube.com/v/#{video_id}?fs=1&amp;hl=en_US"></param>
@@ -340,7 +341,7 @@ class Page < ActiveRecord::Base
     self.calculate_weighted_score
     self.save
   end
-    
+  
   def calculate_weighted_score
     # Ranking algorithm as described in RAILS_SETUP_NOTES
     

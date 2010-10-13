@@ -19,6 +19,10 @@ ActionController::Routing::Routes.draw do |map|
   map.page_builder_submit       "/pagebuilder/submit",  :controller => :page_builder, :action => :create
   map.page_builder_image_upload "/pagebuilder/image",   :controller => :page_builder, :action => :image_upload_form
   map.page_builder_edit         "/pagebuilder/edit/:id",  :controller => :page_builder, :action => :edit
+
+  # On-site URL submission
+  map.assign_category         "/:id/category/edit",   :controller => :page, :action => :edit_category
+  map.assign_category_submit  "/:id/category/submit", :controller => :page, :action => :submit_category
   
   # Bookmarklet
   map.bookmarklet_js      "/bookmarklet/show",    :controller => :bookmarklet,   :action => :show
@@ -42,6 +46,8 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_future_page_queue      "/admin/launch_queue/edit/:id",     :controller => :future_page_queue,  :action => :edit
   map.update_future_page_queue    "/admin/launch_queue/update/:id",   :controller => :future_page_queue,  :action => :update
   map.destroy_future_page_queue   "/admin/launch_queue/destroy/:id",  :controller => :future_page_queue,  :action => :destroy
+
+  map.future_submit_tick          "/admin/launch_queue/tick/13sf5dsfg4-adsf", :controller=>:future_page_queue, :action=>:tick
   
   # Root
   map.root      :controller => :home,  :action => :show

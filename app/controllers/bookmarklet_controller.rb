@@ -34,6 +34,7 @@ class BookmarkletController < ApplicationController
       page.source_url = unsafe_url.sub " ", "" # strip spaces, won't matter for malformed slugs
       page.scrape_source_url
       page.ready_to_process_images = true
+      page.created_with_bookmark = true
       
       unless page.valid?
         @response[:completed] = false

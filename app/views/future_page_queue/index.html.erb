@@ -1,4 +1,4 @@
-<h2>Queued Submissions</h2>
+<h2>Queued Submissions - Oldest first</h2>
 <p><b>About:</b> Automatically submit a page at a future time. Useful if you're AFK for a few hours or want to spread out a series of posts.</p>
 <div style="width:100%; border-top: 1px dotted #ccc;">&nbsp;</div>
 
@@ -6,19 +6,15 @@
     
     <tr>
         <th>Title</th>
-        <th>User</th>
-        <th>Time left</th>
-        <th>Source URL</th>
+        <th>Edit</th>
+        <th>Delete</th>
     </tr>
     
     <% @pages.each do |page| %>
         <tr style="background-color:<%= cycle("#fff", "#eaeaea") -%>">
-            <td><%= truncate(h(page.title), :length=>60) %></td>
-            <td><%= fb_name h(page.user.facebook_id), :linked=>false %></td>
-            <td><%=h distance_of_time_in_words((page.launch_threshold||Time.now), Time.now) %></td>
-            <td><%= link_to "view", page.source_url %></td>
-            <td><%= link_to "edit", edit_future_page_queue_path(page) %></td>
-            <td><%= link_to 'destroy', destroy_future_page_queue_path(page), :confirm => "Are you sure?" %></td>
+            <td><%= link_to(truncate(h(page.title), :length=>60), page) %></td>
+            <td><%= link_to "edit", edit_page_path(page) %></td>
+            <td><%= link_to 'destroy', "/page/#{page.id}", :method=>:delete, :confirm => "Are you sure?" %></td>
         </tr>
     <% end %>
 </table>
@@ -29,4 +25,4 @@
 
 <div style="width:100%; border-top: 1px dotted #ccc;">&nbsp;</div>
 
-<%= link_to "New", new_future_page_queue_path %>
+<%= link_to "run tick method", future_submit_tick_path, :confirm => "Dequeue submission?" %>

@@ -31,6 +31,17 @@ MySQL root user DOES require a password. It's s3rv3rp455
 MySQL Socket is located at /var/run/mysqld/mysqld.sock
 
 
+    [ Varnish: ]
+
+Setup information from here: http://serverfault.com/questions/111678/how-to-setup-apache-passenger-with-varnish
+Edited /etc/apache2/ports.conf, /etc/apache2/sites-enabled/likestream
+Enabled the Expires module (with: a2enmod expires)
+Enabled the Headers module (with: a2enmod headers)
+Apache now listens on port 8000, varnish on 80.
+Varnish config file: /etc/varnish/default.vcl
+To start: sudo varnishd -f /etc/varnish/default.vcl -s malloc,64M -a 0.0.0.0:80
+
+
 	[ Apache: ]
 
 Config located in /etc/apache2/apache2.conf

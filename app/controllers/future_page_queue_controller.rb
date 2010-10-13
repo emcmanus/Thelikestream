@@ -22,61 +22,38 @@
 # t.datetime "updated_at"
 
 class FuturePageQueueController < ApplicationController
-  
-  before_filter :require_admin
-  
+
+  before_filter :require_admin, :except=>[:tick]
+
   def index
-    @pages = FuturePage.all
-    logger.warn @pages.inspect
+    @pages = Page.find(:all, :conditions=>["queue_for_later_submission=1"], :order=>["updated_at"])
   end
-  
-  def new
-    @new_page = FuturePage.new
-  end
-  
-  def prefill
-    # Create a new page, prefill content but DON'T SAVE
-    # Move fields over to FuturePage object
-    # Set launch_threshold
-    # Save
-    
-    # Yep, and this is broken before anyone uses it.
-    render :text => "took queueing offline for a bit"
-    
-    # unless params[:future_page][:source_url].blank?
-    #   @tmp_page = Page.new
-    #   @tmp_page.source_url = params[:future_page][:source_url]
-    #   @tmp_page.user = current_user
-    #   @tmp_page.scrape_source_url
-    # 
-    #   @page = FuturePage.new params[:future_page]
-    #   @page.update_attributes @tmp_page.attributes
-    #   
-    #   redirect_to edit_future_page_queue_path(@page) and return
-    # end
-    # 
-    # flash[:notice] = "Unable to save page."
-    # redirect_to future_page_queue_path
-  end
-  
-  def edit
-    @future_page = FuturePage.find params[:id]
-  end
-  
-  def update
-    @future_page = FuturePage.find params[:id]
-    if @future_page.update_attributes params[:future_page]
-      flash[:notice] = "Record updated."
+
+
+  def tick
+    # on average submit once every three ticks, makes submissions look a little
+    # more human
+    lotto = (rand(3) == 0)
+    if lotto
+      @page = Page.find(:first, :conditions=>["queue_for_later_submission=1"], :order=>["updated_at"])
+      if @page.nil?
+        render :text=>"nothing to submit" and return
+      end
+      @page.queue_for_later_submission = false
+      @page.show_in_popular = true
+      @page.like_count_boost = [2, rand(6)+1].max # 2-6 points
+      submit_time = rand(15).minutes.ago
+      @page.created_at = submit_time
+      @page.updated_at = submit_time
+      @page.update_like_count_with_url page_path(@page, :only_path=>false)
+      if @page.save
+        render :text=>"success" and return
+      else
+        render :text=>"couldn't save" and return
+      end
     else
-      flash[:notice] = "Unable to save page."
+      render :text=>"lost the lotto" and return
     end
-    redirect_to future_page_queue_path
   end
-  
-  def destroy
-    @future_page = FuturePage.find params[:id]
-    @future_page.destroy
-    flash[:notice] = "Destroyed"
-    redirect_to future_page_queue_path
-  end
+
 end

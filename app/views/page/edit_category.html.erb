@@ -1,0 +1,38 @@
+<h2 style="border-bottom: 1px dotted #ccc;">Pick a category</h2>
+
+<% form_tag assign_category_submit_path(@page) do %>
+  <p>
+  <%= radio_button_tag "category", "breaking_tech", false %>
+  <b>Breaking Tech News</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "games", false %>
+  <b>Games</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "gossip", false %>
+  <b>Gossip</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "music", false %>
+  <b>Music</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "funny", false %>
+  <b>Funny</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "smart", false %>
+  <b>Smart</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "community", false %>
+  <b>Community</b>
+  </p>
+  <p>
+  <%= radio_button_tag "category", "other", false %>
+  <b>Other</b>
+  </p>
+
+  <button onclick="this.parentNode.submit()" class="btn" style="font-size: 1.6em; margin-left: 5px;"><span><span><b>&nbsp;</b><u>Next</u></span></span></button>
+<% end %>

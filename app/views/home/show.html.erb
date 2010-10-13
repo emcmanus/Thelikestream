@@ -1,46 +1,61 @@
 
 <style type="text/css" media="screen">
-    .secondary_submit {
-        color: white; background-color: #ff008b; font-size: 0.9em; font-weight: bold; padding:1px 2px;
-    }
-    .secondary_submit:hover {
-/*            background-color: #ff0;*/
-        text-decoration: none;
-        color: black;
-    }
+  .secondary_submit {
+    color: white; background-color: #ff008b; font-size: 0.9em; font-weight: bold; padding:1px 2px;
+  }
+  .secondary_submit:hover {
+    /*            background-color: #ff0;*/
+    text-decoration: none;
+    color: black;
+  }
+  .cat_option { padding: 0 5px; color: #7f7f7f; cursor: pointer; }
+  .cat_option.selected, .cat_option:hover { font-weight: bold; color: #333; padding: 0 4px; }
 </style>
 
 
 <div class="span-24" style="">
-    
-    <div id="contentContainer">
-      <div class="span-24">
-        <h2 style="padding:0; margin:0;" class="span-16">Popular</h2>
+
+  <div id="contentContainer">
+    <div class="span-24">
+      <h2 style="padding:0; margin:0;" class="span-16">Popular</h2>
+      <% if false %>
+        <div class="" style="padding: 0; margin: 0; float: left; width: 480px; text-align:right; padding-top: 15px; font-size: 0.8em;">
+          <span class="highlight" style="padding: 2px 3px; font-weight:bold; color: #000;">toggle categories:</span><br/>
+          <span class="cat_option" id="cat_selector_breaking">tech</span>
+          <span class="cat_option" id="cat_selector_games">games</span>
+          <span class="cat_option selected" id="cat_selector_gossip">gossip</span>
+          <span class="cat_option" id="cat_selector_music">music</span>
+          <span class="cat_option selected" id="cat_selector_stupid">stupid</span>
+          <span class="cat_option" id="cat_selector_community">community</span>
+          <span class="cat_option selected" id="cat_selector_other">other</span>
+        </div>
+      <% else %>
         <div class="span-8" style="text-align:right; padding-top: 15px; font-size: 0.8em;">
           <% link_to(page_path(:id=>417), :style=>"color: #000") do %>
             <span class="highlight" style="padding: 2px 3px; font-weight:bold;">new!</span> community update
           <% end %>
         </div>
+      <% end %>      
+    </div>
+
+    <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
+
+    <div class="span-15 append-1">
+      <% for page in @pages %>
+        <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
+      <% end %>
+      <% if @pages.length == 0 %>
+        No pages found.
+      <% end %>
+
+      <div class="span-5 prepend-3">
+        <%= will_paginate @pages %>
       </div>
 
-      <div style="border-bottom: 1px dotted #ccc; clear: both; height: 2px; margin-bottom: 10px">&nbsp;</div>
+    </div>
+  </div> 
 
-      <div class="span-15 append-1">
-        <% for page in @pages %>
-          <%= render :partial => '/page/homeRow', :locals => {:page=>page} %>
-        <% end %>
-        <% if @pages.length == 0 %>
-          No pages found.
-        <% end %>
+  <%= render :partial=>"/layouts/sidePanel" %>
 
-        <div class="span-5 prepend-3">
-          <%= will_paginate @pages %>
-        </div>
-
-      </div>
-    </div> 
-    
-    <%= render :partial=>"/layouts/sidePanel" %>
-    
 </div>
 

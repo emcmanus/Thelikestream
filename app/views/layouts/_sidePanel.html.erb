@@ -4,11 +4,26 @@
 
 
 
-  <h2 style="font-weight: 400; color:#333; padding:0; margin: 0; margin-top: -5px; margin-bottom: 5px;"><%= image_tag 'back-to-normal-btn.png', :id=>"backToPopularBtn", :onclick=>"exitFavoritesMode()", :style=>"display:none; cursor:pointer; margin-bottom:-5px; margin-right: 10px;" %>Favorite Submissions</h2>
+
+  <% if false %>
+    <h3 style="font-weight: 400; border-bottom: 1px dotted #ccc; padding-bottom: 5px; color:#333; margin-top: 15px; margin-bottom: 5px;"><%= image_tag 'back-to-normal-btn.png', :id=>"backToPopularBtn", :onclick=>"exitFavoritesMode()", :style=>"display:none; cursor:pointer; margin-bottom:-5px; margin-right: 10px;" %>Favorites</h3>
+    <% for page in top_pages %>
+      <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
+        <div class="span-8" style="margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 10px;">
+          <div class="" style="float:left; padding-right: 5px;">
+            <%= image_tag page.thumbnail_thumb %>
+          </div>
+          <div class="span-5 last">
+            <%= h page.title %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
 
   <% for page in top_pages %>
     <% unless page.thumbnail_square.blank? or page.title.downcase.index("nsfw") %>
-      <div class="span-8 <%= cycle("","","last")%>" style="margin-bottom: -55px;">
+      <div class="span-8 <%= cycle("","","last")%>" style="margin-bottom: -60px;">
         <div style="float:right;">
           <div style="position:absolute; margin-left: -55px; margin-top: 5px; font-size: 1.5em; color: white;" class="thin_shadow">
             <%= image_tag("star-like-count-badge.png", :style=>"" ) %>
@@ -19,7 +34,6 @@
         <% link_to page, :style=>"position:relative; height: 75px; top: -75px; display: block;" do %>
           <div style="background-color: rgba(0,0,0,0.50); height:100%; font-size: 1.5em; color: white;" class="ie_transparent_bg thin_shadow">
             <div style="padding:10px 15px;">
-
               <%= h truncate(page.title, :length=>70) %>
             </div>
           </div>

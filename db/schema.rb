@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100930194049) do
+ActiveRecord::Schema.define(:version => 20101012234111) do
 
   create_table "bookmarklet_keys", :force => true do |t|
     t.string   "value",      :null => false
@@ -101,6 +101,9 @@ ActiveRecord::Schema.define(:version => 20100930194049) do
     t.integer  "like_count_boost",               :default => 0
     t.boolean  "show_in_category_community"
     t.boolean  "show_in_category_music"
+    t.boolean  "created_with_bookmark",          :default => false
+    t.boolean  "created_with_site_form",         :default => false
+    t.boolean  "queue_for_later_submission"
   end
 
   create_table "users", :force => true do |t|

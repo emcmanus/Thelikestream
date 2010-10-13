@@ -2,7 +2,7 @@
 
 <div class="span-14" style="overflow: hidden;">
 
-<style type="text/css" media="screen">
+  <style type="text/css" media="screen">
     input.title_entry { padding: 5px 7px 7px 7px; border: 1px solid #ccc; }
     input.title_entry:hover { padding: 4px 6px 6px 6px; border: 2px solid #0cf; }
     input.title_entry:focus { padding: 4px 6px 6px 6px; border: 2px solid #0cf; }
@@ -30,110 +30,118 @@
     textarea.embed_entry { border: 1px solid #ccc; padding: 5px 5px 5px 5px; }
     textarea.embed_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
     textarea.embed_entry:hover { border: 2px solid #0cf !important; padding: 4px 4px 4px 4px !important; }
-</style>
+  </style>
 
-<h2>Edit Page <%= link_to "(View All Pages)", profile_path, :style=>"font-size:12px;" %></h2>
+  <h2>Edit Page <%= link_to "(View All Pages)", profile_path, :style=>"font-size:12px;" %></h2>
 
-<% form_for(@page, :url=>"/page/#{@page.id}") do |f| %>
-  <%=h f.error_messages %>
-  <p>
-      <%=h f.label :title %><br/>
-      <%=h f.text_field :title, :class=>"heading_entry" %>
-  </p>
-  
-  <% if current_user.is_admin %>
+  <% form_for(@page, :url=>"/page/#{@page.id}") do |f| %>
+    <%=h f.error_messages %>
+    <p>
+    <%=h f.label :title %><br/>
+    <%=h f.text_field :title, :class=>"heading_entry" %>
+    </p>
+
+    <% if current_user.is_admin %>
       <p>
-          <%=h f.label :like_title %><br/>
-          <%=h f.text_field :like_title %>
+      <%=h f.label :like_title %><br/>
+      <%=h f.text_field :like_title %>
       </p>
-  <% end %>
-  
-  <p>
-      <%=h f.label :introduction %><br/>
+    <% end %>
+
+    <p>
+    <%=h f.label :introduction %><br/>
     <% if @page.introduction.blank? %>
       <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>truncate(strip_tags(@page.html_body).strip.gsub(/[\r\n\f]+/, "\n" ).gsub(/[\t ]+/, " ").gsub(/&nbsp;/, " ").sub("&nbsp;",""), :length=>500)) %>
     <% else %>
       <%=h f.text_area (:introduction, :class=>"paragraph_entry", :value=>@page.introduction) %>
     <% end %>
-  </p>
-  
-  <% if current_user.is_content_editor %>
+    </p>
+
+    <% if current_user.is_content_editor %>
       <p>
-          <%=h f.label :html_body %><br/>
-          <%=h f.text_area :html_body %>
+      <%=h f.label :html_body %><br/>
+      <%=h f.text_area :html_body %>
       </p>
       <br/>
       <p>
-        <%=h f.label :show_in_popular %><br/>
-        <%=h f.check_box :show_in_popular %>
+      <%=h f.label :show_in_popular %><br/>
+      <%=h f.check_box :show_in_popular %>
       </p>
       <p>
-        <%=h f.label :show_in_favorites %><br/>
-        <%=h f.check_box :show_in_favorites %>
-        </p>
-        <br/>
-      <p>
-          <%=h f.label :media_category %><br/>
-          <%=h f.text_field :media_category %>
+      <%=h f.label :show_in_favorites %><br/>
+      <%=h f.check_box :show_in_favorites %>
       </p>
       <p>
-          <%=h f.label :source_url %><br/>
-          <%=h f.text_field :source_url %>
+      <%=h f.label :queue_for_later_submission %><br/>
+      <%=h f.check_box :queue_for_later_submission %>
       </p>
+      <br/>
+      <p>
+      <%=h f.label :media_category %><br/>
+      <%=h f.text_field :media_category %>
+      </p>
+      <p>
+      <%=h f.label :source_url %><br/>
+      <%=h f.text_field :source_url %>
+      </p>
+    <% end %>
+
+    <% if current_user.is_admin %>
+      <p>
+      <%=h f.label :shortened_url %><br/>
+      <%=h f.text_field :shortened_url %>
+      </p>
+      <p>
+      <%=h f.label :show_link %><br/>
+      <%=h f.check_box :show_link %>
+      </p>
+      <p>
+      <%=h f.label :is_cloaked %><br/>
+      <%=h f.check_box :is_cloaked %>
+      </p>
+    <% end %>
+
+    <% if current_user.is_content_editor %>
+      <p>
+      <%=h f.label :like_count %><br/>
+      <%=h f.text_field :like_count %>
+      </p>
+<p>
+      <%=h f.label :like_count_boost %><br/>
+      <%=h f.text_field :like_count_boost %>
+      </p>
+      <p>
+      <%=h f.label :weighted_score %><br/>
+      <%=h f.text_field :weighted_score %>
+      </p>
+
+      <p>
+      <b>User ID:</b> <%=h @page.user_id %><br/>
+      <b>Created at:</b> <%=h @page.created_at %><br/>
+      <b>Updated at:</b> <%=h @page.updated_at %><br/>
+      <b>Slug:</b> <%=h @page.slug %><br/>
+      <b>Thumbnail_small:</b> <%=h @page.thumbnail_small %><br/>
+      <b>Thumbnail_small_width:</b> <%=h @page.thumbnail_small_width %><br/>
+      <b>Thumbnail_small_height:</b> <%=h @page.thumbnail_small_height %><br/>
+      <b>Thumbnail_full:</b> <%=h @page.thumbnail_full %><br/>
+      <b>Thumbnail_full_width:</b> <%=h @page.thumbnail_full_width %><br/>
+      <b>Thumbnail_full_height:</b> <%=h @page.thumbnail_full_height %>
+      </p>
+    <% end %>
+
+    <button onclick="this.parentNode.submit()" class="btn" style="margin-left: 1px;"><span><span><b>&nbsp;</b><u>Update!</u></span></span></button>
   <% end %>
-  
-  <% if current_user.is_admin %>
-      <p>
-          <%=h f.label :shortened_url %><br/>
-          <%=h f.text_field :shortened_url %>
-      </p>
-      <p>
-          <%=h f.label :show_link %><br/>
-          <%=h f.check_box :show_link %>
-      </p>
-      <p>
-          <%=h f.label :is_cloaked %><br/>
-          <%=h f.check_box :is_cloaked %>
-      </p>
-  <% end %>
-  
-  <% if current_user.is_content_editor %>
-      <p>
-          <%=h f.label :like_count %><br/>
-          <%=h f.text_field :like_count %>
-      </p>
-      <p>
-          <%=h f.label :weighted_score %><br/>
-          <%=h f.text_field :weighted_score %>
-      </p>
-    
-      <p>
-        <b>User ID:</b> <%=h @page.user_id %><br/>
-        <b>Created at:</b> <%=h @page.created_at %><br/>
-        <b>Updated at:</b> <%=h @page.updated_at %><br/>
-        <b>Slug:</b> <%=h @page.slug %><br/>
-        <b>Thumbnail_small:</b> <%=h @page.thumbnail_small %><br/>
-        <b>Thumbnail_small_width:</b> <%=h @page.thumbnail_small_width %><br/>
-        <b>Thumbnail_small_height:</b> <%=h @page.thumbnail_small_height %><br/>
-        <b>Thumbnail_full:</b> <%=h @page.thumbnail_full %><br/>
-        <b>Thumbnail_full_width:</b> <%=h @page.thumbnail_full_width %><br/>
-        <b>Thumbnail_full_height:</b> <%=h @page.thumbnail_full_height %>
-      </p>
-  <% end %>
-
-  <button onclick="this.parentNode.submit()" class="btn" style="margin-left: 1px;"><span><span><b>&nbsp;</b><u>Update!</u></span></span></button>
-<% end %>
 
 
 
-<hr class="space" /><hr class="space" />
+  <hr class="space" /><hr class="space" />
 
-<div style="border-top: 1px dotted #ccc;">
+  <div style="border-top: 1px dotted #ccc;">
     <h2 style="margin-bottom:5px;">Delete This Page</h2>
     <%= link_to("<span><span><b>&nbsp;</b><u>Delete Page</u></span></span>", "/page/#{@page.id}", :confirm => 'Are you sure you\'d like to delete this page? This cannot be undone.', :method =>:delete, :class=>"btn") %>
-</div>
+  </div>
 
-<hr class="space" />
+  <hr class="space" />
 
 
 </div>

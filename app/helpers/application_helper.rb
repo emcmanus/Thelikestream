@@ -20,7 +20,7 @@ module ApplicationHelper
   def get_unpublished_pages
     return nil unless current_user
     return @unpublished_pages if @unpublished_pages
-    @unpublished_pages = Page.all :conditions=>["user_id = ? AND like_count = 0", current_user.id]
+    @unpublished_pages = Page.all :conditions=>["user_id = ? AND weighted_score = 0", current_user.id]
   end
   
   def get_host(full_url)

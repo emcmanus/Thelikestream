@@ -298,7 +298,7 @@ function update_like_count_finished(container, responseText)
 
 </script>
 
-<% if @page and @page.is_cloaked %>
+<% if @page and @page.valid? and @page.is_cloaked %>
   <% fb_connect_async_js :app_id=>"157023087646197" do -%>
     facebookApiReady();
   <% end %>

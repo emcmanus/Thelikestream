@@ -1,5 +1,5 @@
 <!-- Page -->
-<% if @page %>
+<% if @page and @page.valid? %>
     <!-- Facebook Open Graph -->
     <meta property="og:title" content="<%= h @page.og_title || @html_title || "TheLikeStream - #{controller.controller_name.titleize}" %>" />
     <meta property="og:image" content="<%= h @page.og_image || image_url("like-72-72.png") %>" />
@@ -17,7 +17,7 @@
     <meta name="description" content="You'll love this" />
     <link rel="image_src" href="<%= h image_url("like-72-72.png") %>
 <% end %>
-<% if @page and @page.is_cloaked %>
+<% if @page and @page.valid? and @page.is_cloaked %>
     <meta property="og:type" content="activity" />
     <meta property="og:site_name" content="★" />
     <meta property="og:app_id" content="157023087646197">

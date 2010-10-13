@@ -97,7 +97,10 @@
         <label for="show_in_popular">Show in popular:</label>
         <input type="checkbox" name="show_in_popular" <%= 'checked' if @page and @page.show_in_popular %> /><br/>
         <label for="show_in_favorites">Show in favorites:</label>
-        <input type="checkbox" name="show_in_favorites" <%= 'checked' if @page and @page.show_in_favorites %> />
+        <input type="checkbox" name="show_in_favorites" <%= 'checked' if @page and @page.show_in_favorites %> /><br/>
+        <label for="queue_for_later_submission">Queue for later submission:</label>
+        <input type="checkbox" name="queue_for_later_submission" <%= 'checked' if @page and @page.queue_for_later_submission %> />
+
       </div>
     <% end %>
 <% end %>
