@@ -43,7 +43,7 @@ class PageBuilderController < ApplicationController
       end
     end
 
-    page.user = current_user
+    page.user = current_user if page.user.blank?
     page.title = params[:title]
     page.sanitize_user_html params[:html_body]
 
