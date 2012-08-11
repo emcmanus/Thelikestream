@@ -62,12 +62,20 @@ https://manage.slicehost.com/
 
 	[ Important Paths: ]
 
-Rails app: /home/emcmanus/rails_apps/likestream
-MySQL socket: /var/run/mysqld/mysqld.sock
-Apache's init.d: /etc/init.d/apache2
+Rails app:                                          /home/emcmanus/rails_apps/likestream
+MySQL socket:                                       /var/run/mysqld/mysqld.sock
+Apache's init.d:                                    /etc/init.d/apache2
+Apache Configuration:                               /etc/apache2/sites-available/likestream
+Cron jobs (like the future submission dequeue):     /etc/cron.fifteen/
+Firewall Rules:                                     /etc/iptables.up.rules
 mkmf.log: This is located in the gem's folder. Ex, nokogiri: /usr/lib/ruby/gems/1.8/gems/nokogiri-1.4.3.1 -> Then do find . -name "mkmf.log" to find the path
-Apache Configuration: /etc/apache2/sites-available/likestream
-Cron jobs (like the future submission dequeue): /etc/cron.fifteen/
+
+
+	[ Sinatra: ]
+	
+You're running a sinatra server on port 48737! To start, cd into ~/sinatra_apps and run:
+ruby daemonizer.rb start
+
 
 	[ Reminders: ]
 
@@ -79,3 +87,6 @@ When running rake, always check $RAILS_ENV
 
 RAILS_ENV=production
 (I added this to bashrc)
+
+
+
